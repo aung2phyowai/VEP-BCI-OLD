@@ -17,3 +17,14 @@ python 2.7.6 32 bit
 * emokit https://github.com/openyou/emokit/tree/master/python/emokit
 
 Visual Studio 2008
+
+
+TODO:
+
+- Python application prototype which flashes screen with given frequency, read EPOC signal, performs FFT on each, averages and then you can compare if you can find the same frequency in the brain signal (1 August)
+
+Next general goals:
+
+- Estimate how good it is for controlling a robot
+- Try also c-VEP
+- Try to control actual robot with it
