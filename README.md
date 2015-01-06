@@ -11,7 +11,7 @@ Current state: SSVEP identification is working (2s transition time between targe
 - Refactor signal processing
 
 #####THESIS (DEADLINE 14.05.2015):
-Current state: Template is in github. Short summary is has been submitted.
+Current state: Template is in github. Short summary has been submitted.
 - Write about EEG (currently working on)
 - Write about BCIs
 - Write about target identification methods
