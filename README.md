@@ -33,12 +33,25 @@ Done:
 - Add linear interpolation to FFT method
 - Make FFT and CCA method collaborate
 - Have unexpectedly high target identification accuracy
+- Write short summary of the thesis
+- Start actually writing the thesis
+- Refactor UI
 
 TODO:
 
-- Try to improve target identification time without significant loss in accuracy
-- Write short summary of the thesis
-- Start actually writing the thesis
+APPLICATION:
+- Try to improve SSVEP target identification time without significant loss in accuracy
+- Refactor communication between processes
+- Refactor signal processing
+
+THESIS (DEADLINE **14.05.2015**):
+- Write about EEG
+- Write about BCIs
+- Write about target identification methods
+- Write introduction and summary
+- Write everything else
+- Add licence
+
 
 Next general goals:
 
