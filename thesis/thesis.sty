@@ -1,0 +1,40 @@
+\usepackage{subfiles}
+\usepackage[utf8]{inputenc}
+\usepackage[toc,page]{appendix}
+
+% Change title style (removes chapter and appendix before titles and adds number before title)
+
+\usepackage{titlesec}
+\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{20pt}{}{}
+%\titleformat{\section}{\sffamily\Large\bfseries}{\thesection}{20pt}{}{}
+%\titleformat{\subsection}{\sffamily\large\bfseries}{\thesubsection}{20pt}{}{}
+
+% Remove some of the empty space before chapter
+
+% Without titlesec
+%\usepackage{etoolbox} 
+%\makeatletter
+%\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
+%\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
+%\makeatother
+
+% With titlesec
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
+
+% Changing some title names
+% more http://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
+
+\renewcommand{\bibname}{References}
+\renewcommand{\contentsname}{Table of Contents}
+
+% Exact page size from template
+
+\oddsidemargin = 0.5 cm
+\topmargin = 24 pt
+\headheight = 0 pt
+\headsep = 0 pt
+\marginparsep = 0 pt
+\marginparwidth = 0 pt
+\footskip = 0 pt
+\textwidth = 453 pt
+\textheight = 701 pt

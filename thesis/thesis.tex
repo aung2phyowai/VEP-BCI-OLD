@@ -1,103 +1,29 @@
 \documentclass[a4paper,12pt]{report}
-\usepackage[utf8]{inputenc}
-\usepackage[toc,page]{appendix}
+\usepackage{thesis}
 
-% Change title style (removes chapter and appendix before titles and adds number before title)
-
-\usepackage{titlesec}
-\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{20pt}{}{}
-%\titleformat{\section}{\sffamily\Large\bfseries}{\thesection}{20pt}{}{}
-%\titleformat{\subsection}{\sffamily\large\bfseries}{\thesubsection}{20pt}{}{}
-
-% Remove some of the empty space before chapter
-
-% Without titlesec
-%\usepackage{etoolbox} 
-%\makeatletter
-%\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
-%\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
-%\makeatother
-
-% With titlesec
-\titlespacing*{\chapter}{0pt}{0pt}{40pt}
-
-% Changing some title names
-% more http://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
-
-\renewcommand{\bibname}{References}
-\renewcommand{\contentsname}{Table of Contents}
-
-% Exact page size from template
-
-\oddsidemargin = 0.5 cm
-\topmargin = 24 pt
-\headheight = 0 pt
-\headsep = 0 pt
-\marginparsep = 0 pt
-\marginparwidth = 0 pt
-\footskip = 0 pt
-\textwidth = 453 pt
-\textheight = 701 pt
-
-% Packages for layout
+% Packages for layout testing
 
 %\usepackage{showframe}
 %\usepackage{layouts}
 %\usepackage{layout}
 %\printinunitsof{pt}
 
+\includeonly{./tex/abstract, ./tex/title_page, ./tex/appendices, ./tex/introduction, ./tex/EEG, ./tex/BCI, ./tex/conclusion}
 \begin{document}
 
 %\layout
 %\pagevalues
 %\newpage
 
-% Title page
-% font size table: http://tex.stackexchange.com/questions/24599/what-point-pt-font-size-are-large-etc
-
-\begin{center}
-\thispagestyle{empty}
-\large{UNIVERSITY OF TARTU}\\
-\large{FACULTY OF MATHEMATICS AND COMPUTER SCIENCE}\\
-\large{Institute of Computer Science}\\
-\large{Computer Science Curriculum}\\
-\vspace{160pt}
-\Large{\bf Anti Ingel}\\
-\vspace{6pt}
-\LARGE{\textbf{Control a robot via VEP using \\Emotiv EPOC}}\\
-\vspace{12pt}
-\large{\bf Bachelor's thesis}
-\vspace{63pt}
-\end{center}
-\hfill \Large{Supervisor: Ilya Kuzovkin}
-\vfill
-\begin{center}
-\normalsize{Tartu 2015}
-\end{center}
-
-
-\chapter*{Control a robot via VEP using Emotiv EPOC}
-\section*{Abstract}
-\section*{Keywords}
-\normalsize{EEG, BCI, f-VEP, SSVEP, CCA, PSDA, FFT, DFT, electroencephalography}
-\section*{[Kommentaarid?]}
-\section*{Lühikokkuvõte}
-\section*{Võtmesõnad}
-
-
+\include{./tex/title_page}
+\include{./tex/abstract}
 \tableofcontents
-
-\chapter*{Introduction}
-\chapter{Electroencephalography}
-\chapter{Brain-Computer Interface}
-\section{SSVEP}
-\section{c-VEP}
-\chapter{Target Identification Methods}
-\section{Power spectral density analysis}
-Power Spectral density (PSD) analysis is widely used in SSVEP BCIs\cite{bin2009cca}.
-\section{Canonical correlation analysis}
-Canonical correlation analysis was first introduced by Harold Hotelling in 19xx . Testing citing\cite{scipy}\cite{scikit-learn}\cite{psychopy}
-\chapter*{Conclusion}
+\include{./tex/introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+\include{./tex/EEG}
+\include{./tex/BCI}
+\include{./tex/conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
 
 % References
 % styles: https://www.sharelatex.com/learn/Bibtex_bibliography_styles
@@ -107,36 +33,6 @@ Canonical correlation analysis was first introduced by Harold Hotelling in 19xx 
 \bibliography{thesis}
 Internet URLs were valid on ...
 
-% Appendices
-% Can be replaced by \appendix
-
-
-\begin{appendices}
-\renewcommand{\thechapter}{\Roman{chapter}}
-\chapter{Glossary}
-asd
-\chapter{Licence}
-\textbf{Non-exclusive licence to reproduce thesis and make thesis public}\\[1cm]
-
-\noindent I, \textbf{Anti Ingel} (dd.mm.yyyy)
-
-\begin{enumerate}
-	\item herewith grant the University of Tartu a free permit (non-exclusive licence) to:
-	\begin{enumerate}
-		\item[1.1] reproduce, for the purpose of preservation and making available to the public, including for addition to the DSpace digital archives until expiry of the term of validity of the copyright, and
-		\item[1.2] make available to the public via the web environment of the University of Tartu, including via the DSpace digital archives until expiry of the term of validity of the copyright,
-	\end{enumerate}
-	of my thesis\\
-	\textbf{Control a robot via VEP using Emotiv EPOC}\\
-	supervised by Ilya Kuzovkin
-	\item I am aware of the fact that the author retains these rights.
-	\item I certify that granting the non-exclusive licence does not infringe the intellectual property rights or rights arising from the Personal Data Protection Act.
-\end{enumerate}
-\vspace{1cm}
-Tartu dd.mm.yyyy
-
-
-\end{appendices}
-
+\include{./tex/appendices}
 
 \end{document}
