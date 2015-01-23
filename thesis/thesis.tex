@@ -1,29 +1,30 @@
 \documentclass[a4paper,12pt]{report}
-\usepackage{thesis}
+\usepackage{myStyle}
 
 % Packages for layout testing
 
-%\usepackage{showframe}
-%\usepackage{layouts}
-%\usepackage{layout}
-%\printinunitsof{pt}
+\usepackage{showframe}
+\usepackage{layouts}
+\usepackage{layout}
+\printinunitsof{pt}
 
 \includeonly{./tex/abstract, ./tex/title_page, ./tex/appendices, ./tex/introduction, ./tex/EEG, ./tex/BCI, ./tex/conclusion}
 \begin{document}
 
-%\layout
-%\pagevalues
-%\newpage
+\layout
+\pagevalues
+\newpage
 
 \include{./tex/title_page}
 \include{./tex/abstract}
 \tableofcontents
-\include{./tex/introduction}
 \addcontentsline{toc}{chapter}{Introduction}
+\include{./tex/introduction}
 \include{./tex/EEG}
 \include{./tex/BCI}
-\include{./tex/conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
+\include{./tex/conclusion}
+
 
 % References
 % styles: https://www.sharelatex.com/learn/Bibtex_bibliography_styles

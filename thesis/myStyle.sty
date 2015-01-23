@@ -1,6 +1,9 @@
-\usepackage{subfiles}
-\usepackage[utf8]{inputenc}
-\usepackage[toc,page]{appendix}
+\usepackage{subfiles} 			% to compile subfiles
+\usepackage[utf8]{inputenc}		% we also have estonian words like lühikokkuvõte
+\usepackage[toc,page]{appendix} % nice appendix
+\usepackage{url} 				% to add url in bib
+\usepackage{graphicx}			% for pictures
+\graphicspath{ {./img/} }
 
 % Change title style (removes chapter and appendix before titles and adds number before title)
 
@@ -30,11 +33,16 @@
 % Exact page size from template
 
 \oddsidemargin = 0.5 cm
-\topmargin = 24 pt
+\topmargin = 0 pt
 \headheight = 0 pt
 \headsep = 0 pt
 \marginparsep = 0 pt
 \marginparwidth = 0 pt
-\footskip = 0 pt
+\footskip = 30 pt
 \textwidth = 453 pt
 \textheight = 701 pt
+
+% Paragraph indent styling
+
+\setlength\parindent{0pt}
+\setlength\parskip{6pt}
