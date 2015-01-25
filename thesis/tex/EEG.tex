@@ -5,18 +5,26 @@
 
 As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells, or neurons, and non-neural cells, called glial cells. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
 
-There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that neuron sends signals through axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. 
+There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:synapse} for an example of a neuron and a synapse.
 
 \begin{figure}[b!]
-\centering
-\includegraphics[width=0.5\textwidth]{synapse.jpg}
-\caption{Neurons and chemical synapse\cite[p.~17]{neuronpic}}
-\label{fig:synapse}
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{synapse.jpg}
+		\caption{Neurons and chemical synapse\cite[p.~17]{neuronpic}}
+		\label{fig:synapse}
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		%\includegraphics[width=\textwidth]{ActionPotential.png}
+		\caption{Resting and action potential}
+		\label{fig:action_potential}
+	\end{minipage}
 \end{figure}
 
-To send signals, neuron must be able to maintain electrical potential, called membrane potential. Membrane potential is defined as the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it. The positively charged ions are sodium and potassium cations.
+To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is defined as the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it. The positively charged ions are sodium and potassium cations.
 
-The concentration of potassium ions is higher in the interior of a cell, while the concentration of sodium ions is higher in the exterior. To maintain negative resting potential, the sodium-potassium pump is used. This pump transports three sodium cations out of the cell for every two potassium cations pumped in. Sodium-potassium pump is a active transport mechanism, which means that it moves ions across the cell membrane against their concentration gradient.
+The concentration of potassium ions is higher in the interior of a cell, while the concentration of sodium ions is higher in the exterior. To maintain negative resting potential, the sodium-potassium pump is used. This pump transports three sodium cations out of the cell for every two potassium cations pumped in. Sodium-potassium pump is an active transport mechanism, which means that it moves ions across the cell membrane against their concentration gradient.
 
 By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. To increase the membrane potential, voltage-gated ion channels are used. These channels are similar to sodium-potassium pumps, but differ in the direction of ion transportation. Ion channels are passive transport mechanisms, which means they move ions across the cell membrane down their concentration gradient.
 
@@ -24,34 +32,42 @@ Voltage-gated ion channels, as the name suggests, are activated by a certain thr
 
 As sodium ions enter the cell, potassium ion channels start to open and potassium ions start diffusing out of the cell. The depolarisation occurs, because more sodium ions enter the cell than potassium ions diffuse out of the cell. After depolarisation, sodium ion channels are closed while potassium ion channels remain open. This causes the repolarisation of the cell, meaning that the membrane potential of the cell returns to a negative value, which is slightly lower than the resting potential. After potassium ion channels close, active transport reestablishes the resting potential of the cell.
 
-When the action potential reaches the synapse, increased membrane potential causes the voltage-gated calcium channels to open. This increases calcium concentration in the interior of the cell which causes calcium-sensitive proteins to change shape and as a result, neurotransmitters are dumped into the synaptic cleft. figure \ref{fig:synapse}. Some of the neurotransmitter gets bound on the receptors of the signal receiving cell. The last step is the action of the receptor, which might be opening ion channels which in turn cause changes in the membrane potential and might lead to another action potential in the receiving cell.
- 
-\section{Measuring the brain's electrical activity}
+When the action potential reaches the synapse, increased membrane potential causes the voltage-gated calcium channels to open. This increases calcium concentration in the interior of the cell which causes calcium-sensitive proteins to change shape and as a result, neurotransmitters are dumped into the synaptic cleft. Some of the neurotransmitter gets bound on the receptors of the signal receiving cell. See figure \ref{fig:synapse} for graphical illustration.
 
-As discussed in section \ref{sec:neuron}, neurons in the brain are constantly sending electrochemical signals to communicate with each other. There are several techniques available to measure and record this activity. Some of the non-invasive methods are:
+The last step of the signal sending is the action of the receptor, which might be opening ion channels in the neuron that receives the signal. Opened channels cause changes in the membrane potential in the receiving cell and might lead to another action potential.
+
+\section{Measuring the brain's electrical activity}
+\subsection{Different techniques}
+
+As discussed in section \ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity and before we continue to discuss the biological background we will be giving a brief overview of the non-invasive measurement methods. Some of the non-invasive methods are:
 \begin{itemize}
-	\item Functional magnetic resonance imaging (fMRI), which works by detecting changes of oxygen consumption and blood flow that occur in response to neural activity. Magnetic resonance imaging (MRI) technology works by sending a strong magnetic field through the head and detects radiation from certain molecules. Different tissues have different concentration of these molecules and this contrast can be visualised. MRI scanner prices start from around \$150,000.\footnote{http://info.blockimaging.com/bid/92623/MRI-Machine-Cost-and-Price-Guide}
-	\item Positron emission tomography (PET), which works by measuring the emission of positrons from the brain, after injecting radioactive isotopes to the bloodstream. Very similar method to PET is single-photon emission computed tomography (SPECT), which uses isotopes with longer half-lives. PET scanner prices start from around \$125 000.\footnote{http://info.blockimaging.com/bid/68875/How-Much-Does-a-PET-CT-Scanner-Cost}
-	\item Electroencephalography (EEG), which works by measuring electrical potential along the scalp. EEG is cheap and portable, but measures only the activity in the outer layer of the brain. Similar method is magnetoencephalography (MEG), which measures the magnetic fields produced by electrical activity rather than the electrical activity itself. The prices of very simple EEG devices start around \$100\footnote{http://en.wikipedia.org/wiki/Comparison\_of\_consumer\_brain-computer\_interfaces}, but complex device can cost as much as \$77 100\footnote{http://www.brainvision.com/files/actiCHamp-PyCorder-Flyer\_US.pdf}.
-	\item Functional near-infrared spectroscopy (fNIRS), which measures blood oxygenation in the brain by shining light through the head. As light travels through the head, its intensity decreases. The amount of intensity loss depends on blood oxygenation. fNIRS prices vary around \$10 000 -- \$100 000 \cite{NIRS}.
+	\item Functional magnetic resonance imaging (fMRI), which works by detecting changes of oxygen consumption and blood flow that occur in response to neural activity. Magnetic resonance imaging (MRI) technology works by sending a strong magnetic field through the head and detects radiation from certain molecules. Different tissues have different concentration of these molecules and this contrast can be visualised.
+	\item Positron emission tomography (PET), which works by measuring the emission of positrons from the brain, after injecting radioactive isotopes to the bloodstream. Very similar method to PET is single-photon emission computed tomography (SPECT), which uses isotopes with longer half-lives.
+	\item Electroencephalography (EEG), which works by measuring electrical potential along the scalp. EEG is cheap and portable, but measures only the activity in the outer layer of the brain. Similar method is magnetoencephalography (MEG), which measures the magnetic fields produced by electrical activity rather than the electrical activity itself.
+	\item Functional near-infrared spectroscopy (fNIRS), which measures blood oxygenation in the brain by shining light through the head. As light travels through the head, its intensity decreases. The amount of intensity loss depends on blood oxygenation.
 %http://psychcentral.com/lib/types-of-brain-imaging-techniques/0001057
 %http://www.macalester.edu/academics/psychology/whathap/UBNRP/Imaging/eeg.html
 %http://scienceforthemasses.org/2014/04/11/selecting-an-eeg-device/
 \end{itemize}
+
+To decide which method is best for controlling a robot, we will compare each method's device price, portability and temporal resolution. See table \ref{tab:measuring methods} for details. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique. For real time robot controlling, lower temporal resolution is better, because it enables faster decision making. We also prefer techniques that are portable and available for the consumer, so the usage would not be limited to certain location and would be available to the people in need. Considering all these arguments, it can be seen that the best choice is an EEG device.
+\newpage
 \begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|}
-		\hline
-				& Price	from	& Portable	& Temporal resolution & Requirements\\\hline
-		fMRI	& 150 000	& No	  	& around 1 second	  & magnetically shielded room\\\hline
-		PET		& 125 000	& No		& up to minutes		  & radioactive isotopes injection\\\hline
-		fNIRS	& 10 000 	& Yes		& hundreds of milliseconds & 			\\\hline
-		MEG		&			& No		& milliseconds		  & magnetically shielded room\\\hline
-		EEG		& 100 		& Yes		& milliseconds 		  & 				\\\hline
+	\hline
+			& Price	from	& Portable	& Temporal resolution 				 	& Special requirements		\\\hline
+	MEG		& millions\tablefootnote{http://neurogadget.com/2012/12/15/inexpensive-magnetoencephalography-meg-system-could-be-available-at-every-hospital/6495}		& no		& milliseconds \cite{timeresol}		 	& magnetically shielded room\\\hline
+	fMRI	& 150 000\tablefootnote{http://info.blockimaging.com/bid/92623/MRI-Machine-Cost-and-Price-Guide}		& no	  	& about 1 second \cite{timeresol}	 	& magnetically shielded room\\\hline
+	PET		& 125 000\tablefootnote{http://info.blockimaging.com/bid/68875/How-Much-Does-a-PET-CT-Scanner-Cost}		& no		& about 1 second \cite{timeresol}	 	& radioactive isotopes injection\\\hline
+	fNIRS	& 10 000\cite{NIRS} 		& yes		& hundreds of milliseconds \cite{NIRS}	&							\\\hline
+	EEG		& 100\tablefootnote{http://en.wikipedia.org/wiki/Comparison\_of\_consumer\_brain-computer\_interfaces}\tablefootnote{http://www.brainvision.com/files/actiCHamp-PyCorder-Flyer\_US.pdf} 			& yes		& milliseconds \cite{timeresol} 		&							\\\hline
 	\end{tabular}
 	\caption{Measuring methods comparison}
 	\label{tab:measuring methods}
 \end{table}
+\subsection{EEG with Emotiv EPOC}
+asd
 
 \section{Visual evoked potentials}
  
