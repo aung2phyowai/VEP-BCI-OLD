@@ -11,7 +11,7 @@ There are connections between neurons, through which neurons can interact with e
 	\begin{minipage}{0.5\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{synapse.jpg}
-		\caption{Neurons and chemical synapse\cite[p.~17]{neuronpic}}
+		\caption{Neurons and chemical synapse \cite[p.~17]{neuronpic}}
 		\label{fig:synapse}
 	\end{minipage}
 	\begin{minipage}{0.5\textwidth}
@@ -41,31 +41,45 @@ The last step of the signal sending is the action of the receptor, which might b
 
 As discussed in section \ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity and before we continue to discuss the biological background we will be giving a brief overview of the non-invasive measurement methods. Some of the non-invasive methods are:
 \begin{itemize}
-	\item Functional magnetic resonance imaging (fMRI), which works by detecting changes of oxygen consumption and blood flow that occur in response to neural activity. Magnetic resonance imaging (MRI) technology works by sending a strong magnetic field through the head and detects radiation from certain molecules. Different tissues have different concentration of these molecules and this contrast can be visualised.
-	\item Positron emission tomography (PET), which works by measuring the emission of positrons from the brain, after injecting radioactive isotopes to the bloodstream. Very similar method to PET is single-photon emission computed tomography (SPECT), which uses isotopes with longer half-lives.
-	\item Electroencephalography (EEG), which works by measuring electrical potential along the scalp. EEG is cheap and portable, but measures only the activity in the outer layer of the brain. Similar method is magnetoencephalography (MEG), which measures the magnetic fields produced by electrical activity rather than the electrical activity itself.
+	\item Functional magnetic resonance imaging (fMRI), which works by detecting changes of oxygen consumption and blood flow that occur in response to neural activity. Magnetic resonance imaging technology works by sending a strong magnetic field through the head and detects radiation from certain molecules. Different tissues have different concentration of these molecules and this contrast can be visualised.
+	\item Positron emission tomography (PET), which works by measuring the emission of positrons from the brain, after injecting radioactive isotopes to the bloodstream. Very similar method to PET is single-photon emission computed tomography, which uses isotopes with longer half-lives.
+	\item \acrfull{EEG}, which works by measuring electrical potential along the scalp. EEG is cheap and portable, but measures only the activity in the outer layer of the brain. Similar method is magnetoencephalography (MEG), which measures the magnetic fields produced by electrical activity rather than the electrical activity itself.
 	\item Functional near-infrared spectroscopy (fNIRS), which measures blood oxygenation in the brain by shining light through the head. As light travels through the head, its intensity decreases. The amount of intensity loss depends on blood oxygenation.
 %http://psychcentral.com/lib/types-of-brain-imaging-techniques/0001057
 %http://www.macalester.edu/academics/psychology/whathap/UBNRP/Imaging/eeg.html
 %http://scienceforthemasses.org/2014/04/11/selecting-an-eeg-device/
 \end{itemize}
 
-To decide which method is best for controlling a robot, we will compare each method's device price, portability and temporal resolution. See table \ref{tab:measuring methods} for details. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique. For real time robot controlling, lower temporal resolution is better, because it enables faster decision making. We also prefer techniques that are portable and available for the consumer, so the usage would not be limited to certain location and would be available to the people in need. Considering all these arguments, it can be seen that the best choice is an EEG device.
+To decide which method is best for controlling a robot, we will compare each method's device price, portability and temporal resolution. See table \ref{tab:measuring methods} for details. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique. For real time robot controlling, lower temporal resolution is better, because it enables faster decision making. We also prefer techniques that are portable and available for the consumer, so the usage would not be limited to certain location and would be available to the people in need. Considering all these arguments, it can be seen that the best choice is an \acrshort{EEG} device.
 \newpage
+
+% Constants for table
+
+\newcommand{\pMEG}{\tablefootnote{http://neurogadget.com/2012/12/15/inexpensive-magnetoencephalography-meg-system-could-be-available-at-every-hospital/6495}}
+\newcommand{\pfMRI}{\tablefootnote{http://info.blockimaging.com/bid/92623/MRI-Machine-Cost-and-Price-Guide}}
+\newcommand{\pPET}{\tablefootnote{http://info.blockimaging.com/bid/68875/How-Much-Does-a-PET-CT-Scanner-Cost}}
+\newcommand{\plEEG}{\tablefootnote{http://en.wikipedia.org/wiki/Comparison\_of\_consumer\_brain-computer\_interfaces}}
+\newcommand{\phEEG}{\tablefootnote{http://www.brainvision.com/files/actiCHamp-PyCorder-Flyer\_US.pdf}}
+\newcommand{\pNIRS}{\cite{NIRS}}
+\newcommand{\tresol}{\cite{timeresol}}
+
+% Table
+
 \begin{table}[h]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|}
 	\hline
-			& Price	from	& Portable	& Temporal resolution 				 	& Special requirements		\\\hline
-	MEG		& millions\tablefootnote{http://neurogadget.com/2012/12/15/inexpensive-magnetoencephalography-meg-system-could-be-available-at-every-hospital/6495}		& no		& milliseconds \cite{timeresol}		 	& magnetically shielded room\\\hline
-	fMRI	& 150 000\tablefootnote{http://info.blockimaging.com/bid/92623/MRI-Machine-Cost-and-Price-Guide}		& no	  	& about 1 second \cite{timeresol}	 	& magnetically shielded room\\\hline
-	PET		& 125 000\tablefootnote{http://info.blockimaging.com/bid/68875/How-Much-Does-a-PET-CT-Scanner-Cost}		& no		& about 1 second \cite{timeresol}	 	& radioactive isotopes injection\\\hline
-	fNIRS	& 10 000\cite{NIRS} 		& yes		& hundreds of milliseconds \cite{NIRS}	&							\\\hline
-	EEG		& 100\tablefootnote{http://en.wikipedia.org/wiki/Comparison\_of\_consumer\_brain-computer\_interfaces}\tablefootnote{http://www.brainvision.com/files/actiCHamp-PyCorder-Flyer\_US.pdf} 			& yes		& milliseconds \cite{timeresol} 		&							\\\hline
+				& Price	from				& Portable	& Temporal resolution 	& Special requirements		\\\hline
+MEG				& millions\pMEG				& no	& milliseconds \tresol		& magnetically shielded room\\\hline
+fMRI			& \SI{150000}[\$]\pfMRI		& no	& about 1 second \tresol	& magnetically shielded room\\\hline
+PET				& \SI{125000}[\$]\pPET		& no	& about 1 second \tresol	& radioactive isotopes injection\\\hline
+fNIRS			& \SI{10000}[\$]{} \pNIRS 	& yes	& hundreds of milliseconds \pNIRS&						\\\hline
+\acrshort{EEG}	& \SI{100}[\$]\plEEG		& yes	& milliseconds \tresol 		&							\\\hline
 	\end{tabular}
 	\caption{Measuring methods comparison}
 	\label{tab:measuring methods}
 \end{table}
+
 \subsection{EEG with Emotiv EPOC}
 asd
 

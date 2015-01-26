@@ -1,10 +1,21 @@
-\usepackage{subfiles} 			% to compile subfiles
-\usepackage[utf8]{inputenc}		% we also have estonian words like lühikokkuvõte
-\usepackage[toc,page]{appendix} % nice appendix
-\usepackage{url} 				% to add url in bib
-\usepackage{tablefootnote}		% add footnotes to tables
-\usepackage{graphicx}			% for pictures
+\usepackage{subfiles} 					% to compile subfiles
+\usepackage[utf8]{inputenc}				% we also have estonian words like lühikokkuvõte
+\usepackage[toc,page]{appendix} 		% nice appendix
+\usepackage{url} 						% to add url in bib
+\usepackage{tablefootnote}				% add footnotes to tables
+
+\usepackage[nogroupskip]{glossaries}	% for acronyms
+\renewcommand{\glossarysection}[2][]{}	% no title for glossary
+\makeglossaries
+
+\usepackage{graphicx}					% for pictures
 \graphicspath{ {./img/} }
+
+\usepackage{siunitx}					% for currency
+\sisetup{
+  group-four-digits = true,
+  group-separator = {,}
+}
 
 % Change title style (removes chapter and appendix before titles and adds number before title)
 
