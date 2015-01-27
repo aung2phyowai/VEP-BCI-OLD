@@ -1,6 +1,9 @@
 
-\chapter{Electroencephalography}
-\section{Electrical activity in the brain}
+\chapter{Electrical activity in the brain}
+
+In this chapter we are going to discuss ...
+
+\section{Source of the electrical activity}
 \label{sec:neuron}
 
 As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells, or neurons, and non-neural cells, called glial cells. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
@@ -36,22 +39,19 @@ When the action potential reaches the synapse, increased membrane potential caus
 
 The last step of the signal sending is the action of the receptor, which might be opening ion channels in the neuron that receives the signal. Opened channels cause changes in the membrane potential in the receiving cell and might lead to another action potential.
 
-\section{Measuring the brain's electrical activity}
-\subsection{Different techniques}
+\section{Functional neuroimaging}
+\label{sec:neuroimaging}
 
-As discussed in section \ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity and before we continue to discuss the biological background we will be giving a brief overview of the non-invasive measurement methods. Some of the non-invasive methods are:
-\begin{itemize}
-	\item Functional magnetic resonance imaging (fMRI), which works by detecting changes of oxygen consumption and blood flow that occur in response to neural activity. Magnetic resonance imaging technology works by sending a strong magnetic field through the head and detects radiation from certain molecules. Different tissues have different concentration of these molecules and this contrast can be visualised.
-	\item Positron emission tomography (PET), which works by measuring the emission of positrons from the brain, after injecting radioactive isotopes to the bloodstream. Very similar method to PET is single-photon emission computed tomography, which uses isotopes with longer half-lives.
-	\item \acrfull{EEG}, which works by measuring electrical potential along the scalp. EEG is cheap and portable, but measures only the activity in the outer layer of the brain. Similar method is magnetoencephalography (MEG), which measures the magnetic fields produced by electrical activity rather than the electrical activity itself.
-	\item Functional near-infrared spectroscopy (fNIRS), which measures blood oxygenation in the brain by shining light through the head. As light travels through the head, its intensity decreases. The amount of intensity loss depends on blood oxygenation.
+As discussed in section \ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity and before we continue to discuss the biological background we will be giving a brief overview of these methods. Measuring an aspect of brain function is called functional neuroimaging and common measurement methods divide into haemodynamic and electromagnetic techniques.
+
+Haemodynamic techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. Haemodynamic techniques include functional magnetic resonance imaging (fMRI), positron emission tomography (PET), and functional near-infrared spectroscopy (fNIRS).
+
+Electromagnetic techniques measure either electrical activity or magnetic fields produced by the electrical activity along the scalp. Electromagnetic techniques include \acrfull{EEG} and magnetoencephalography (MEG). These methods have lower temporal resolution than haemodynamic methods, but measure only the activity in the outer layer of the brain. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique.
 %http://psychcentral.com/lib/types-of-brain-imaging-techniques/0001057
 %http://www.macalester.edu/academics/psychology/whathap/UBNRP/Imaging/eeg.html
 %http://scienceforthemasses.org/2014/04/11/selecting-an-eeg-device/
-\end{itemize}
 
-To decide which method is best for controlling a robot, we will compare each method's device price, portability and temporal resolution. See table \ref{tab:measuring methods} for details. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique. For real time robot controlling, lower temporal resolution is better, because it enables faster decision making. We also prefer techniques that are portable and available for the consumer, so the usage would not be limited to certain location and would be available to the people in need. Considering all these arguments, it can be seen that the best choice is an \acrshort{EEG} device.
-\newpage
+To decide which method is best for controlling a robot, we will compare cost, portability and temporal resolution of each method. See table \ref{tab:neuroimaging} for details. For real time robot controlling, lower temporal resolution is better, because it enables faster decision making. We also prefer techniques that are portable and available for the consumer, so the usage would not be limited to certain location and would be available to the people in need. Considering all these arguments, it can be seen that the best choice for controlling a robot is an \acrshort{EEG} device.
 
 % Constants for table
 
@@ -76,12 +76,16 @@ PET				& \SI{125000}[\$]\pPET		& no	& about 1 second \tresol	& radioactive isoto
 fNIRS			& \SI{10000}[\$]{} \pNIRS 	& yes	& hundreds of milliseconds \pNIRS&						\\\hline
 \acrshort{EEG}	& \SI{100}[\$]\plEEG		& yes	& milliseconds \tresol 		&							\\\hline
 	\end{tabular}
-	\caption{Measuring methods comparison}
-	\label{tab:measuring methods}
+	\caption{Comparison of functional neuroimaging methods}
+	\label{tab:neuroimaging}
 \end{table}
 
-\subsection{EEG with Emotiv EPOC}
-asd
+\section{Electroencephalography}
 
-\section{Visual evoked potentials}
+As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates from the communication between neurons, as discussed in section \ref{sec:neuron}. 
+
+\section{Visual evoked potential}
+
+\section{Emotiv EPOC}
+In section \ref{sec:neuroimaging} we briefly compared different functional neuroimaging methods and concluded that currently \acrshort{EEG} is most suitable for our needs. But there is a wide variety of EEG devices available. 
  
