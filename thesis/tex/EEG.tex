@@ -44,9 +44,9 @@ The last step of the signal sending is the action of the receptor, which might b
 
 As discussed in section \ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity and before we continue to discuss the biological background we will be giving a brief overview of these methods. Measuring an aspect of brain function is called functional neuroimaging and common measurement methods divide into haemodynamic and electromagnetic techniques.
 
-Haemodynamic techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. Haemodynamic techniques include functional magnetic resonance imaging (fMRI), positron emission tomography (PET), and functional near-infrared spectroscopy (fNIRS).
+Haemodynamic techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. Haemodynamic techniques include functional \acrfull{fMRI}, \acrfull{fNIRS}, \acrfull{PET}.
 
-Electromagnetic techniques measure either electrical activity or magnetic fields produced by the electrical activity along the scalp. Electromagnetic techniques include \acrfull{EEG} and magnetoencephalography (MEG). These methods have lower temporal resolution than haemodynamic methods, but measure only the activity in the outer layer of the brain. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique.
+Electromagnetic techniques measure either electrical activity or magnetic fields produced by the electrical activity along the scalp. Electromagnetic techniques include \acrfull{EEG} and \acrfull{MEG}. These methods have lower temporal resolution than haemodynamic methods, but measure only the activity in the outer layer of the brain. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique.
 %http://psychcentral.com/lib/types-of-brain-imaging-techniques/0001057
 %http://www.macalester.edu/academics/psychology/whathap/UBNRP/Imaging/eeg.html
 %http://scienceforthemasses.org/2014/04/11/selecting-an-eeg-device/
@@ -69,12 +69,12 @@ To decide which method is best for controlling a robot, we will compare cost, po
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|}
 	\hline
-				& Price	from				& Portable	& Temporal resolution 	& Special requirements		\\\hline
-MEG				& millions\pMEG				& no	& milliseconds \tresol		& magnetically shielded room\\\hline
-fMRI			& \SI{150000}[\$]\pfMRI		& no	& about 1 second \tresol	& magnetically shielded room\\\hline
-PET				& \SI{125000}[\$]\pPET		& no	& about 1 second \tresol	& radioactive isotopes injection\\\hline
-fNIRS			& \SI{10000}[\$]{} \pNIRS 	& yes	& hundreds of milliseconds \pNIRS&						\\\hline
-\acrshort{EEG}	& \SI{100}[\$]\plEEG		& yes	& milliseconds \tresol 		&							\\\hline
+				& Price	from				& Portable	& Temporal resolution	& Special requirements		\\\hline
+\acrshort{MEG}	& millions\pMEG				& no	& milliseconds \tresol		& magnetically shielded room\\\hline
+\acrshort{fMRI}	& \SI{150000}[\$]\pfMRI		& no	& about 1 second \tresol	& magnetically shielded room\\\hline
+\acrshort{PET}	& \SI{125000}[\$]\pPET		& no	& about 1 second \tresol	& radioactive isotopes injection\\\hline
+\acrshort{fNIRS}& \SI{10000}[\$]{} \pNIRS	& yes	& hundreds of milliseconds \pNIRS&						\\\hline
+\acrshort{EEG}	& \SI{100}[\$]\plEEG		& yes	& milliseconds \tresol		&							\\\hline
 	\end{tabular}
 	\caption{Comparison of functional neuroimaging methods}
 	\label{tab:neuroimaging}
