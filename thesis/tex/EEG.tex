@@ -6,7 +6,7 @@ In this chapter we are going to discuss ...
 \section{Source of the electrical activity}
 \label{sec:neuron}
 
-As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells, or neurons, and non-neural cells, called glial cells. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
+As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells and non-neural cells, called neurons and glial cells respectively. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
 
 There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:synapse} for an example of a neuron and a synapse.
 
@@ -25,19 +25,13 @@ There are connections between neurons, through which neurons can interact with e
 	\end{minipage}
 \end{figure}
 
-To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is defined as the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it. The positively charged ions are sodium and potassium cations.
+To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it.
 
-The concentration of potassium ions is higher in the interior of a cell, while the concentration of sodium ions is higher in the exterior. To maintain negative resting potential, the sodium-potassium pump is used. This pump transports three sodium cations out of the cell for every two potassium cations pumped in. Sodium-potassium pump is an active transport mechanism, which means that it moves ions across the cell membrane against their concentration gradient.
+By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. To increase or decrease the membrane potential of a cell, ionophoric proteins are used. These proteins transport ions across the cell membrane.
 
-By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. To increase the membrane potential, voltage-gated ion channels are used. These channels are similar to sodium-potassium pumps, but differ in the direction of ion transportation. Ion channels are passive transport mechanisms, which means they move ions across the cell membrane down their concentration gradient.
+Action potential is initiated by a certain threshold voltage, called threshold potential. When the membrane potential of a neuron exceeds threshold potential, the neuron sends signals to other cells. The neuron that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic terminal to increase or decrease. These events are called postsynaptic potentials.
 
-Voltage-gated ion channels, as the name suggests, are activated by a certain threshold voltage, called threshold potential. When the membrane potential is near resting potential the channels are shut. Synaptic inputs, however, can cause the membrane potential to increase and if the membrane potential exceeds the threshold, first voltage-gated ion channels are opened and sodium ions start entering the cell. Sodium ions further increase the membrane potential which causes next ion channels to be opened along the axon and more sodium ions can enter the cell and so on.
-
-As sodium ions enter the cell, potassium ion channels start to open and potassium ions start diffusing out of the cell. The depolarisation occurs, because more sodium ions enter the cell than potassium ions diffuse out of the cell. After depolarisation, sodium ion channels are closed while potassium ion channels remain open. This causes the repolarisation of the cell, meaning that the membrane potential of the cell returns to a negative value, which is slightly lower than the resting potential. After potassium ion channels close, active transport reestablishes the resting potential of the cell.
-
-When the action potential reaches the synapse, increased membrane potential causes the voltage-gated calcium channels to open. This increases calcium concentration in the interior of the cell which causes calcium-sensitive proteins to change shape and as a result, neurotransmitters are dumped into the synaptic cleft. Some of the neurotransmitter gets bound on the receptors of the signal receiving cell. See figure \ref{fig:synapse} for graphical illustration.
-
-The last step of the signal sending is the action of the receptor, which might be opening ion channels in the neuron that receives the signal. Opened channels cause changes in the membrane potential in the receiving cell and might lead to another action potential.
+Postsynaptic potentials cause small electric currents. When ions start entering the cell near postsynaptic terminal, the concentration of these ions increase in this location and they start to move along a dendrite towards cell body. This movement generates current dipole.
 
 \section{Functional neuroimaging}
 \label{sec:neuroimaging}
@@ -82,8 +76,9 @@ To decide which method is best for controlling a robot, we will compare cost, po
 
 \section{Electroencephalography}
 
-As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates from the communication between neurons, as discussed in section \ref{sec:neuron}. 
+As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates from the communication between neurons, as discussed in section \ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, thousands or millions of neurons have to 
 
+%Oscillatory activity can also be used to control external devices in brain?computer interfaces, in which subjects can control an external device by changing the amplitude of particular brain rhythmics. (http://en.wikipedia.org/wiki/Neural_oscillation)
 \section{Visual evoked potential}
 
 \section{Emotiv EPOC}
