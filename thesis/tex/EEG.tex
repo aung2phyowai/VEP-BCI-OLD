@@ -8,21 +8,22 @@ In this chapter we are going to discuss ...
 
 As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells and non-neural cells, called neurons and glial cells respectively. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
 
-There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:synapse} for an example of a neuron and a synapse.
+There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:neuron_synapse} for an example of a neuron and a synapse.
 
 \begin{figure}[b!]
-	\begin{minipage}{0.5\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{synapse.jpg}
-		\caption{Neurons and chemical synapse \cite[p.~17]{neuronpic}}
-		\label{fig:synapse}
-	\end{minipage}
-	\begin{minipage}{0.5\textwidth}
-		\centering
-		%\includegraphics[width=\textwidth]{ActionPotential.png}
-		\caption{Resting and action potential}
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{synapse_modified.jpg}
+		\caption{Neurons and chemical \cite[p.~17]{neuronpic}}
+		\label{fig:neuron_synapse}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{action_potential.png}
+		\caption{Action potential \cite{action_potential_pic}}
 		\label{fig:action_potential}
-	\end{minipage}
+	\end{subfigure}
+	\caption{Neuron structure}
 \end{figure}
 
 To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it.
@@ -31,7 +32,7 @@ By having stable resting potential, neuron is able to send signals by rapidly in
 
 Action potential is initiated by a certain threshold voltage, called threshold potential. When the membrane potential of a neuron exceeds threshold potential, the neuron sends signals to other cells. The neuron that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic cell to increase or decrease. This is called postsynaptic potential and it can cause an action potential in the postsynaptic cell.
 
-The following paragraph is based on article \cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Location, where ions enter the cell is called sink and where ions return to the exterior of the cell is called source. The current from a source to a sink forms a dipole. This is important, because it is possible to measure this electric field produced by these dipoles from the scalp. Although action potentials generate stronger currents, their duration is low and nearby neurons rarely fire synchronously.
+The following paragraph is based on article \cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Location, where ions enter the cell is called sink and where ions flow to the exterior of the cell is called source. The current from a source to a sink forms a dipole. This is important, because it is possible to measure the electric field produced by these dipoles from the scalp. Although action potentials generate stronger currents, their duration is low and nearby neurons rarely fire synchronously.
 
 \section{Functional neuroimaging}
 \label{sec:neuroimaging}
@@ -67,7 +68,7 @@ To decide which method is best for controlling a robot, we will compare cost, po
 \acrshort{MEG}	& millions\pMEG				& no	& milliseconds \tresol		& magnetically shielded room\\\hline
 \acrshort{fMRI}	& \SI{150000}[\$]\pfMRI		& no	& about 1 second \tresol	& magnetically shielded room\\\hline
 \acrshort{PET}	& \SI{125000}[\$]\pPET		& no	& about 1 second \tresol	& radioactive isotopes injection\\\hline
-\acrshort{fNIRS}& \SI{10000}[\$]{} \pNIRS	& yes	& hundreds of milliseconds \pNIRS&						\\\hline
+\acrshort{fNIRS}& \SI{10000}[\$]{} \pNIRS	& yes	& over 0.1 second \pNIRS	&							\\\hline
 \acrshort{EEG}	& \SI{100}[\$]\plEEG		& yes	& milliseconds \tresol		&							\\\hline
 	\end{tabular}
 	\caption{Comparison of functional neuroimaging methods}
@@ -76,11 +77,23 @@ To decide which method is best for controlling a robot, we will compare cost, po
 
 \section{Electroencephalography}
 
-As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates from the communication between neurons, as discussed in section \ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, thousands or millions of neurons have to 
+As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates from the electric fields generated by neurons, as discussed in section \ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, approximately 108 neurons have to have synchronous electrical activity to create measurable field \cite{field_count}. Furthermore, these neurons have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. See figure \ref{fig:dipole} for example.
+
+\acrshort{EEG} measures the potential fields as the function of voltage versus time, using electrodes placed on scalp \cite{field_count}. Since voltage is the electrical potential difference between two points, at least two electrodes have to be used, one of them is called reference electrode. Usually electrodes are placed on the scalp according to international 10-20 electrode location system. 10-20 electrode location system locations are identified by a letter and a number.
+
+The brain can be classified into four lobes: temporal, occipital, parietal and frontal. 10-20 electrode location system uses a letter and a number to identify electrode location. A letter coincides with the first letter of the corresponding brain lobe.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{dipole.PNG}
+	\caption{Dipole generated by a neuron \cite[p.~669]{neuroscience}}
+	\label{fig:dipole}
+\end{figure}
 
 %Oscillatory activity can also be used to control external devices in brain?computer interfaces, in which subjects can control an external device by changing the amplitude of particular brain rhythmics. (http://en.wikipedia.org/wiki/Neural_oscillation)
 \section{Visual evoked potential}
 
 \section{Emotiv EPOC}
+
 In section \ref{sec:neuroimaging} we briefly compared different functional neuroimaging methods and concluded that currently \acrshort{EEG} is most suitable for our needs. But there is a wide variety of EEG devices available. 
  
