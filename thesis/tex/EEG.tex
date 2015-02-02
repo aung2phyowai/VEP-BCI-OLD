@@ -6,45 +6,57 @@ In this chapter we are going to discuss ...
 \section{Source of the electrical activity}
 \label{sec:neuron}
 
-As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells, or neurons, and non-neural cells, called glial cells. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
+As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells and non-neural cells, called neurons and glial cells respectively. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
 
-There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:synapse} for an example of a neuron and a synapse.
+There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:neuron_synapse} for an example of a neuron and a synapse.
 
 \begin{figure}[b!]
-	\begin{minipage}{0.5\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{synapse.jpg}
-		\caption{Neurons and chemical synapse \cite[p.~17]{neuronpic}}
-		\label{fig:synapse}
-	\end{minipage}
-	\begin{minipage}{0.5\textwidth}
-		\centering
-		%\includegraphics[width=\textwidth]{ActionPotential.png}
-		\caption{Resting and action potential}
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{synapse_modified.jpg}
+		\caption{Neurons and a chemical synapse \cite[p.~17]{neuronpic}}
+		\label{fig:neuron_synapse}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{action_potential.png}
+		\caption{Action potential \cite{action_potential_pic}}
 		\label{fig:action_potential}
-	\end{minipage}
+	\end{subfigure}
+	\caption{The structure of a neuron}
 \end{figure}
 
-To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is defined as the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it. The positively charged ions are sodium and potassium cations.
+To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it.
 
-The concentration of potassium ions is higher in the interior of a cell, while the concentration of sodium ions is higher in the exterior. To maintain negative resting potential, the sodium-potassium pump is used. This pump transports three sodium cations out of the cell for every two potassium cations pumped in. Sodium-potassium pump is an active transport mechanism, which means that it moves ions across the cell membrane against their concentration gradient.
+By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. To increase or decrease the membrane potential of a cell, ionophoric proteins are used. These proteins transport ions across the cell membrane.
 
-By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. To increase the membrane potential, voltage-gated ion channels are used. These channels are similar to sodium-potassium pumps, but differ in the direction of ion transportation. Ion channels are passive transport mechanisms, which means they move ions across the cell membrane down their concentration gradient.
+Action potential is initiated by a certain threshold voltage, called threshold potential. When the membrane potential of a neuron exceeds threshold potential, the neuron sends signals to other cells. The neuron that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic cell to increase or decrease. This is called postsynaptic potential and it can cause an action potential in the postsynaptic cell.
 
-Voltage-gated ion channels, as the name suggests, are activated by a certain threshold voltage, called threshold potential. When the membrane potential is near resting potential the channels are shut. Synaptic inputs, however, can cause the membrane potential to increase and if the membrane potential exceeds the threshold, first voltage-gated ion channels are opened and sodium ions start entering the cell. Sodium ions further increase the membrane potential which causes next ion channels to be opened along the axon and more sodium ions can enter the cell and so on.
+The following paragraph is based on article \cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Location, where ions enter the cell is called sink and where ions flow to the exterior of the cell is called source. A source and a sink form a dipole. This is important, because it is possible to measure the electric field produced by these dipoles from the scalp. Although action potentials generate stronger currents, their duration is low and nearby neurons rarely fire synchronously.
 
-As sodium ions enter the cell, potassium ion channels start to open and potassium ions start diffusing out of the cell. The depolarisation occurs, because more sodium ions enter the cell than potassium ions diffuse out of the cell. After depolarisation, sodium ion channels are closed while potassium ion channels remain open. This causes the repolarisation of the cell, meaning that the membrane potential of the cell returns to a negative value, which is slightly lower than the resting potential. After potassium ion channels close, active transport reestablishes the resting potential of the cell.
-
-When the action potential reaches the synapse, increased membrane potential causes the voltage-gated calcium channels to open. This increases calcium concentration in the interior of the cell which causes calcium-sensitive proteins to change shape and as a result, neurotransmitters are dumped into the synaptic cleft. Some of the neurotransmitter gets bound on the receptors of the signal receiving cell. See figure \ref{fig:synapse} for graphical illustration.
-
-The last step of the signal sending is the action of the receptor, which might be opening ion channels in the neuron that receives the signal. Opened channels cause changes in the membrane potential in the receiving cell and might lead to another action potential.
+\begin{figure}[b!]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{dipole_neuron.png}
+		\caption{A dipole generated by a neuron \cite[p.~669]{neuroscience}}
+		\label{fig:dipole_neuron}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{dipole_electric.png}
+		\caption{The electric field of a dipole} %{http://hyperphysics.phy-astr.gsu.edu/hbase/electric/equipot.html}
+		\label{fig:dipole_electric}
+	\end{subfigure}
+	\caption{Dipoles}
+	\label{fig:dipole}
+\end{figure}
 
 \section{Functional neuroimaging}
 \label{sec:neuroimaging}
 
 As discussed in section \ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity and before we continue to discuss the biological background we will be giving a brief overview of these methods. Measuring an aspect of brain function is called functional neuroimaging and common measurement methods divide into haemodynamic and electromagnetic techniques.
 
-Haemodynamic techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. Haemodynamic techniques include functional \acrfull{fMRI}, \acrfull{fNIRS}, \acrfull{PET}.
+Haemodynamic techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. Haemodynamic techniques include \acrfull{fMRI}, \acrfull{fNIRS}, \acrfull{PET}.
 
 Electromagnetic techniques measure either electrical activity or magnetic fields produced by the electrical activity along the scalp. Electromagnetic techniques include \acrfull{EEG} and \acrfull{MEG}. These methods have lower temporal resolution than haemodynamic methods, but measure only the activity in the outer layer of the brain. Temporal resolution is the smallest time period of neural activity that is reliably separated out by measuring technique.
 %http://psychcentral.com/lib/types-of-brain-imaging-techniques/0001057
@@ -73,7 +85,7 @@ To decide which method is best for controlling a robot, we will compare cost, po
 \acrshort{MEG}	& millions\pMEG				& no	& milliseconds \tresol		& magnetically shielded room\\\hline
 \acrshort{fMRI}	& \SI{150000}[\$]\pfMRI		& no	& about 1 second \tresol	& magnetically shielded room\\\hline
 \acrshort{PET}	& \SI{125000}[\$]\pPET		& no	& about 1 second \tresol	& radioactive isotopes injection\\\hline
-\acrshort{fNIRS}& \SI{10000}[\$]{} \pNIRS	& yes	& hundreds of milliseconds \pNIRS&						\\\hline
+\acrshort{fNIRS}& \SI{10000}[\$]{} \pNIRS	& yes	& over 0.1 second \pNIRS	&							\\\hline
 \acrshort{EEG}	& \SI{100}[\$]\plEEG		& yes	& milliseconds \tresol		&							\\\hline
 	\end{tabular}
 	\caption{Comparison of functional neuroimaging methods}
@@ -81,11 +93,28 @@ To decide which method is best for controlling a robot, we will compare cost, po
 \end{table}
 
 \section{Electroencephalography}
+\label{sec:EEG}
 
-As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates from the communication between neurons, as discussed in section \ref{sec:neuron}. 
+As already mentioned in the previous section, \acrshort{EEG} measures the electrical activity along the scalp. This electrical activity originates mainly from the electric fields generated by neurons, as discussed in section \ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, approximately 108 neurons have to have synchronous electrical activity to a create measurable field \cite{field_count}. Furthermore, these neurons have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. See figure \ref{fig:dipole_electric} for example.
 
+\acrshort{EEG} measures the potential fields as the function of voltage versus time, using electrodes placed on scalp \cite{field_count}. Since voltage is the electrical potential difference between two points, one or more reference electrodes should be used. Then voltmeter can be used to measure the differences in voltage between two electrodes, one of which is a reference electrode.
+
+Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore, the electrode measures the activity of this brain lobe.
+
+In a broad sense, \acrshort{EEG} recording is linked to the state of the general activation of the brain \cite{VEP}. Therefore, due to the generality of the recording, we cannot see potentials evoked by certain event in the recording, because the general fluctuations are much larger than the evoked potential. A brain potential evoked by some event is called event-related potential (ERP). ERPs are associated with the information flow in the cortical areas and are usually obtained by an averaging technique \cite{ERP}. ERPs are time locked to a stimulus event and therefore, may be recorded by presenting a stimulus with a certain time interval to a subject and calculating the average of EEG signals recorded in the same time interval.
+%The potential fields that \acrshort{EEG} measures are also called neural oscillations. The modulation of the information flow in the brain is manifested in synchronisation and desynchronisation of neural oscillation rhythms. On the other hand, the stages of information flow evoked by some event are measured by event-related potentials (ERP).
+%Oscillatory activity can also be used to control external devices in brain?computer interfaces, in which subjects can control an external device by changing the amplitude of particular brain rhythmics. (http://en.wikipedia.org/wiki/Neural_oscillation)
 \section{Visual evoked potential}
 
+In section \ref{sec:EEG} we gave a brief overview of ERPs. Now we are going to discuss one specific ERP, called visual evoked potential (VEP). As the name suggests, VEPs are elicited by visual stimuli. The visual stimulus for eliciting a VEP can be very simple, for example a white square blinking on a black computer screen.
+
+The visual processing centre in humans is located in the back of the brain. The corresponding brain lobe is called occipital lobe. Therefore, when subject sees the stimulus, the signal travels from the eyes to the visual processing centre through the primary visual pathway. The primary visual pathway is a neural pathway, which we briefly discussed in the section \ref{sec:neuron}.
+
+Since the occipital lobe is located in the back of the brain, when recording VEPs with EEG, electrodes located in the back of the head should be used. These electrode locations are identified with the letter O, as discussed in section \ref{sec:EEG}.
+
+If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway cannot recover before next stimulus is presented, then the elicited response becomes continuous and it is called the steady-state visual evoked potential (SSVEP) \cite{VEP}. See figure X for an example of VEP and SSVEP.
+
 \section{Emotiv EPOC}
+
 In section \ref{sec:neuroimaging} we briefly compared different functional neuroimaging methods and concluded that currently \acrshort{EEG} is most suitable for our needs. But there is a wide variety of EEG devices available. 
  
