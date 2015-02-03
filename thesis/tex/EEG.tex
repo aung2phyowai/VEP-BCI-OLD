@@ -1,14 +1,12 @@
 
 \chapter{Electrical activity in the brain}
 
-In this chapter we are going to discuss ...
+In this chapter we are going to discuss how the brain activity can be measured and where the measurable activity originates from. We are also going to compare different neuroimaging techniques and choose neuroimaging device most suitable for our needs. 
 
 \section{Source of the electrical activity}
 \label{sec:neuron}
 
 As all known living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells and non-neural cells, called neurons and glial cells respectively. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells \cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings, or dendrites, and one nerve fibre, or axon. Both, dendrites and axons can branch multiple times, but axons can be much longer than dendrites. 
-
-There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:neuron_synapse} for an example of a neuron and a synapse.
 
 \begin{figure}[b!]
 	\centering
@@ -26,13 +24,15 @@ There are connections between neurons, through which neurons can interact with e
 	\caption{The structure of a neuron}
 \end{figure}
 
-To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions inside the cell than around it.
+There are connections between neurons, through which neurons can interact with each other by sending electro-chemical signals. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways \cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure \ref{fig:neuron_synapse} for an example of a neuron and a synapse.
 
-By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. To increase or decrease the membrane potential of a cell, ionophoric proteins are used. These proteins transport ions across the cell membrane.
+To send signals, neurons must be able to maintain electrical potential, called membrane potential. Membrane potential is the difference in electric potential between the interior and exterior of a cell. When neurons are not sending signals, they have slightly negative membrane potential which is called resting potential. Negative resting potential is achieved by having more positively charged ions around the cell than inside the cell.
 
-Action potential is initiated by a certain threshold voltage, called threshold potential. When the membrane potential of a neuron exceeds threshold potential, the neuron sends signals to other cells. The neuron that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic cell to increase or decrease. This is called postsynaptic potential and it can cause an action potential in the postsynaptic cell.
+By having stable resting potential, neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. See figure \ref{fig:action_potential} for illustration. To increase or decrease the membrane potential of a cell, ionophoric proteins are used. These proteins transport ions across the cell membrane to regulate the concentration of ions and membrane potential.
 
-The following paragraph is based on article \cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Location, where ions enter the cell is called sink and where ions flow to the exterior of the cell is called source. A source and a sink form a dipole. This is important, because it is possible to measure the electric field produced by these dipoles from the scalp. Although action potentials generate stronger currents, their duration is low and nearby neurons rarely fire synchronously.
+Action potential is initiated by a certain threshold voltage, called threshold potential. When the membrane potential of a neuron exceeds threshold potential, the neuron sends signals to other cells. The neuron that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic cell to increase or decrease. This change in membrane potential is called postsynaptic potential and it can cause an action potential in the postsynaptic cell.
+
+The following paragraph is mainly based on article \cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Ions enter the cell from a location called sink and flow to the exterior of the cell to a location called source. A sink and a source form a dipole. See figure \ref{fig:dipole_electric} for illustration. These dipoles are important, because it is possible to measure the electric field produced by these dipoles from the scalp. See figure \ref{fig:dipole_neuron} for illustration. Measuring these electric fields is further discussed in section \ref{sec:EEG}. Although action potentials generate stronger currents than postsynaptic potentials, their duration is low and nearby neurons rarely fire synchronously.
 
 \begin{figure}[b!]
 	\centering
@@ -93,18 +93,18 @@ To decide which method is best for controlling a robot, we will compare cost, po
 \section{Electroencephalography}
 \label{sec:EEG}
 
-As already mentioned in the previous section, \gls{EEG} measures the electrical activity along the scalp. This electrical activity originates mainly from the electric fields generated by neurons, as discussed in section \ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, approximately 108 neurons have to have synchronous electrical activity to a create measurable field \cite{field_count}. Furthermore, these neurons have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. See figure \ref{fig:dipole_electric} for example.
+As already mentioned in the previous section, \gls{EEG} measures the electrical activity along the scalp. This electrical activity originates mainly from the electric fields generated by neurons, as discussed in section \ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, approximately 108 neurons have to have synchronous electrical activity to a create measurable field \cite{field_count}. Furthermore, these neurons have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. See figure \ref{fig:dipole_neuron} for example.
 
-\gls{EEG} measures the potential fields as the function of voltage versus time, using electrodes placed on scalp \cite{field_count}. Since voltage is the electrical potential difference between two points, one or more reference electrodes should be used. Then voltmeter can be used to measure the differences in voltage between two electrodes, one of which is a reference electrode.
+\gls{EEG} measures the potential fields as the function of voltage versus time, using electrodes placed on scalp \cite{field_count}. Since voltage is the electrical potential difference between two points, one or more reference electrodes should be used. Then voltmeter can be used to measure the differences in voltage between two electrodes, one of which is the reference electrode. See figure \ref{fig:voltmeter} for a simplified scheme.
 
-Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore, the electrode measures the activity of this brain lobe.
+Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. See figure \ref{fig:brain_lobes} for example. 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore, the electrode measures the activity of this brain lobe. See figure \ref{fig:electrode_locations} for illustration.
 
 In a broad sense, \gls{EEG} recording is linked to the state of the general activation of the brain \cite{VEP}. Therefore, due to the generality of the recording, we cannot see potentials evoked by certain event in the recording, because the general fluctuations are much larger than the evoked potential. A brain potential evoked by some event is called \gls{ERP}. \glspl{ERP} are associated with the information flow in the cortical areas and are usually obtained by an averaging technique \cite{ERP}. \glspl{ERP} are time locked to a stimulus event and therefore, may be recorded by presenting a stimulus with a certain time interval to a subject and calculating the average of \gls{EEG} signals recorded in the same time interval.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.70\textwidth]{voltmeter.png}
-	\caption{Voltmeter \cite[p.~120]{ERP}}
+	\caption{Electrodes connected to voltmeter \cite[p.~120]{ERP}}
 	\label{fig:voltmeter}
 \end{figure}
 
@@ -112,13 +112,13 @@ In a broad sense, \gls{EEG} recording is linked to the state of the general acti
 
 In section \ref{sec:EEG} we gave a brief overview of \glspl{ERP}. Now we are going to discuss one specific \gls{ERP}, called \gls{VEP}. As the name suggests, \glspl{VEP} are elicited by visual stimuli. The visual stimulus for eliciting a \gls{VEP} can be very simple, for example a white square blinking on a black computer screen.
 
-The visual processing centre in humans is located in the back of the brain. The corresponding brain lobe is called occipital lobe. Therefore, when subject sees the stimulus, the signal travels from the eyes to the visual processing centre through the primary visual pathway \cite{neuroscience}. The primary visual pathway is a neural pathway. Neural pathways were also mentioned in the section \ref{sec:neuron}.
+The visual processing centre is located in the back of the brain. The corresponding brain lobe is called occipital lobe. Therefore, when subject sees the stimulus, the signal travels from the eyes to the visual processing centre through the primary visual pathway \cite{neuroscience}. See figure \ref{fig:lobes_pathway} for illustration. The primary visual pathway is a neural pathway; neural pathways were also mentioned in the section \ref{sec:neuron}.
 
 Since the occipital lobe is located in the back of the brain, when recording \glspl{VEP} with \gls{EEG}, electrodes located in the back of the head should be used. These electrode locations are identified with the letter O, as discussed in section \ref{sec:EEG}.
 
-When comparing the \glspl{VEP} elicited in the central visual field and in the peripheral vision by the same stimuli, it can be seen that the stimulation of the central visual field produces larger \glspl{VEP} \cite{VEP_size}. This property is beneficial when presenting more than one stimulus to a subject and trying to identify, which stimulus is in the central visual field of the subject, or in other words, which stimulus is the subject looking at. 
+When comparing the \glspl{VEP} elicited in the central visual field and in the peripheral vision by the same stimuli, it can be seen that the stimulation of the central visual field produces larger \glspl{VEP} \cite{VEP_size}. This allows us to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
 
-To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway cannot recover before the next stimulus is presented, then the elicited response becomes continuous and it is called the \gls{SSVEP} \cite{VEP}. See figure X for an example of \gls{VEP} and \gls{SSVEP}. \gls{SSVEP} is sinusoidal and therefore, it is easier to detect it in the \gls{EEG} recording.
+To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway cannot recover before the next stimulus is presented, then the elicited response becomes continuous and it is called the \gls{SSVEP} \cite{VEP}. See figure X for an example of \gls{VEP} and \gls{SSVEP}. \glspl{SSVEP} are sinusoidal and therefore it is easier to detect it than \glspl{VEP}, which have more complex shape and are not continuous.
 
 \begin{figure}[h]
 	\centering
@@ -141,11 +141,11 @@ To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visu
 
 In section \ref{sec:neuroimaging} we briefly compared different functional neuroimaging methods and concluded that currently \gls{EEG} is most suitable for our needs. But there is a wide variety of EEG devices available. See table \ref{tab:EEG} for details. As discussed in section \ref{sec:neuroimaging}, we prefer device that is available to the consumer.
 
-OpenBCI is an open source brain-computer interface that provides access to all the data and algorithms, which makes it good for research, but it is not easy to use for non-specialist. From the more consumer friendly devices, Emotiv EPOC seems to offer good price-quality relationship.
+OpenBCI is an open source brain-computer interface that provides access to all the data and algorithms, which makes it good for specialists, but it is not easy to use for a non-specialist. From the more consumer-friendly devices, Emotiv EPOC seems to offer good price-quality relationship.
 
-Emotiv EPOC has 16 electrodes, two of which are reference electrodes. Reference electrodes have two different possible locations, P3 and P4 or behind the ears. Other electrodes have fixed locations AF3, AF4, F3, F4, F7, F8, FC5, FC6, P7, P8, T7, T8, O1, O2. See figure \ref{fig:electrode_locations} for illustration. Emotiv EPOC has internal sampling rate of \SI{2048}{Hz} and \gls{ADC} resolution of 16 bit. 
+Emotiv EPOC has 16 electrodes, two of which are reference electrodes. Reference electrodes have two different possible locations, P3 and P4 or locations behind the ears. Other electrodes have fixed locations AF3, AF4, F3, F4, F7, F8, FC5, FC6, P7, P8, T7, T8, O1, O2. See figure \ref{fig:electrode_locations} for illustration. Emotiv EPOC has internal sampling rate of \SI{128}{Hz}, internal sampling rate of \SI{2048}{Hz} and \gls{ADC} resolution of 16 bit. 
 
-\gls{ADC} converts continuous voltage to the sequence of discrete values or in other words, an analog signal to a digital signal that can be processed by computer.
+\gls{ADC} device converts continuous voltage to the sequence of discrete values or in other words, an analog signal to a digital signal that can be processed by a computer. \gls{ADC} resolution indicates the number of discrete values it can produce. Sampling rate is the rate at which digital values are sampled.
 
 \newcommand{\patiCHamp}{\tablefootnote{http://www.brainvision.com/files/actiCHamp-PyCorder-Flyer\_US.pdf}}
 \newcommand{\pmitsar}{\tablefootnote{http://www.novatecheeg.com/products--software.html}}
@@ -170,12 +170,8 @@ Emotiv EPOC has 16 electrodes, two of which are reference electrodes. Reference 
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
-		\includegraphics[width=\textwidth]{electrode_locations.png}
-		\caption{Electrode locations used by Emotiv EPOC\protect\footnotemark}
-		\label{fig:electrode_locations}
-	\end{subfigure}
-	\caption{Caption}
-	\label{fig:label}
+	\includegraphics[width=0.7\textwidth]{electrode_locations.png}
+	\caption{Electrode locations used by Emotiv EPOC\protect\footnotemark}
+	\label{fig:electrode_locations}
 \end{figure}
 \footnotetext{http://emotiv.wikia.com/wiki/Emotiv\_EPOC}
