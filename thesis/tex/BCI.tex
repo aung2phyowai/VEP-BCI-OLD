@@ -1,9 +1,42 @@
 
-\chapter{VEP based Brain-Computer Interface}
+\chapter{VEP-based Brain-Computer Interface}
+
+In this chapter we will discuss which kind of visual stimulus can be used to elicit \glspl{SSVEP} and how to detect \glspl{SSVEP} in a \gls{EEG} recording. This allows us to extract information from EEG recording and use this information to control a robot. In other words, we will discuss how to implement a \gls{VEP}-based \gls{BCI}.
+
 \section{Visual stimulus}
-asd
+
+As discussed in section \ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. We will discuss only the stimulus that can be presented by computer monitor. Therefore, we will be limited to certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and distance between them. Monitor refresh rate, on the other hand, affects the blinking speed of the stimulus that can be used.
+
+Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{VEP}-based \glspl{BCI}. Sometimes the squares have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets. We say that a target is in on state when it is displayed and it is in off state when it is not displayed. The on and off states or simply states of a target can be represented with ones and zeroes respectively. We represent the changes in the state of a target with a sequence of ones and zeroes and we call it a blinking sequence.
+
+Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames a second. Therefore, one number in the blinking sequence of a target represents the state of the target in one frame.
+
+The fastest possible target frequency can be achieved by changing between on and off states of the target every time the screen gets updated or every frame. If the state is changed at lower rate, the target frequency will also be lower. The target frequency can be calculated with 
+
+\begin{equation}
+	f_{target} = f_{monitor}/(N_{on}+N_{off})
+\end{equation}
+
+where $f_{target}$ is target frequency, $f_{monitor}$ is monitor refresh rate, $N_{on}$ is the number of frames the target is in on state successively and $N_{off}$ is the number of frames the target is in off state successively.
+
+If $T_{on}=1$, $T_{off}=1$, then the sequence is: $0101010101\dots$.
+
+If $T_{on}=2$, $T_{off}=1$, then the sequence is: $011011011011\dots$.
+
+However, in more general case $T_{on}$ and $T_{off}$ do not have to be natural numbers since it is possible to design a stimulus that changes its $T_{on}$ or $T_{off}$ between different values. For example, if $T_{on}$ changes between 1 and 2 and $T_{off}=1$, then the sequence is $0101101011...$.
+
+\begin{table}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		$T_{on}$	& $T_{off}$	& Sequence				& $M_{freq}$	& $T_{freq}$	\\\hline
+		1			& 1			& $\underbrace{01}0101010101010$\dots	& 60			& 30			\\\hline
+		2			& 1			& $\underbrace{011}011011011011\dots	& 60			& 20			\\\hline
+					& 1			& 010110101101011\dots 	& 60			& 24			\\\hline
+	\end{tabular}
+\end{table}
+
 \section{Steady-state VEP BCI}
-\label{SSVEP_detection}
+\label{sec:SSVEP_detection}
 \subsection{Power spectral density analysis}
 Power Spectral density (PSD) analysis is widely used in SSVEP BCIs\cite{bin2009cca}.
 \subsection{Canonical correlation analysis}
