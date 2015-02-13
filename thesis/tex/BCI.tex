@@ -5,18 +5,56 @@ In this chapter we will discuss which kind of visual stimulus can be used to eli
 
 \section{Visual stimulus}
 
-As discussed in section \ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. We will discuss only the stimulus that can be presented by computer monitor. Therefore, we will be limited to certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking speed of the stimulus that can be used.
+As discussed in section \ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. We will discuss only the stimulus that can be presented by a computer monitor. Therefore, we will be limited to certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking speed of the stimulus that can be used.
 
-Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{VEP}-based \glspl{BCI}. Sometimes the squares have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets. We say that a target is in on state when it is displayed and it is in off state when it is not displayed. The on and off states or simply states of a target can be represented with ones and zeroes respectively. Therefore, we can represent the state changes of a target with a function of state versus time.
+Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
-Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames a second. 
+Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{VEP}-based \glspl{BCI}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets. We say that a target is in on state when it is displayed and it is in off state when it is not displayed. The on and off states or simply states of a target can be represented with ones and zeroes respectively. Therefore, we can represent the state changes of a target with a function of state versus time:
+\begin{equation}
+	\label{eq:state_vs_time}
+	y(t)=
+	\begin{cases}
+		1,	&\mbox{if the target is displayed on the screen at time t}\\
+		0,	&\mbox{if the target is not displayed on the screen at time t}
+	\end{cases}
+\end{equation}
+The function \ref{eq:state_vs_time} has to be periodic for the target frequency to be constant. The state switches should be distributed as evenly as possible over the period of the function.
 
-The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the target frequency will also be lower.
+The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the target frequency will also be lower. Perhaps it is most reasonable to calculate the target frequency with:
+\begin{equation}
+	f = \frac{n}{2T}
+\end{equation}
+where T is the period of function \ref{eq:state_vs_time}, n is the number of times the target state is switched in a time period of T and f is the target frequency.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{square_wave.png}
+		\caption{Square waves}
+		\label{fig:rain_lobes}
+	\end{subfigure}\vspace{30pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{rect_wave.png}
+		\caption{Square waves adjusted to refresh rate}
+		\label{fig:isual_pathway}
+	\end{subfigure}
+	\caption{The blinking of targets represented by a function of state versus time}
+	\label{fig:obes_pathway}
+\end{figure}
+
+\section{Fourier analysis}
 
 
-\section{Steady-state VEP BCI}
+
+\section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
+
 \subsection{Power spectral density analysis}
-Power Spectral density (PSD) analysis is widely used in SSVEP BCIs\cite{bin2009cca}.
+
+Power Spectral density (PSD) analysis is widely used in \gls{SSVEP}-based \glspl{BCI} \cite{bin2009cca}.
+
 \subsection{Canonical correlation analysis}
-Canonical correlation analysis was first introduced by Harold Hotelling in 19xx .
+
+\Gls{CCA} was first introduced by Harold Hotelling in 1936 \cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data \cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 \cite{cca_eeg_lin}. 
+
+\Gls{CCA} is statistical method that can be used when analysing two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable $X=x_{O1}+x_{O2}$. The second set of data is ...
