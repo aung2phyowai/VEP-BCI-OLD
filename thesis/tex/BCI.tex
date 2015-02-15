@@ -9,7 +9,9 @@ As discussed in section \ref{sec:VEP}, it is possible to present multiple visual
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
-Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{VEP}-based \glspl{BCI}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets. We say that a target is in on state when it is displayed and it is in off state when it is not displayed. The on and off states or simply states of a target can be represented with ones and zeroes respectively. Therefore, we can represent the state changes of a target with a function of state versus time:
+Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{VEP}-based \glspl{BCI}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
+
+In every frame each target can be in one of two states - displayed or not displayed. The state of a target can be changed only when the frame changes. Switches between the states of a target can be represented with a function of state versus time:
 \begin{equation}
 	\label{eq:state_vs_time}
 	y(t)=
@@ -18,33 +20,69 @@ Typically, blinking one-coloured squares on one-coloured background are used as 
 		0,	&\mbox{if the target is not displayed on the screen at time t}
 	\end{cases}
 \end{equation}
-The function \ref{eq:state_vs_time} has to be periodic for the target frequency to be constant. The state switches should be distributed as evenly as possible over the period of the function.
+See figure \ref{fig:square_waves} for example. The function $y(t)$ has to be periodic and the state switches should be distributed as evenly as possible over the period of the function for the target frequency to be constant.
 
 The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the target frequency will also be lower. Perhaps it is most reasonable to calculate the target frequency with:
 \begin{equation}
 	f = \frac{n}{2T}
 \end{equation}
-where T is the period of function \ref{eq:state_vs_time}, n is the number of times the target state is switched in a time period of T and f is the target frequency.
+where T is the period of the function $y(t)$, n is the number of times the target state is switched in a time period of T and f is the target frequency.
+
+In the following discussion it is assumed that the refresh rate is 60 Hz. The blinking of a target with a frequency of 10 Hz can easily be divided among frame changes. The blinking of a target with a frequency of 12 Hz, however, has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal. With 11 Hz target frequency the blinking has to be even more irregular \cite{11hz}. Although the 11 Hz target frequency produces irregular blinking, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording \cite{emotiv_11hz}.
+%In general, if the refresh rate divided by target frequency is:
+%\begin{itemize}
+%	\item even number, then $y(t)$ is a square wave.
+%	\item odd number, then $y(t)$ is a rectangular wave.
+%	\item not a natural number, then $y(t)$ is neither square nor rectangular wave.
+%\end{itemize}
+
+%In conclusion the blinking of a target can be represented with a function of state versus time. This function can be one of three different waveforms. 
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}\hline
+		Target frequency divided by refresh rate is \\\hline
+		Even \\\hline
+		Odd \\\hline
+	\end{tabular}
+	\caption{Comparison of EEG devices}
+	\label{tab:square_waves}
+\end{table}
 
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{square_wave.png}
-		\caption{Square waves}
-		\label{fig:rain_lobes}
-	\end{subfigure}\vspace{30pt}
+		\includegraphics[width=\textwidth]{square_wave_10.png}
+		\caption{Square wave with fundamental frequency of 10 Hz}
+		\label{fig:square_10}
+	\end{subfigure}\vspace{10pt}
 	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{rect_wave.png}
-		\caption{Square waves adjusted to refresh rate}
-		\label{fig:isual_pathway}
+		\includegraphics[width=\textwidth]{square_wave_11.png}
+		\caption{Square wave with fundamental frequency of 11 Hz}
+		\label{fig:square_11}
+	\end{subfigure}\vspace{10pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{rect_wave_11.png}
+		\caption{11 Hz square wave adjusted to refresh rate}
+		\label{fig:rect_11}
+	\end{subfigure}\vspace{10pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{square_wave_12.png}
+		\caption{Square wave with fundamental frequency of 12 Hz}
+		\label{fig:square_12}
+	\end{subfigure}\vspace{10pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{rect_wave_12.png}
+		\caption{12 Hz square wave adjusted to refresh rate}
+		\label{fig:rect_12}
 	\end{subfigure}
-	\caption{The blinking of targets represented by a function of state versus time}
-	\label{fig:obes_pathway}
+	\caption{The blinking of targets represented by a function of state versus time. Vertical grid lines represent the frame changes with 60 Hz refresh rate.}
+	\label{fig:square_waves}
 \end{figure}
 
 \section{Fourier analysis}
 
-
+As discussed in the previous section, the blinking of a target can produce three different waveforms. Now we will discuss how these waveforms can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
 
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
