@@ -36,18 +36,7 @@ In the following discussion it is assumed that the refresh rate is 60 Hz. The bl
 %	\item not a natural number, then $y(t)$ is neither square nor rectangular wave.
 %\end{itemize}
 
-%In conclusion the blinking of a target can be represented with a function of state versus time. This function can be one of three different waveforms. 
-
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}\hline
-		Target frequency divided by refresh rate is \\\hline
-		Even \\\hline
-		Odd \\\hline
-	\end{tabular}
-	\caption{Comparison of EEG devices}
-	\label{tab:square_waves}
-\end{table}
+%In conclusion the blinking of a target can be represented with a function of state versus time. This function can be one of three different waveforms.
 
 \begin{figure}[h!]
 	\centering
@@ -84,8 +73,23 @@ In the following discussion it is assumed that the refresh rate is 60 Hz. The bl
 
 As discussed in the previous section, the blinking of a target can produce three different waveforms. Now we will discuss how these waveforms can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
 
+The decomposition process itself is called Fourier transform and it is used to decompose a function of time into the frequencies that make it up. The Fourier transform is a function of frequency and its values are complex numbers. The amount of frequency x present in a function of time can be calculated by taking the absolute value of the Fourier transform's value at frequency x. The absolute value of a complex number $z=a+ib$ is defined as:
+\begin{equation}
+	|z|=\sqrt{a^2+b^2}
+\end{equation}
+Since we are working with discrete signal as discussed in section \ref{sec:EEG_comparison}, we will use the discrete Fourier transform. The algorithm used to compute the discrete Fourier transform is called \gls{FFT}.
+
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
+The aim of this chapter is to give overview of two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. Current methods include:
+\begin{enumerate}
+	\item \gls{PSDA} method introduced by Cheng et al \cite{psda}.
+	\item \gls{SC} method introduced by Wu et al \cite{sc}.
+	\item \gls{MEC} method introduced by Friman et al \cite{mec}. This method shows better performance than \gls{SC} and \gls{PSDA} method \cite{mec_comparison}.
+	\item \gls{CCA} method introduced by Lin et al \cite{cca_lin}. This method shows better performance than \gls{PSDA} \cite{bin2009cca}.
+	\item \gls{LASSO} method introduced by Zhang et al \cite{LASSO}. This method shows better performance than \gls{CCA} method \cite{LASSO}.
+	\item \gls{LRT} method introduced by Zhang et al \cite{LRT}. This method shows better performance than \gls{CCA} method and similar performance to \gls{LASSO} method \cite{LRT}.
+\end{enumerate}
 
 \subsection{Power spectral density analysis}
 
@@ -93,6 +97,6 @@ Power Spectral density (PSD) analysis is widely used in \gls{SSVEP}-based \glspl
 
 \subsection{Canonical correlation analysis}
 
-\Gls{CCA} was first introduced by Harold Hotelling in 1936 \cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data \cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 \cite{cca_eeg_lin}. 
+\Gls{CCA} was first introduced by Harold Hotelling in 1936 \cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data \cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 \cite{cca_lin}. 
 
 \Gls{CCA} is statistical method that can be used when analysing two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable $X=x_{O1}+x_{O2}$. The second set of data is ...
