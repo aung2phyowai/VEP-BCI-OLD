@@ -1,15 +1,27 @@
 
 \chapter{VEP-based Brain-Computer Interface}
 
-In this chapter we will discuss which kind of visual stimulus can be used to elicit \glspl{SSVEP} and how to detect \glspl{SSVEP} in a \gls{EEG} recording. This allows us to extract information from EEG recording and use this information to control a robot. In other words, we will discuss how to implement a \gls{VEP}-based \gls{BCI}.
+In this chapter we will discuss which kind of visual stimulus can be used to elicit \glspl{SSVEP} and how to detect \glspl{SSVEP} in a \gls{EEG} recording. This allows us to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, we will discuss how to implement a \gls{VEP}-based \gls{BCI}.
+
+A review by Bashashati \emph{et al.} gives a good overview of \glspl{BCI} based on \gls{EEG} recordings \cite{bci_comparison}. Their paper includes overview of the following neuromechanisms used in \glspl{BCI}:
+\begin{enumerate}
+	\item \gls{VEP} or \gls{SSVEP}
+	\item P300
+	\item Slow cortical potential
+	\item Response to mental task
+	\item Sensorimotor activity, for example event-related synchronisation and desynchronisation
+	\item Multiple neuromechanisms or hybrid BCI \cite{hybrid_bci, hybrid_bci2}. Hybrid BCI uses two different neuromechanisms in a BCI. Therefore, two different \gls{EEG} analysing methods are required.
+\end{enumerate}
 
 \section{Visual stimulus}
 
-As discussed in section \ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. We will discuss only the stimulus that can be presented by a computer monitor. Therefore, we will be limited to certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking speed of the stimulus that can be used.
+As discussed in section \ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. In this thesis only the stimulus that can be presented by a computer monitor is discussed. Research has shown that LCD screens produce more accurate stimuli than light-emitting diodes \cite{lcd_lcd_led}. 
+
+A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking speed of the stimulus that can be used. Research has shown that LCD screens produce more accurate stimuli when using the monitor refresh rate for synchronisation rather than a timer \cite{lcd_lcd_led}.
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
-Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{VEP}-based \glspl{BCI}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
+Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI} \cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
 
 In every frame each target can be in one of two states - displayed or not displayed. The state of a target can be changed only when the frame changes. Switches between the states of a target can be represented with a function of state versus time:
 \begin{equation}
@@ -83,12 +95,14 @@ Since we are working with discrete signal as discussed in section \ref{sec:EEG_c
 \label{sec:SSVEP_detection}
 The aim of this chapter is to give overview of two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. Current methods include:
 \begin{enumerate}
-	\item \gls{PSDA} method introduced by Cheng et al \cite{psda}.
-	\item \gls{SC} method introduced by Wu et al \cite{sc}.
-	\item \gls{MEC} method introduced by Friman et al \cite{mec}. This method shows better performance than \gls{SC} and \gls{PSDA} method \cite{mec_comparison}.
-	\item \gls{CCA} method introduced by Lin et al \cite{cca_lin}. This method shows better performance than \gls{PSDA} \cite{bin2009cca}.
-	\item \gls{LASSO} method introduced by Zhang et al \cite{LASSO}. This method shows better performance than \gls{CCA} method \cite{LASSO}.
-	\item \gls{LRT} method introduced by Zhang et al \cite{LRT}. This method shows better performance than \gls{CCA} method and similar performance to \gls{LASSO} method \cite{LRT}.
+	\item \gls{PSDA} method introduced by Cheng \emph{et al.} \cite{psda}.
+	\item \gls{SC} method introduced by Wu and Yao \cite{sc}.
+	\item \gls{MEC} method introduced by Friman \emph{et al.} \cite{mec}. This method shows better performance than \gls{SC} and \gls{PSDA} method \cite{mec_comparison}.
+	\item \gls{CCA} method introduced by Lin \emph{et al.} \cite{cca_lin}. This method shows better performance than \gls{PSDA} method \cite{bin2009cca}.
+	\item \gls{LASSO} method introduced by Zhang \emph{et al.} \cite{LASSO}. This method shows better performance than \gls{CCA} method \cite{LASSO}.
+	\item \gls{LRT} method introduced by Zhang \emph{et al.} \cite{LRT}. This method shows better performance than \gls{CCA} method and similar performance to \gls{LASSO} method \cite{LRT}.
+	\item \gls{MPCC} method introduced by Tong \emph{et al.} \cite{MPCC}.
+	\item dual-frequency \gls{SSVEP} methods \cite{dual1, dual2}.
 \end{enumerate}
 
 \subsection{Power spectral density analysis}
