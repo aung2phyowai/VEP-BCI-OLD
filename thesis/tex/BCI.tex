@@ -1,29 +1,30 @@
 
 \chapter{VEP-based Brain-Computer Interface}
 
-In this chapter we will discuss which kind of visual stimulus can be used to elicit \glspl{SSVEP} and how to detect \glspl{SSVEP} in a \gls{EEG} recording. This allows us to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, we will discuss how to implement a \gls{VEP}-based \gls{BCI}.
+The previous chapter discussed the biology of the human brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit \gls{SSVEP} and how to detect \gls{SSVEP} in a \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
 
-A review by Bashashati \emph{et al.} gives a good overview of \glspl{BCI} based on \gls{EEG} recordings~\cite{bci_comparison}. Their paper includes overview of the following neuromechanisms used in \glspl{BCI}:
-\begin{enumerate}
-	\item \gls{VEP} or \gls{SSVEP}
-	\item P300
-	\item Slow cortical potential
-	\item Response to mental task
-	\item Sensorimotor activity, for example event-related synchronisation and desynchronisation
-	\item Multiple neuromechanisms or hybrid BCI~\cite{hybrid_bci, hybrid_bci2}. Hybrid BCI uses two different neuromechanisms in a BCI. Therefore, two different \gls{EEG} analysing methods are required.
-\end{enumerate}
+A review by Bashashati \emph{et al.} gives a good overview of \glspl{BCI} based on \gls{EEG} recordings~\cite{bci_comparison}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}:
+\begin{itemize}
+	\item \gls{VEP} or \gls{SSVEP},
+	\item P300,
+	\item slow cortical potential,
+	\item response to mental task,
+	\item sensorimotor activity, for example event-related synchronisation and desynchronisation and
+	\item multiple neuromechanisms or hybrid \gls{BCI}~\cite{hybrid_bci, hybrid_bci2}.
+\end{itemize}
+Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different \gls{EEG} analysing methods are required~\cite{hybrid_bci, hybrid_bci2}.
 
 \section{Visual stimulus}
 
-As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. In this thesis only the stimulus that can be presented by a computer monitor is discussed. Research has shown that LCD screens produce more accurate stimuli than light-emitting diodes~\cite{lcd_lcd_led}. 
+As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. In this thesis only the stimulus that can be presented by a computer monitor is discussed, because research has shown that LCD screens produce more accurate stimuli than light-emitting diodes~\cite{lcd_lcd_led}. 
 
-A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking speed of the stimulus that can be used. Research has shown that LCD screens produce more accurate stimuli when using the monitor refresh rate for synchronisation rather than a timer~\cite{lcd_lcd_led}.
+A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more accurate stimuli when using the monitor refresh rate for synchronisation rather than a timer~\cite{lcd_lcd_led}.
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
 The blinking of a target is called flickering. Often, flickering one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
 
-In every frame each target can be in one of two states - displayed or not displayed. The state of a target can be changed only when the frame changes. Switches between the states of a target can be represented with a function of state versus time:
+In every frame each target can be in one of two states - displayed or not displayed. The state of a target can be changed only when the frame changes. The states of a target over time can be represented with a function of state versus time:
 \begin{equation}
 	\label{eq:state_vs_time}
 	y(t)=
@@ -40,15 +41,14 @@ The fastest possible target frequency can be achieved by changing between on and
 \end{equation}
 where T is the period of the function~$y(t)$, n is the number of times the target state is switched in a time period of T and f is the target frequency.
 
-In the following discussion it is assumed that the refresh rate is 60 Hz. The flickering of a target with a frequency of 10 Hz can easily be divided among frame changes. The flickering of a target with a frequency of 12 Hz, however, has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal. With 11 Hz target frequency the flickering has to be even more irregular~\cite{11hz}. Although the 11 Hz target frequency produces irregular flickering, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
-%In general, if the refresh rate divided by target frequency is:
-%\begin{itemize}
-%	\item even number, then $y(t)$ is a square wave.
-%	\item odd number, then $y(t)$ is a rectangular wave.
-%	\item not a natural number, then $y(t)$ is neither square nor rectangular wave.
-%\end{itemize}
+The flickering of a target can be divided in three categories. If the refresh rate divided by target frequency is 
+\begin{enumerate}
+	\item[a.] even, then it is easy to divide flickering among frame changes;
+	\item[b.] odd, then the flickering has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal; or
+	\item[c.] not a natural number, then the flickering has to be even more irregular than in case~b.
+\end{enumerate}
 
-%In conclusion the flickering of a target can be represented with a function of state versus time. This function can be one of three different waveforms.
+If the monitor refresh rate is 60 Hz, then the flickering of 10 Hz corresponds to case~a, 12 Hz corresponds to case~b and 11 Hz corresponds to case~c. Although the 11 Hz flickering produces irregular flickering \cite{11hz}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 
 \begin{figure}[h!]
 	\centering
@@ -94,16 +94,16 @@ Since we are working with discrete signal as discussed in section~\ref{sec:EEG_c
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
 The aim of this chapter is to give overview of two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. Current methods include:
-\begin{enumerate}
-	\item \gls{PSDA} method introduced by Cheng \emph{et al.}~\cite{psda}.
-	\item \gls{SC} method introduced by Wu and Yao~\cite{sc}.
-	\item \gls{MEC} method introduced by Friman \emph{et al.}~\cite{mec}. This method shows better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
-	\item \gls{CCA} method introduced by Lin \emph{et al.}~\cite{cca_lin}. This method shows better performance than \gls{PSDA} method~\cite{bin2009cca}.
-	\item \gls{LASSO} method introduced by Zhang \emph{et al.}~\cite{LASSO}. This method shows better performance than \gls{CCA} method~\cite{LASSO}.
-	\item \gls{LRT} method introduced by Zhang \emph{et al.}~\cite{LRT}. This method shows better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
-	\item \gls{MPCC} method introduced by Tong \emph{et al.}~\cite{MPCC}.
-	\item dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
-\end{enumerate}
+\begin{itemize}
+	\item \Gls{PSDA} method introduced by Cheng \emph{et al.}~\cite{psda}.
+	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
+	\item \Gls{MEC} method introduced by Friman \emph{et al.}~\cite{mec}. This method shows better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
+	\item \Gls{CCA} method introduced by Lin \emph{et al.}~\cite{cca_lin}. This method shows better performance than \gls{PSDA} method~\cite{bin2009cca}.
+	\item \Gls{LASSO} method introduced by Zhang \emph{et al.}~\cite{LASSO}. This method shows better performance than \gls{CCA} method~\cite{LASSO}.
+	\item \Gls{LRT} method introduced by Zhang \emph{et al.}~\cite{LRT}. This method shows better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
+	\item \Gls{MPCC} method introduced by Tong \emph{et al.}~\cite{MPCC}.
+	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
+\end{itemize}
 
 \subsection{Power spectral density analysis}
 
