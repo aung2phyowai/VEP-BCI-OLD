@@ -21,7 +21,7 @@ A computer monitor has certain size, resolution and refresh rate. Monitor resolu
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
-Typically, blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
+The blinking of a target is called flickering. Often, flickering one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
 
 In every frame each target can be in one of two states - displayed or not displayed. The state of a target can be changed only when the frame changes. Switches between the states of a target can be represented with a function of state versus time:
 \begin{equation}
@@ -40,7 +40,7 @@ The fastest possible target frequency can be achieved by changing between on and
 \end{equation}
 where T is the period of the function~$y(t)$, n is the number of times the target state is switched in a time period of T and f is the target frequency.
 
-In the following discussion it is assumed that the refresh rate is 60 Hz. The blinking of a target with a frequency of 10 Hz can easily be divided among frame changes. The blinking of a target with a frequency of 12 Hz, however, has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal. With 11 Hz target frequency the blinking has to be even more irregular~\cite{11hz}. Although the 11 Hz target frequency produces irregular blinking, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
+In the following discussion it is assumed that the refresh rate is 60 Hz. The flickering of a target with a frequency of 10 Hz can easily be divided among frame changes. The flickering of a target with a frequency of 12 Hz, however, has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal. With 11 Hz target frequency the flickering has to be even more irregular~\cite{11hz}. Although the 11 Hz target frequency produces irregular flickering, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 %In general, if the refresh rate divided by target frequency is:
 %\begin{itemize}
 %	\item even number, then $y(t)$ is a square wave.
@@ -48,7 +48,7 @@ In the following discussion it is assumed that the refresh rate is 60 Hz. The bl
 %	\item not a natural number, then $y(t)$ is neither square nor rectangular wave.
 %\end{itemize}
 
-%In conclusion the blinking of a target can be represented with a function of state versus time. This function can be one of three different waveforms.
+%In conclusion the flickering of a target can be represented with a function of state versus time. This function can be one of three different waveforms.
 
 \begin{figure}[h!]
 	\centering
@@ -77,13 +77,13 @@ In the following discussion it is assumed that the refresh rate is 60 Hz. The bl
 		\caption{12 Hz square wave adjusted to refresh rate}
 		\label{fig:rect_12}
 	\end{subfigure}
-	\caption{The blinking of targets represented by a function of state versus time. Vertical grid lines represent the frame changes with 60 Hz refresh rate.}
+	\caption{The flickering of targets represented by a function of state versus time. Vertical grid lines represent the frame changes with 60 Hz refresh rate.}
 	\label{fig:square_waves}
 \end{figure}
 
 \section{Fourier analysis}
 
-As discussed in the previous section, the blinking of a target can produce three different waveforms. Now we will discuss how these waveforms can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
+As discussed in the previous section, the flickering of a target can produce three different waveforms. Now we will discuss how these waveforms can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
 
 The decomposition process itself is called Fourier transform and it is used to decompose a function of time into the frequencies that make it up. The Fourier transform is a function of frequency and its values are complex numbers. The amount of frequency x present in a function of time can be calculated by taking the absolute value of the Fourier transform's value at frequency x. The absolute value of a complex number $z=a+ib$ is defined as:
 \begin{equation}
