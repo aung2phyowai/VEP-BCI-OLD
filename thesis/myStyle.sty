@@ -7,8 +7,10 @@
 %\usepackage{mathtools}					% for curly braces under equation. Also includes amsmath.
 %\include{enumitem}						% for alphabetical enumerate or inline list.
 
-\usepackage[nogroupskip]{glossaries}	% for acronyms
-\renewcommand{\glossarysection}[2][]{}	% no title for glossary
+\usepackage[nogroupskip, acronym]{glossaries}	% for acronyms
+\renewcommand{\glossarysection}[2][]{}			% no title for glossary
+\newcommand*{\glossfirstformat}[1]{\textit{#1}}	% use italics for first occurence
+\renewcommand{\glsdisplayfirst}[4]{\glossfirstformat{#1#4}}
 \makeglossaries
 
 \usepackage{graphicx}					% for pictures
@@ -43,7 +45,7 @@
 % more http://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
 
 \renewcommand{\bibname}{References}
-\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\contentsname}{Table of contents}
 
 % Exact page size from template
 

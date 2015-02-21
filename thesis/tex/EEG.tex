@@ -1,12 +1,12 @@
 
 \chapter{Electrical activity in the brain}
 
-In this chapter we will discuss how brain activity can be measured and where the measurable activity originates from. We will also compare different neuroimaging techniques and choose the neuroimaging device most suitable for our needs. 
+The aim of this chapter is to describe the biology of the brain, discuss how brain activity can be measured and where the measurable activity originates from. The chapter will also compare different techniques and devices used to measure brain activity and finally suitable device for controlling a robot is chosen.
 
 \section{Source of the electrical activity}
 \label{sec:neuron}
 
-As all living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells called neurons and non-neural cells. There are approximately 86 billion neurons in the human brain and roughly as much non-neural cells~\cite{neuroncount}. A typical neuron has a cell body, multiple nerve endings or dendrites, and one nerve fibre or axon. Both dendrites and axons can branch multiple times. 
+As all living organisms are composed of cells, so are humans and the human brain. The brain consists of nerve cells called \glspl{neuron} and non-neural cells. There are approximately 86 billion \glspl{neuron} in the human brain and roughly as much non-neural cells~\cite{neuroncount}. A typical \gls{neuron} has a cell body, multiple nerve endings or \glspl{dendrite}, and one nerve fibre or \gls{axon}. Both \glspl{dendrite} and \glspl{axon} can branch multiple times. 
 
 \begin{figure}[b!]
 	\centering
@@ -24,15 +24,15 @@ As all living organisms are composed of cells, so are humans and the human brain
 	\caption{The structure of a neuron}
 \end{figure}
 
-Neurons interact with each other via electro-chemical signals that are transmitted through various connections. These connections are not static and can change over time. Functionally related neurons are connected to each other and form neural pathways~\cite{neuralpathway}. The general rule is that a neuron sends signals through its axon and receives signals through dendrites. The connection between an axon and a dendrite is called a synapse. See figure~\ref{fig:neuron_synapse} for an example of neurons and a synapse.
+Neurons interact with each other via electro-chemical signals that are transmitted through various connections. These connections are not static and can change over time. Functionally related \glspl{neuron} are connected to each other and form neural pathways~\cite{neuralpathway}. The general rule is that a \gls{neuron} sends signals through its \gls{axon} and receives signals through \glspl{dendrite}. The connection between an \gls{axon} and a \gls{dendrite} is called a \gls{synapse}. See figure~\ref{fig:neuron_synapse} for an example of \glspl{neuron} and a \gls{synapse}.
 
-To send signals, neurons must be able to maintain electrical potential called membrane potential. Membrane potential is the difference in electric potential between the interior and the exterior of a cell. When neurons are not sending signals, their membrane potentials are slightly negative. The membrane potential of a neuron at a resting state is called resting potential. Negative resting potential is achieved by having more positively charged ions around the cell than inside the cell.
+To send signals, \glspl{neuron} must be able to maintain electric potential called membrane potential. Membrane potential is the difference in electric potential between the interior and the exterior of a cell. When \glspl{neuron} are not sending signals, their membrane potentials are slightly negative. The membrane potential of a \gls{neuron} at a resting state is called resting potential. Negative resting potential is achieved by having more positively charged ions around the cell than inside the cell.
 
-By having stable resting potential, a neuron is able to send signals by rapidly increasing and decreasing the membrane potential along an axon. Therefore, the signal travelling along an axon is actually higher membrane potential. This event is called an action potential. See figure~\ref{fig:action_potential} for illustration. To increase or decrease the membrane potential of a cell, ionophoric proteins are used. These proteins transport ions across the cell membrane to regulate the concentration of ions and membrane potential.
+By having stable resting potential, a \gls{neuron} is able to send signals by rapidly increasing and decreasing the membrane potential along an \gls{axon}. Therefore, the signal travelling along an \gls{axon} is actually higher membrane potential. This event is called an action potential. See figure~\ref{fig:action_potential} for illustration. To increase or decrease the membrane potential of a cell, ionophoric proteins are used. These proteins transport ions across the cell membrane to regulate the concentration of ions and membrane potential.
 
-Action potential is initiated by a certain threshold voltage called threshold potential. When the membrane potential of a neuron exceeds threshold potential, the neuron sends signals to other cells. The neuron that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic cell to increase or decrease. This change in membrane potential is called a postsynaptic potential and it can cause an action potential in the postsynaptic cell.
+Action potential is initiated by a certain threshold voltage called threshold potential. When the membrane potential of a \gls{neuron} exceeds threshold potential, the \gls{neuron} sends signals to other cells. The \gls{neuron} that receives the signal is called postsynaptic cell. Synaptic input in a postsynaptic cell can cause the membrane potential of the postsynaptic cell to increase or decrease. This change in membrane potential is called a postsynaptic potential and it can cause an action potential in the postsynaptic cell.
 
-The following paragraph is mainly based on article~\cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Ions enter the cell from a location called sink and flow to the exterior of the cell to a location called source. A sink and a source form a dipole. See figure~\ref{fig:dipole_electric} for illustration. These dipoles are important because it is possible to measure the electric field produced by these dipoles from the scalp. See figure~\ref{fig:dipole_neuron} for illustration. Measuring these electric fields is further discussed in section~\ref{sec:EEG}. Although action potentials generate stronger currents than postsynaptic potentials, their duration is low and nearby neurons rarely fire synchronously.
+The following paragraph is mainly based on article~\cite{electric_field}. Postsynaptic potentials cause small current flows into the cell. To achieve electroneutrality, a balancing current from the interior to the exterior of the cell is needed. Ions enter the cell from a location called sink and flow to the exterior of the cell to a location called source. A sink and a source form a dipole. See figure~\ref{fig:dipole_electric} for illustration.
 
 \begin{figure}[h!]
 	\centering
@@ -52,10 +52,12 @@ The following paragraph is mainly based on article~\cite{electric_field}. Postsy
 \end{figure}
 \footnotetext{http://hyperphysics.phy-astr.gsu.edu/hbase/electric/equipot.html}
 
+These dipoles are important because it is possible to measure the electric field produced by these dipoles from the scalp. See figure~\ref{fig:dipole_neuron} for illustration. Measuring these electric fields is further discussed in section~\ref{sec:EEG}. Although action potentials generate stronger currents than postsynaptic potentials, their duration is short and nearby \glspl{neuron} rarely fire synchronously~\cite{electric_field}. Thus recording the electrical activity of the brain relies on the electric fields of the dipoles generated by \glspl{neuron}.
+
 \section{Functional neuroimaging methods}
 \label{sec:neuroimaging}
 
-As discussed in section~\ref{sec:neuron}, neurons in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity. We will give a brief overview of various methods before continuing to discuss the biological background. Measuring an aspect of brain function is called functional neuroimaging and common measurement methods divide into haemodynamic and electromagnetic techniques.
+As discussed in section~\ref{sec:neuron}, \glspl{neuron} in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity. We will give a brief overview of various methods before continuing to discuss the biological background. Measuring an aspect of brain function is called functional neuroimaging and common measurement methods divide into haemodynamic and electromagnetic techniques.
 
 Haemodynamic techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. Haemodynamic techniques include \gls{fMRI}, \gls{fNIRS}, \gls{PET}.
 
@@ -94,20 +96,22 @@ To decide which method is best for controlling a robot, we will compare cost, po
 \section{Electroencephalography}
 \label{sec:EEG}
 
-As already mentioned in the previous section, \gls{EEG} measures the electrical activity along the scalp. This electrical activity originates mainly from the electric fields generated by neurons as discussed in section~\ref{sec:neuron}. However, the electric potential generated by one neuron is far too low to be recognized. Therefore, approximately 108 neurons have to have synchronous electrical activity to a create measurable field~\cite{field_count}. Furthermore, these neurons have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. See figure~\ref{fig:dipole_neuron} for example.
+As already mentioned in the previous section, \gls{EEG} measures the electrical activity along the scalp. This electrical activity originates mainly from the electric fields generated by \glspl{neuron} as discussed in section~\ref{sec:neuron}. However, the electric potential generated by one \gls{neuron} is far too low to be recognized. Therefore, approximately 108 \glspl{neuron} have to have synchronous electrical activity to a create measurable field~\cite{field_count}. Furthermore, these \glspl{neuron} have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. See figure~\ref{fig:dipole_neuron} for example.
 
-\gls{EEG} measures the potential fields as the function of voltage versus time using electrodes placed on scalp~\cite{field_count}. Since voltage is the electrical potential difference between two points, one or more reference electrodes should be used. Then voltmeter can be used to measure the differences in voltage between two electrodes, one of which is the reference electrode. See figure~\ref{fig:voltmeter} for a simplified scheme.
+\gls{EEG} measures the potential fields as the function of voltage versus time using electrodes placed on scalp~\cite{field_count}. Since voltage is the electric potential difference between two points, one or more reference electrodes should be used. Then voltmeter can be used to measure the differences in voltage between two electrodes, one of which is the reference electrode. See figure~\ref{fig:voltmeter} for a simplified scheme.
 
-Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. See figure~\ref{fig:brain_lobes} for example. 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore the electrode measures the activity of this brain lobe. There are more complicated electrode-naming-systems that extend the 10-20 system. See figure~\ref{fig:electrode_locations} for illustration.
-
-In a broad sense, \gls{EEG} recording is linked to the state of the general activation of the brain~\cite{VEP}. Therefore, due to the generality of the recording, we cannot see potentials evoked by certain events in the recording because the general fluctuations are much larger than the evoked potential. A brain potential evoked by some event is called \gls{ERP}. \glspl{ERP} are associated with the information flow in the cortical areas and are usually obtained by an averaging technique~\cite{ERP}. \glspl{ERP} are time locked to a stimulus event and therefore may be recorded by presenting a stimulus with a certain time interval to a subject and calculating the average of \gls{EEG} signals recorded in the same time interval.
-
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.70\textwidth]{voltmeter.png}
 	\caption{Electrodes connected to a voltmeter~\cite[p.~120]{ERP}}
 	\label{fig:voltmeter}
 \end{figure}
+
+Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. See figure~\ref{fig:brain_lobes} for example. 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore the electrode measures the activity of this brain lobe. There are more complicated electrode-naming-systems that extend the 10-20 system. See figure~\ref{fig:electrode_locations} for illustration.
+
+In a broad sense, \gls{EEG} recording is linked to the general state of the brain~\cite{VEP}. Therefore, due to the generality of the recording, potentials evoked by certain events cannot be seen in the recording because the evoked potentials are much smaller than the general fluctuations. A brain potential evoked by some event is called \gls{ERP}. 
+
+\glspl{ERP} are linked to the information flow in the brain and are usually recorded by using an averaging technique~\cite{ERP}. For example, \glspl{ERP} can be recorded by presenting a stimulus with a certain time interval to a subject and calculating the average of \gls{EEG} signals recorded in the same time interval. This technique can be used because the stimuli blinks at a constant rate and thus \glspl{ERP} are also evoked one after another in the same constant interval. Therefore, \glspl{ERP} are always evoked at the same time and when calculating the average of the \gls{EEG} recordings divided into same time intervals, the result will be an \gls{ERP} because other fluctuations and noise are random and mostly cancels out in the averaging process. Thus the \glspl{ERP} can be recorded using \gls{EEG}. 
 
 \section{Visual evoked potential}
 \label{sec:VEP}
@@ -120,7 +124,7 @@ Due to the posterior location of the occipital lobe, electrodes must be placed t
 
 When comparing the \glspl{VEP} elicited in the central visual field and in the peripheral vision by the same stimuli, it can be seen that the stimulation of the central visual field produces larger \glspl{VEP}~\cite{VEP_size}. This allows us to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
 
-To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway cannot recover before the next stimulus is presented, then the elicited response becomes continuous and it is called the \gls{SSVEP}~\cite{VEP}. See figure X for an example of \gls{VEP} and \gls{SSVEP}. \gls{SSVEP} is sinusoidal and therefore it is easier to detect it than \glspl{VEP}, which have more complex shape and are not continuous.
+To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway cannot recover before the next stimulus is presented, then the elicited response becomes continuous and it is called the \gls{SSVEP}~\cite{VEP}. See figure X for an example of \gls{VEP} and \gls{SSVEP}. \gls{SSVEP} is sinusoidal and therefore it is easier to detect it than \glspl{VEP}, which are not continuous.
 
 \begin{figure}[h]
 	\centering
