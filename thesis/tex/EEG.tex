@@ -71,7 +71,7 @@ These \glspl{dipole} are important because it is possible to measure the electri
 \section{Functional neuroimaging methods}
 \label{sec:neuroimaging}
 
-As discussed in section~\ref{sec:neuron}, \glspl{neuron} in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity. The aim of this section is to briefly compare various techniques. Measuring an aspect of brain function is called \gls{functional neuroimaging} and common measurement methods divide into \gls{haemodynamic} and \gls{electromagnetic} techniques.
+As discussed in section~\ref{sec:neuron}, \glspl{neuron} in the brain are sending electrochemical signals to communicate with each other. There are several techniques available to measure this activity. The aim of this section is to briefly compare various non-invasive techniques. Measuring an aspect of brain function is called \gls{functional neuroimaging} and common measurement methods divide into \gls{haemodynamic} and \gls{electromagnetic} techniques.
 
 \Gls{haemodynamic} techniques measure blood oxygenation and blood flow in the brain. More oxygen has to be delivered to more active brain regions and this allows the brain activity to be measured. \Gls{haemodynamic} techniques include \gls{fMRI}, \gls{fNIRS} and \gls{PET}.
 
@@ -126,20 +126,14 @@ Usually electrodes are placed on the scalp according to international 10-20 elec
 
 In a broad sense, \gls{EEG} recording is linked to the general state of the brain~\cite{VEP}. Therefore, due to the generality of the recording, potentials evoked by certain events cannot be seen in the recording because the evoked potentials are much smaller than the general fluctuations. A brain potential evoked by some event is called \gls{ERP}. 
 
-\glspl{ERP} are linked to the information flow in the brain and are usually recorded by using an averaging technique~\cite{ERP}. For example, \glspl{ERP} can be recorded by presenting a stimulus with a certain time interval to a subject and calculating the average of \gls{EEG} signals recorded in the same time interval. This technique can be used because the stimuli is presented at a constant rate and thus \glspl{ERP} are also evoked one after another in the same constant interval. Therefore, \glspl{ERP} are always evoked at the same time while other fluctuations and noise are mostly random. When calculating the average of the \gls{EEG} recordings divided into the same time intervals as the stimulus presentation, the result will be an \gls{ERP} because other fluctuations and noise mostly cancel out in the averaging process. Thus \gls{EEG} can be used to record \glspl{ERP}. 
+\glspl{ERP} are linked to the information flow in the brain and are usually recorded by using an averaging technique~\cite{ERP}. For example, \glspl{ERP} can be recorded by presenting a stimulus with a certain time interval to a subject and calculating the average of \gls{EEG} signals recorded in the same time interval. This technique can be used because the stimuli is presented at a constant rate and thus \glspl{ERP} are also evoked one after another in the same constant interval. Therefore, \glspl{ERP} are always evoked at the same time while other fluctuations and noise are mostly random. When calculating the average of the \gls{EEG} recordings divided into the same time intervals as the stimulus presentation, the result will be an \gls{ERP} because other fluctuations and noise mostly cancel out in the averaging process. Thus \gls{EEG} can be used to record \glspl{ERP} from the scalp. 
 
 \section{Visual evoked potential}
 \label{sec:VEP}
 
-In section~\ref{sec:EEG} we gave a brief overview of \glspl{ERP}. Now we are going to discuss one specific \gls{ERP} called \gls{VEP}. As the name suggests, \glspl{VEP} are elicited by visual stimuli. The visual stimulus for eliciting a \gls{VEP} can be very simple, for example a white square blinking on a black computer screen.
+In section~\ref{sec:EEG} brain potential called \gls{ERP} was discussed and it was noted that \glspl{ERP} are evoked by some event. The aim of this section is to discuss one specific \gls{ERP} called \gls{VEP}. As the name suggests, \glspl{VEP} are elicited by visual stimuli. The visual stimulus for eliciting a \gls{VEP} can be very simple, for example a white square blinking on a black computer screen.
 
-The visual processing centre is located in the back of the brain. The corresponding brain lobe is called occipital lobe. Therefore, when subject sees the stimulus, the signal travels from the eyes to the visual processing centre through the primary visual pathway~\cite{neuroscience}. See figure~\ref{fig:lobes_pathway} for illustration. The primary visual pathway is a neural pathway; neural pathways were also mentioned in the section~\ref{sec:neuron}.
-
-Due to the posterior location of the occipital lobe, electrodes must be placed to the back of the head when recording \glspl{VEP} with \gls{EEG}. These electrode locations are identified with the letter O as discussed in section~\ref{sec:EEG}.
-
-When comparing the \glspl{VEP} elicited in the central visual field and in the peripheral vision by the same stimuli, it can be seen that the stimulation of the central visual field produces larger \glspl{VEP}~\cite{VEP_size}. This allows us to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
-
-To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway cannot recover before the next stimulus is presented, then the elicited response becomes continuous and it is called the \gls{SSVEP}~\cite{VEP}. See figure X for an example of \gls{VEP} and \gls{SSVEP}. \gls{SSVEP} is sinusoidal and therefore it is easier to detect it than \glspl{VEP}, which are not continuous.
+When the visual stimulus is seen, the signal travels from the eyes to the \gls{visual processing centre} through the \gls{primary visual pathway}~\cite{neuroscience}. The \gls{visual processing centre} is located in the back of the brain. As mentioned in section~\ref{sec:EEG}, the outer layer of the brain can be classified into four lobes. The \gls{visual processing centre} is located in the occipital lobe. See figure~\ref{fig:lobes_pathway} for illustration. The \gls{primary visual pathway} is a \gls{neural pathway}; \glspl{neural pathway} were also mentioned in the section~\ref{sec:neuron}.
 
 \begin{figure}[h]
 	\centering
@@ -158,16 +152,22 @@ To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visu
 	\label{fig:lobes_pathway}
 \end{figure}
 
+Due to the posterior location of the occipital lobe, electrodes must be placed to the back of the head when recording \glspl{VEP} with \gls{EEG}. These electrode locations are identified with the letter O as discussed in section~\ref{sec:EEG}.
+
+When comparing the \glspl{VEP} elicited by
+\begin{enumerate*}[(1)]
+	\item the stimulation of the \gls{central visual field} and
+	\item the stimulation of the \gls{peripheral vision}
+\end{enumerate*} by the same stimuli, it can be seen that the stimulation of the \gls{central visual field} produces larger \glspl{VEP}~\cite{VEP_size}. In other words, the stimulus which a subject is looking at elicits larger \glspl{VEP} than those stimuli that are not in the very centre of gaze. Therefore, it is possible to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
+
+To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway does not have enough time to fully recover between stimulus presentations, then the elicited response becomes continuous and it is called the \gls{SSVEP}~\cite{VEP}. See figure X for an example of \gls{VEP} and \gls{SSVEP}. \gls{SSVEP} is continuous and therefore it is easier to detect it in \gls{EEG} recording than \glspl{VEP}, which are not continuous. Detecting continuous response is easier because it is always present in the recording. The methods used to detect \gls{SSVEP} in \gls{EEG} recording are discussed in section~\ref{sec:SSVEP_detection}.
+
+Research has shown that \glspl{SSVEP} reflect certain properties of the visual stimulus. The frequency of \gls{SSVEP} elicited by a visual stimulus is the same as the presentation rate or \gls{flickering} frequency of the visual stimulus. Furthermore, not only the frequency of the visual stimulus can be detected in the \gls{EEG} recording, but also its \glspl{harmonic}. 
+
 \section{Emotiv EPOC}
 \label{sec:EEG_comparison}
 
 In section~\ref{sec:neuroimaging} we briefly compared different functional neuroimaging methods and concluded that currently \gls{EEG} is most suitable for our needs. But there is a wide variety of EEG devices available. See table~\ref{tab:EEG} for details. As discussed in section~\ref{sec:neuroimaging}, we prefer a device that is available to the consumer.
-
-OpenBCI is an open source \gls{BCI} that provides access to all the data and algorithms, which makes it good for specialists, but it is not easy to use for a non-specialist. From the more consumer-friendly devices, Emotiv EPOC seems to offer good price-quality relationship. Therefore, we will choose Emotiv EPOC for controlling a robot.
-
-Emotiv EPOC has 16 electrodes, two of which are reference electrodes. Reference electrodes have two different possible locations: P3 and P4 or locations behind the ears. Other electrodes have fixed locations AF3, AF4, F3, F4, F7, F8, FC5, FC6, P7, P8, T7, T8, O1, O2. See figure~\ref{fig:electrode_locations} for illustration. Emotiv EPOC has a sampling rate of \SI{128}{Hz}, an internal sampling rate of \SI{2048}{Hz} and an \gls{ADC} resolution of 16 bit. 
-
-An \gls{ADC} device converts continuous voltage to the sequence of discrete values or in other words, an analog signal to a digital signal that can be processed by a computer. The \gls{ADC} resolution indicates the number of discrete values it can produce. Sampling rate is the rate at which digital values are extracted from a continuous signal.
 
 \newcommand{\patiCHamp}{\tablefootnote{http://www.brainvision.com/files/actiCHamp-PyCorder-Flyer\_US.pdf}}
 \newcommand{\pmitsar}{\tablefootnote{http://www.novatecheeg.com/products--software.html}}
@@ -190,6 +190,10 @@ An \gls{ADC} device converts continuous voltage to the sequence of discrete valu
 	\label{tab:EEG}
 \end{table}
 
+OpenBCI is an open source \gls{BCI} that provides access to all the data and algorithms, which makes it good for specialists, but it is not easy to use for a non-specialist. From the more consumer-friendly devices, Emotiv EPOC seems to offer good price-quality relationship. Therefore, we will choose Emotiv EPOC for controlling a robot.
+
+Emotiv EPOC has 16 electrodes, two of which are reference electrodes. Reference electrodes have two different possible locations: P3 and P4 or locations behind the ears. Other electrodes have fixed locations AF3, AF4, F3, F4, F7, F8, FC5, FC6, P7, P8, T7, T8, O1, O2. See figure~\ref{fig:electrode_locations} for illustration. Emotiv EPOC has a sampling rate of \SI{128}{Hz}, an internal sampling rate of \SI{2048}{Hz} and an \gls{ADC} resolution of 16 bit.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{electrode_locations.png}
@@ -197,3 +201,6 @@ An \gls{ADC} device converts continuous voltage to the sequence of discrete valu
 	\label{fig:electrode_locations}
 \end{figure}
 \footnotetext{http://emotiv.wikia.com/wiki/Emotiv\_EPOC}
+
+
+An \gls{ADC} device converts continuous voltage to the sequence of discrete values or in other words, an analog signal to a digital signal that can be processed by a computer. The \gls{ADC} resolution indicates the number of discrete values it can produce. Sampling rate is the rate at which digital values are extracted from a continuous signal.
