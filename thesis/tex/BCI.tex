@@ -3,57 +3,46 @@
 
 The previous chapter discussed the biology of the human brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit \gls{SSVEP} and how to detect \gls{SSVEP} in a \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
 
-A review by Bashashati \emph{et al.} gives a good overview of \glspl{BCI} based on \gls{EEG} recordings~\cite{bci_comparison}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}:
-\begin{itemize}
-	\item \gls{VEP} or \gls{SSVEP},
-	\item P300,
-	\item slow cortical potential,
-	\item response to mental task,
-	\item sensorimotor activity, for example event-related synchronisation and desynchronisation and
-	\item multiple neuromechanisms or hybrid \gls{BCI}~\cite{hybrid_bci, hybrid_bci2}.
-\end{itemize}
-Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different \gls{EEG} analysing methods are required~\cite{hybrid_bci, hybrid_bci2}.
-
 \section{Visual stimulus}
 \label{sec:stimuli}
 
-As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. In this thesis only the stimulus that can be presented by a computer monitor is discussed, because research has shown that LCD screens produce more accurate stimuli than light-emitting diodes~\cite{lcd_lcd_led}. 
+As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. Research has shown that LCD screens produce more accurate stimuli than light-emitting diodes~\cite{lcd_lcd_led}. In this thesis only the stimulus that can be presented by a computer monitor is discussed.
 
-A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size affect the size of the visual stimulus that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, affects the blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more accurate stimuli when using the monitor refresh rate for synchronisation rather than a timer~\cite{lcd_lcd_led}.
+A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, limits the blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more accurate stimuli when using the monitor refresh rate for synchronisation rather than a timer~\cite{lcd_lcd_led}. In this thesis, monitor refresh rate is used for synchronisation.
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
-The blinking of a target is called flickering. Often, flickering one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called targets.
+The blinking of a target is called \gls{flickering}. Often, \gls{flickering} one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target}.
 
-In every frame each target can be in one of two states - displayed or not displayed. The state of a target can be changed only when the frame changes. The states of a target over time can be represented with a function of state versus time:
+In every frame each \gls{target} can be in one of two states---displayed or not displayed. The state of a \gls{target} can be changed only when the frame changes. The states of a \gls{target} over time can be represented with a function of state versus time:
 \begin{equation}
 	\label{eq:state_vs_time}
 	y(t)=
 	\begin{cases}
-		1,	&\mbox{if the target is displayed on the screen at time t}\\
-		0,	&\mbox{if the target is not displayed on the screen at time t}
+		1,	&\mbox{if the \gls{target} is displayed on the screen at time t}\\
+		0,	&\mbox{if the \gls{target} is not displayed on the screen at time t}
 	\end{cases}
 \end{equation}
 See figure~\ref{fig:square_waves} for example. The function~$y(t)$ has to be periodic and the state switches should be distributed as evenly as possible over the period of the function for the target frequency to be constant.
 
-The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the target frequency will also be lower. Perhaps it is most reasonable to calculate the target frequency with:
+The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
 \begin{equation}
 	f = \frac{n}{2T}
 \end{equation}
 where T is the period of the function~$y(t)$, n is the number of times the target state is switched in a time period of T and f is the target frequency.
 
-The flickering of a target can be divided in three categories. If the refresh rate divided by target frequency is 
+The \gls{flickering} of a \gls{target} can be divided into three categories. If the refresh rate divided by target frequency is 
 \begin{enumerate}
-	\item[a.] even, then it is easy to divide flickering among frame changes;
-	\item[b.] odd, then the flickering has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal; or
-	\item[c.] not a natural number, then the flickering has to be even more irregular than in case~b.
+	\item[a.] even, then it is easy to divide \gls{flickering} among frame changes;
+	\item[b.] odd, then the \gls{flickering} has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal; or
+	\item[c.] not a natural number, then the \gls{flickering} has to be even more irregular than in case~b.
 \end{enumerate}
 
 If the monitor refresh rate is 60 Hz, then the flickering of 10 Hz corresponds to case~a, 12 Hz corresponds to case~b and 11 Hz corresponds to case~c. Although the 11 Hz flickering produces irregular flickering \cite{11hz}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 
 %In conclusion, the visual stimuli used in \gls{VEP}-based \gls{BCI} can be produced by a computer monitor and the synchronisation of the flickering can be based on refresh rate.
 
-\begin{figure}[h!]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{\textwidth}
 		\includegraphics[width=\textwidth]{square_wave_10.png}
@@ -95,19 +84,31 @@ The decomposition process itself is called Fourier transform and it is used to d
 \end{equation}
 Since we are working with discrete signal as discussed in section~\ref{sec:EEG_comparison}, we will use the discrete Fourier transform. The algorithm used to compute the discrete Fourier transform is called \gls{FFT}.
 
-\section{SSVEP-based brain-computer interface}
-\label{sec:SSVEP_detection}
-The aim of this chapter is to give overview of two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. Current methods include:
+\section{Related work}
+
+There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a good overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different methods are required to analyse \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}. %In this thesis, main focus is on \gls{SSVEP}-based \glspl{BCI}. 
+
+\gls{SSVEP}-based \glspl{BCI} can be divided in categories according to the method used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are also called \gls{feature extraction} methods. Current \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} methods include:
 \begin{itemize}
-	\item \Gls{PSDA} method introduced by Cheng \emph{et al.}~\cite{psda}.
+	\item \Gls{PSDA} method introduced by Cheng \textit{et al.}~\cite{psda}.
 	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
-	\item \Gls{MEC} method introduced by Friman \emph{et al.}~\cite{mec}. This method shows better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
-	\item \Gls{CCA} method introduced by Lin \emph{et al.}~\cite{cca_lin}. This method shows better performance than \gls{PSDA} method~\cite{bin2009cca}.
-	\item \Gls{LASSO} method introduced by Zhang \emph{et al.}~\cite{LASSO}. This method shows better performance than \gls{CCA} method~\cite{LASSO}.
-	\item \Gls{LRT} method introduced by Zhang \emph{et al.}~\cite{LRT}. This method shows better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
-	\item \Gls{MPCC} method introduced by Tong \emph{et al.}~\cite{MPCC}.
+	\item \Gls{MEC} method introduced by Friman \textit{et al.}~\cite{mec}. This method has shown better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
+	\item \Gls{CCA} method introduced by Lin \textit{et al.}~\cite{cca_lin}. This method has shown better performance than \gls{PSDA} method~\cite{cca_psda, bin2009cca, cca_lin}.
+	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
+	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
+	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
 	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
 \end{itemize}
+
+In this thesis, Emotiv EPOC is used to record brain activity. Article by Liu \textit{et al.}~\cite{emotiv_11hz} also describes a \gls{BCI} that used Emotiv EPOC for recording brain activity using \gls{CCA} method. 
+%This thesis focuses on two of these methods: \gls{PSDA} and \gls{CCA} methods.
+
+\gls{CCA} and \gls{PSDA} comparison~\cite{cca_psda, bin2009cca, cca_lin}. \gls{CCA} improvement multiway \gls{CCA}~\cite{mcca}. Multiway \gls{CCA} has shown slightly better performance than standard \gls{CCA} method.
+
+\section{SSVEP-based brain-computer interface}
+\label{sec:SSVEP_detection}
+The aim of this chapter is to give overview of two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. 
+This section describes the \gls{PSDA} and \gls{CCA} method. These are the methods used in chapter~\ref{sec:SSVEP_BCI} for designing application for controlling a robot. 
 
 \subsection{Power spectral density analysis}
 
