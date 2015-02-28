@@ -1,7 +1,7 @@
 
 \chapter{VEP-based brain-computer interface}
 
-The previous chapter discussed the biology of the human brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit \gls{SSVEP} and how to detect \gls{SSVEP} in a \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
+The previous chapter discussed the biology of the brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit \gls{SSVEP} and how to detect \gls{SSVEP} in a \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
 
 \section{Visual stimulus}
 \label{sec:stimuli}
@@ -12,18 +12,39 @@ A computer monitor has certain size, resolution and refresh rate. Monitor resolu
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
-The blinking of a target is called \gls{flickering}. Often, \gls{flickering} one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target}.
+Often blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target}. The blinking of a target is called \gls{flickering}.
 
-In every frame each \gls{target} can be in one of two states---displayed or not displayed. The state of a \gls{target} can be changed only when the frame changes. The states of a \gls{target} over time can be represented with a function of state versus time:
-\begin{equation}
-	\label{eq:state_vs_time}
-	y(t)=
-	\begin{cases}
-		1,	&\mbox{if the \gls{target} is displayed on the screen at time t}\\
-		0,	&\mbox{if the \gls{target} is not displayed on the screen at time t}
-	\end{cases}
-\end{equation}
-See figure~\ref{fig:square_waves} for example. The function~$y(t)$ has to be periodic and the state switches should be distributed as evenly as possible over the period of the function for the target frequency to be constant.
+In every frame each \gls{target} can be in one of two states---displayed or not displayed. The state of a \gls{target} can be changed only when the frame changes. The state switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the state switches is easier with some frequencies than others. For example, if refresh rate is 60 Hz, then
+\begin{itemize}
+	\item 10 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the refresh rate. This means, that the \gls{target} has to be presented once in every 6 frames. Since 6 is even number, 10 Hz \gls{flickering} can be achieved by changing the state of the \gls{target} after every 3 frames.
+	\item 12 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the refresh rate, the \gls{target} has to be presented once in every 5 frames and since 5 is odd number, the amount of time the target is in on state and in off state cannot be equal. Therefore, the \gls{target} should be 3 frames in displayed state and 2 frames in not displayed state.
+	\item 11 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the refresh rate. This means, that the \gls{target} has to be presented once in every 5.45 frames. Since 5.45 is not a natural number, the \gls{target} \gls{flickering} will be irregular. 11 Hz target flickering from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although 11 Hz frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
+\end{itemize}
+
+\begin{figure}
+	\begin{subfigure}{\textwidth}
+		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
+			10 Hz & [C] 10{3H 3L}\\
+			11 Hz & [C] 11{2.73H 2.73L}\\
+			12 Hz & [C] 12{2.5H 2.5L}\\
+			\extracode
+			\tablegrid[black!25,step=1]
+		\end{tikztimingtable}
+		\caption{Ideal target flickering}
+	\end{subfigure}
+	\begin{subfigure}{\textwidth}
+		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
+			10 Hz & [C] 10{3H 3L}\\
+			11 Hz & [C] 3H 3L 3H 2L 3H 3L 3H 2L 3H 3L 2H 3L 3H 3L 2H 3L 3H 3L 2H 3L 3H 2L\\
+			12 Hz & [C] 12{3H 2L}\\
+			\extracode
+			\tablegrid[black!25,step=1]
+		\end{tikztimingtable}
+		\caption{Target flickering adjusted to refresh rate}
+	\end{subfigure}
+	\caption{Adjusting target flickering to refresh rate}
+	\label{fig:flickering}
+\end{figure}
 
 The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
 \begin{equation}
@@ -42,37 +63,6 @@ If the monitor refresh rate is 60 Hz, then the flickering of 10 Hz corresponds t
 
 %In conclusion, the visual stimuli used in \gls{VEP}-based \gls{BCI} can be produced by a computer monitor and the synchronisation of the flickering can be based on refresh rate.
 
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{square_wave_10.png}
-		\caption{Square wave with fundamental frequency of 10 Hz}
-		\label{fig:square_10}
-	\end{subfigure}\vspace{10pt}
-	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{square_wave_11.png}
-		\caption{Square wave with fundamental frequency of 11 Hz}
-		\label{fig:square_11}
-	\end{subfigure}\vspace{10pt}
-	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{rect_wave_11.png}
-		\caption{11 Hz square wave adjusted to refresh rate}
-		\label{fig:rect_11}
-	\end{subfigure}\vspace{10pt}
-	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{square_wave_12.png}
-		\caption{Square wave with fundamental frequency of 12 Hz}
-		\label{fig:square_12}
-	\end{subfigure}\vspace{10pt}
-	\begin{subfigure}{\textwidth}
-		\includegraphics[width=\textwidth]{rect_wave_12.png}
-		\caption{12 Hz square wave adjusted to refresh rate}
-		\label{fig:rect_12}
-	\end{subfigure}
-	\caption{The flickering of targets represented by a function of state versus time. Vertical grid lines represent the frame changes with 60 Hz refresh rate.}
-	\label{fig:square_waves}
-\end{figure}
-
 \section{Fourier analysis}
 \label{sec:fourier}
 
@@ -86,24 +76,32 @@ Since we are working with discrete signal as discussed in section~\ref{sec:EEG_c
 
 \section{Related work}
 
-There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a good overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different methods are required to analyse \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}. %In this thesis, main focus is on \gls{SSVEP}-based \glspl{BCI}. 
+There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a detailed overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different methods are required to analyse \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}. %In this thesis, main focus is on \gls{SSVEP}-based \glspl{BCI}. 
 
 \gls{SSVEP}-based \glspl{BCI} can be divided in categories according to the method used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are also called \gls{feature extraction} methods. Current \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} methods include:
 \begin{itemize}
 	\item \Gls{PSDA} method introduced by Cheng \textit{et al.}~\cite{psda}.
 	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
+	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
+	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
 	\item \Gls{MEC} method introduced by Friman \textit{et al.}~\cite{mec}. This method has shown better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
 	\item \Gls{CCA} method introduced by Lin \textit{et al.}~\cite{cca_lin}. This method has shown better performance than \gls{PSDA} method~\cite{cca_psda, bin2009cca, cca_lin}.
 	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
 	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
-	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
-	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
 \end{itemize}
+There is also an improvement of \gls{CCA} method available called multiway \gls{CCA}, which has shown slightly better performance than standard \gls{CCA} method~\cite{mcca}.
 
-In this thesis, Emotiv EPOC is used to record brain activity. Article by Liu \textit{et al.}~\cite{emotiv_11hz} also describes a \gls{BCI} that used Emotiv EPOC for recording brain activity using \gls{CCA} method. 
+In this thesis, Emotiv EPOC is used to record brain activity. The following papers also describe \glspl{BCI} that also used Emotiv EPOC to record brain activity:
+\begin{itemize}
+	\item Liu \textit{et al.}~\cite{emotiv_11hz} used \gls{CCA} method;
+	\item Lin \textit{et al.}~\cite{emotiv_walking} used \gls{CCA} method;
+	\item Choi and Jo~\cite{emotiv_hybrid} designed hybrid \gls{BCI};
+	\item Zier~\cite{emotiv_psda} used \gls{PSDA} method;
+	\item Hvaring and Ulltveit-Moe~\cite{emotiv_comparison} compared different \gls{feature extraction} methods using Emotiv EPOC;
+	\item Duvinage \textit{et al.}~\cite{emotiv_p300_comp} used P300 method and compared the performance of Emotiv EPOC and a medical-grade device.
+\end{itemize}
 %This thesis focuses on two of these methods: \gls{PSDA} and \gls{CCA} methods.
 
-\gls{CCA} and \gls{PSDA} comparison~\cite{cca_psda, bin2009cca, cca_lin}. \gls{CCA} improvement multiway \gls{CCA}~\cite{mcca}. Multiway \gls{CCA} has shown slightly better performance than standard \gls{CCA} method.
 
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
