@@ -16,12 +16,12 @@ Often blinking one-coloured squares on one-coloured background are used as visua
 
 In every frame each \gls{target} can be in one of two states---displayed or not displayed. The state of a \gls{target} can be changed only when the frame changes. The state switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the state switches is easier with some frequencies than others. For example, if refresh rate is 60 Hz, then
 \begin{itemize}
-	\item 10 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the refresh rate. This means, that the \gls{target} has to be presented once in every 6 frames. Since 6 is even number, 10 Hz \gls{flickering} can be achieved by changing the state of the \gls{target} after every 3 frames.
-	\item 12 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the refresh rate, the \gls{target} has to be presented once in every 5 frames and since 5 is odd number, the amount of time the target is in on state and in off state cannot be equal. Therefore, the \gls{target} should be 3 frames in displayed state and 2 frames in not displayed state.
-	\item 11 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the refresh rate. This means, that the \gls{target} has to be presented once in every 5.45 frames. Since 5.45 is not a natural number, the \gls{target} \gls{flickering} will be irregular. 11 Hz target flickering from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although 11 Hz frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
+	\item 10 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the refresh rate. This means, that the \gls{target} has to be presented once in every 6 frames. Since 6 is even number, 10 Hz \gls{flickering} can be achieved by changing the state of the \gls{target} after every 3 frames. If representing this \gls{flickering} as a waveform as in figure~\ref{fig:flickering}, it can be seen that the waveform is a \gls{square wave}.
+	\item 12 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the refresh rate, the \gls{target} has to be presented once in every 5 frames and since 5 is odd number, the amount of time the target is in on state and in off state cannot be equal. Therefore, the \gls{target} should be 3 frames in displayed state and 2 frames in not displayed state or the other way round. If representing this \gls{flickering} as a waveform as in figure~\ref{fig:flickering}, it can be seen that the waveform is a \gls{rectangular wave}.
+	\item 11 Hz \gls{target} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the refresh rate. This means, that the \gls{target} has to be presented once in every 5.45 frames. Since 5.45 is not a natural number, the \gls{target} \gls{flickering} will be irregular. 11 Hz target \gls{flickering} from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although 11 Hz frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}. In this thesis, the waveform produced by 11 Hz \gls{flickering} is called an \gls{irregular square wave}.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[h]
 	\begin{subfigure}{\textwidth}
 		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
 			10 Hz & [C] 10{3H 3L}\\
@@ -45,34 +45,53 @@ In every frame each \gls{target} can be in one of two states---displayed or not 
 	\caption{Adjusting target flickering to refresh rate}
 	\label{fig:flickering}
 \end{figure}
+A \gls{duty cycle} is used to characterise a \gls{rectangular wave}. \Gls{duty cycle} is the percentage of the amount of time the \gls{target} is in displayed state in one period. If the target is in displayed state for 2 frames and in not displayed state for 3 frames in one period, then the \gls{duty cycle} of the \gls{rectangular wave} is $\frac{2}{2+3}\cdot 100\%=40\%$. \Gls{square wave} has a duty cycle of 50\%. Research has shown that the \gls{SSVEP} elicited by \gls{square wave} \gls{flickering} can be more accurately detected than those elicited by \glspl{rectangular wave} \gls{flickering}.
+
+The previous discussion was about blinking shapes or single graphic stimuli. There is another type of \gls{SSVEP} stimuli called pattern reversal stimuli that can also be presented by computer screen. Pattern reversal stimuli is rendered by changing between two different patterns, for example alternating the colours of a chequerboard~\cite{ssvep_stim}. The main difference between single graphic stimuli and pattern reversal stimuli is that single graphic stimuli elicits \gls{SSVEP} response after every two alterations, while pattern reversal stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}.
 
 The fastest possible target frequency can be achieved by changing between on and off states of the target every time a new frame is displayed. If the state is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
 \begin{equation}
-	f = \frac{n}{2T}
+	f_{single\mbox{ }graphic} = \frac{n}{2T} \qquad f_{pattern\mbox{ }reversal} = \frac{n}{T}
 \end{equation}
-where T is the period of the function~$y(t)$, n is the number of times the target state is switched in a time period of T and f is the target frequency.
+where $T$ is the period of the \gls{flickering}, $n$ is the number of times the target state is switched in a time period of $T$ and $f$ is the target frequency.
 
-The \gls{flickering} of a \gls{target} can be divided into three categories. If the refresh rate divided by target frequency is 
-\begin{enumerate}
-	\item[a.] even, then it is easy to divide \gls{flickering} among frame changes;
-	\item[b.] odd, then the \gls{flickering} has to be adjusted so that the amounts of time the target is displayed and not displayed are not equal; or
-	\item[c.] not a natural number, then the \gls{flickering} has to be even more irregular than in case~b.
-\end{enumerate}
-
-If the monitor refresh rate is 60 Hz, then the flickering of 10 Hz corresponds to case~a, 12 Hz corresponds to case~b and 11 Hz corresponds to case~c. Although the 11 Hz flickering produces irregular flickering \cite{11hz}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
+As it was mentioned in section~\ref{sec:VEP}, \gls{SSVEP} reflects certain properties of the visual stimulus. Most important of these properties is that \gls{SSVEP} has a component with same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. It is sufficient to detect only the component with visual stimuli presentation frequency in the \gls{EEG} recording, but to improve the performance other components should be detected too.
 
 %In conclusion, the visual stimuli used in \gls{VEP}-based \gls{BCI} can be produced by a computer monitor and the synchronisation of the flickering can be based on refresh rate.
 
-\section{Fourier analysis}
+\section{Decomposing signals}
 \label{sec:fourier}
 
-As discussed in the previous section, the flickering of a target can produce three different waveforms. Now we will discuss how these waveforms can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
+\subsection{Fourier analysis}
 
-The decomposition process itself is called Fourier transform and it is used to decompose a function of time into the frequencies that make it up. The Fourier transform is a function of frequency and its values are complex numbers. The amount of frequency x present in a function of time can be calculated by taking the absolute value of the Fourier transform's value at frequency x. The absolute value of a complex number $z=a+ib$ is defined as:
+As discussed in the previous section, the flickering of a target can produce different waveforms. This section will discuss how these waveforms and other signals can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
+
+The following paragraph is based on the book by Hartmann~\cite{pure_tone}. The simpler trigonometric functions that a signal is decomposed into are pure tones---the waveforms that contain only one frequency. All other waveforms have at least two frequencies. Pure tone waveforms are sine and cosine waves. Important property of a pure tone is that linear operations do not change the shape of the pure tone waveform.
+
+The pure tones are used to represent all possible frequencies that a signal may contain. The decomposition process of a signal is called Fourier transform and it is used to decompose a function of time into frequencies or pure tones that make it up. The function of time can be for example the \gls{EEG} recording represented as voltage versus time or the target flickering represented as state versus time. Fourier transform converts signal from time domain or the function of time to frequency domain or the function of frequency. The representation of a time-domain signal in a frequency domain is called frequency spectrum. Frequency spectrum contains information about amplitude and phase of different frequencies. Therefore, frequency spectrum can be presented as a function of frequency versus amplitude and phase.
+
+To represent both amplitude and phase, complex numbers are used. Complex numbers can be represented as a pair of real numbers and therefore complex numbers can be used to represent two values. The amplitude and phase do not correspond to the real and imaginary part of the complex number but rather to the absolute value or the modulus and phase of the complex number. In this thesis the phase information from the frequency spectrum is not used. There are, however, \glspl{BCI} that also use phase information~\cite{MPCC}. Since only the information about amplitude is required in this thesis, it is possible to convert the frequency spectrum into power spectral density, which is represented as a function of amplitude squared or power versus frequency.
+
+To conclude previous discussion, the amount of frequency $f$ present in a signal can be calculated by first calculating the frequency spectrum with Fourier transform and then taking modulus squared of the frequency spectrum's value at frequency $f$.
+
+In digital devices, however, theoretical power spectral density cannot be calculated. The measurement period would have to be infinitely long to a acquire the true power spectral density~\gls{psd}. Therefore, power spectral estimation is used. The modulus squared of frequency spectrum in a real-world application is called periodogram and it is the estimation of the power spectral density. There are other spectral estimation methods available.
+
+Since digital devices work with discrete signals as discussed in section~\ref{sec:EEG_comparison}, in real-world application discrete version of the Fourier transform is used. The algorithm used to compute the discrete Fourier transform is called \gls{FFT}. The higher the sampling rate and \gls{ADC} resolution of a recording device, the more accurate the recording and therefore the more accurate the frequency spectrum and the periodogram of the signal. Thus higher sampling rate and \gls{ADC} resolution lead to more accurate \gls{SSVEP} detection.
+
+\subsection{Decomposition of target flickering}
+
+It can be shown that a square wave is composed of the \gls{fundamental} frequency and its odd \glspl{harmonic}. \Gls{fundamental} frequency is the component with lowest frequency among the components that make up the wave. In case of \gls{square wave} \gls{flickering} and \gls{rectangular wave} \gls{flickering}, the \gls{fundamental} frequency is the frequency of the stimuli presentation. \Glspl{harmonic} are the components of a signal that have frequency of a multiple of the fundamental frequency of the same signal. Therefore, \gls{square wave} can be represented as a sum of sine waves
 \begin{equation}
-	|z|=\sqrt{a^2+b^2}
+	\label{eq:square}
+	square(x) = \sum_{i=1}^{\infty}a_i sin(2\pi 2if)
 \end{equation}
-Since we are working with discrete signal as discussed in section~\ref{sec:EEG_comparison}, we will use the discrete Fourier transform. The algorithm used to compute the discrete Fourier transform is called \gls{FFT}.
+where $square(x)$ is the flickering represented as state versus time, $f$ is the flickering frequency and $a_i$ is the amplitude of i'th component. \Gls{fundamental} frequency of a square wave or rectangular wave has the highest amplitude or in other words, $\max_i a_i=a_1$. \Gls{rectangular wave}'s frequency depends on the \gls{duty cycle} of the wave.
+
+Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies present in the waveform of the \gls{target} \gls{flickering}. \Gls{SSVEP} contains all the harmonics of the \gls{fundamental} frequency, but the frequencies that are present in the components of \gls{target} \gls{flickering} are more successfully elicited in \gls{SSVEP}~\cite{puudu}. It has even been reported that \gls{SSVEP} contains small subharmonics of the fundamental frequency.
+%Rectangular wave is composed of frequencies not including every third harmonic
+%\begin{equation}
+%	rectangular(x)=\sum_{i=1}^{\infty} a_i sin(2\pi if)+b_i sin(2\pi 2if)
+%\end{equation}
 
 \section{Related work}
 
@@ -91,7 +110,7 @@ There are many types of \glspl{BCI} available. A review by Bashashati \textit{et
 \end{itemize}
 There is also an improvement of \gls{CCA} method available called multiway \gls{CCA}, which has shown slightly better performance than standard \gls{CCA} method~\cite{mcca}.
 
-In this thesis, Emotiv EPOC is used to record brain activity. The following papers also describe \glspl{BCI} that also used Emotiv EPOC to record brain activity:
+In this thesis, Emotiv EPOC is used to record brain activity. The following papers also describe \glspl{BCI} that used Emotiv EPOC to record brain activity:
 \begin{itemize}
 	\item Liu \textit{et al.}~\cite{emotiv_11hz} used \gls{CCA} method;
 	\item Lin \textit{et al.}~\cite{emotiv_walking} used \gls{CCA} method;
@@ -105,15 +124,27 @@ In this thesis, Emotiv EPOC is used to record brain activity. The following pape
 
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
-The aim of this chapter is to give overview of two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. 
-This section describes the \gls{PSDA} and \gls{CCA} method. These are the methods used in chapter~\ref{sec:SSVEP_BCI} for designing application for controlling a robot. 
+The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. 
+This section describes the \gls{PSDA} and \gls{CCA} method. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design application for controlling a robot. 
 
 \subsection{Power spectral density analysis}
 
-Power Spectral density (PSD) analysis is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}.
+\Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is uses \gls{FFT} to estimate power spectral density. The power spectral estimation calculated by taking the absolute value squared of the \gls{FFT} is called periodogram. 
 
 \subsection{Canonical correlation analysis}
 
 \Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007~\cite{cca_lin}. 
 
-\Gls{CCA} is statistical method that can be used when analysing two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is ...
+\Gls{CCA} is statistical method that can be used when analysing two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is the \gls{fundamental} frequency and \glspl{harmonic} of the \gls{flickering} frequency. Both sine and cosine waves are used in the second data set % since the phase of the \gls{SSVEP} is not known.
+\begin{equation}
+	\label{eq:cca_ref}
+	Y=\left(\begin{matrix}
+		sin(2\pi)\\
+		cos(2\pi)\\
+		sin(2\pi)\\
+		cos(2\pi)\\
+		sin(2\pi)\\
+		cos(2\pi)\\
+	\end{matrix}\right)
+\end{equation}
+In the method proposed by ... \textit{et al.} three harmonics are used as in equation~\ref{eq:cca_ref}.
