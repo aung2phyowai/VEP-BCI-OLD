@@ -6,9 +6,9 @@ The previous chapter discussed the biology of the brain and described the brain 
 \section{Visual stimulus}
 \label{sec:stimuli}
 
-As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. Research has shown that LCD screens produce more accurate stimuli than light-emitting diodes~\cite{lcd_lcd_led}. In this thesis only the stimulus that can be presented by a computer monitor is discussed.
+As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another article published in the same year, however, concludes that \glspl{BCI} that used \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, in this thesis only the stimulus that can be presented by a computer monitor is discussed.
 
-A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, limits the blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more accurate stimuli when using the monitor refresh rate for synchronisation rather than a timer~\cite{lcd_lcd_led}. In this thesis, monitor refresh rate is used for synchronisation.
+A computer monitor has certain size, resolution and refresh rate. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor refresh rate, on the other hand, limits the blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using the monitor refresh rate for synchronisation rather than a timer~\cite{lcd_lcd_led}. In this thesis, monitor refresh rate is used for synchronisation.
 
 Monitor refresh rate is the number of consecutive images or frames shown on screen in a second, assuming that the frames are produces at least as fast as they can be displayed. A frame is one of the images that compose the changing picture on screen. Monitor with a refresh rate of 60 Hz can display 60 frames per second. 
 
@@ -55,14 +55,12 @@ The fastest possible target frequency can be achieved by changing between on and
 \end{equation}
 where $T$ is the period of the \gls{flickering}, $n$ is the number of times the target state is switched in a time period of $T$ and $f$ is the target frequency.
 
-As it was mentioned in section~\ref{sec:VEP}, \gls{SSVEP} reflects certain properties of the visual stimulus. Most important of these properties is that \gls{SSVEP} has a component with same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. It is sufficient to detect only the component with visual stimuli presentation frequency in the \gls{EEG} recording, but to improve the performance other components should be detected too.
-
-%In conclusion, the visual stimuli used in \gls{VEP}-based \gls{BCI} can be produced by a computer monitor and the synchronisation of the flickering can be based on refresh rate.
+\gls{SSVEP} reflects certain properties of the visual stimulus~\cite{ssvep_response}. Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. It is sufficient to detect only the component with visual stimuli presentation frequency in the \gls{EEG} recording, but to improve the performance other components should be detected too~\cite{harmonic_imrpovement}.
 
 \section{Decomposing signals}
-\label{sec:fourier}
 
 \subsection{Fourier analysis}
+\label{sec:fourier}
 
 As discussed in the previous section, the flickering of a target can produce different waveforms. This section will discuss how these waveforms and other signals can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
 
@@ -87,7 +85,7 @@ It can be shown that a square wave is composed of the \gls{fundamental} frequenc
 \end{equation}
 where $square(x)$ is the flickering represented as state versus time, $f$ is the flickering frequency and $a_i$ is the amplitude of i'th component. \Gls{fundamental} frequency of a square wave or rectangular wave has the highest amplitude or in other words, $\max_i a_i=a_1$. \Gls{rectangular wave}'s frequency depends on the \gls{duty cycle} of the wave.
 
-Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies present in the waveform of the \gls{target} \gls{flickering}. \Gls{SSVEP} contains all the harmonics of the \gls{fundamental} frequency, but the frequencies that are present in the components of \gls{target} \gls{flickering} are more successfully elicited in \gls{SSVEP}~\cite{puudu}. It has even been reported that \gls{SSVEP} contains small subharmonics of the fundamental frequency.
+Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies present in the waveform of the \gls{target} \gls{flickering}, but the frequencies that are present in the components of \gls{target} \gls{flickering} are more successfully elicited in \gls{SSVEP}~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small subharmonics of the fundamental frequency.
 %Rectangular wave is composed of frequencies not including every third harmonic
 %\begin{equation}
 %	rectangular(x)=\sum_{i=1}^{\infty} a_i sin(2\pi if)+b_i sin(2\pi 2if)
