@@ -2,13 +2,20 @@
 % Can be replaced by \appendix
 
 \begin{appendices}
-\renewcommand{\thechapter}{\Roman{chapter}}
-\chapter{Glossary}
+\renewcommand{\thesection}{\Roman{section}}
+\section{Glossary}
 \printglossary
+\newpage
+\section{Acronyms}
 \printglossary[type=\acronymtype]
-%\listoffigures
+\newpage
+\section{List of figures}
+\makeatletter
+\@starttoc{lof}% Print List of Figures
+\makeatother
+\newpage
 %\listoftables
-\chapter{Licence}
+\section{Licence}
 \textbf{Non-exclusive licence to reproduce thesis and make thesis public}\\[1cm]
 
 \noindent I, \textbf{Anti Ingel} (dd.mm.yyyy)
