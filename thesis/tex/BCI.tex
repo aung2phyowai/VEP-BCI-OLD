@@ -91,13 +91,15 @@ This section will focus on the decomposition of the \glspl{flickering waveform}.
 It can be shown that a \gls{square wave} is composed of odd \glspl{harmonic}. If the \gls{flickering waveform} is \gls{square wave} or \gls{rectangular wave}, the \gls{fundamental} frequency of the waveform is the frequency of the stimuli presentation. Therefore, \gls{square wave} with \gls{fundamental} frequency $f$ can be represented as a sum of sine waves
 \begin{equation}
 	\label{eq:square}
-	square(t) = \sum_{n=1,3,5,\dots}^{\infty}\frac{1}{n} sin(2\pi nft)
+	square(t) = \sum_{n=1,3,5,\dots}^{\infty}\frac{1}{n} \sin(2\pi nft)
 \end{equation}
 where $square(t)$ is the \gls{flickering} represented as \gls{state} versus time, $\frac{1}{n}$ is the amplitude of a \gls{frequency component} and $f$ is the \gls{fundamental} frequency of the waveform. It can be seen that the \gls{fundamental} has the highest amplitude. \Gls{rectangular wave}'s \glspl{frequency component} depend on the \gls{duty cycle} of the wave. But as is the case with \glspl{square wave}, the \gls{fundamental} has the highest amplitude also in \gls{rectangular wave}.
 
-Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is \gls{frequenct component} with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is an integer.
+Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is \gls{frequency component} with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is an integer.
 
-Thus \gls{SSVEP} reflects certain properties of the visual stimulus~\cite{ssvep_response}. The frequencies that are present in \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the visual stimuli presentation in the \gls{EEG} recording, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
+\gls{SSVEP} contains \glspl{harmonic} of the \gls{flickering} frequency~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that the frequencies are not each other \glspl{harmonic} or \glspl{subharmonic}. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response since. For example, if 6 Hz ans 12 Hz \gls{flickering} frequencies are used, then 6 Hz \gls{flickering} also elicits 12 Hz frequency in the \gls{SSVEP} since 12 Hz is the second harmonic of 6 Hz \gls{flickering}.
+
+Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering}, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
 
 %. Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
@@ -116,7 +118,7 @@ There are many types of \glspl{BCI} available. A review by Bashashati \textit{et
 	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
 	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
 \end{itemize}
-There is also an improvement of \gls{CCA} method available called multiway \gls{CCA}, which has shown slightly better performance than standard \gls{CCA} method~\cite{mcca}.
+There is also an improvement of \gls{CCA} method available called multiway \gls{CCA}, which has shown slightly better performance than standard \gls{CCA} method~\cite{mcca}. For more comprehensive review see article by Liu \textit{et al.}~\cite{feature_extraction}.
 
 In this thesis, Emotiv EPOC is used to record brain activity. The following papers also describe \glspl{BCI} that used Emotiv EPOC to record brain activity:
 \begin{itemize}
@@ -124,7 +126,7 @@ In this thesis, Emotiv EPOC is used to record brain activity. The following pape
 	\item Lin \textit{et al.}~\cite{emotiv_walking} used \gls{CCA} method;
 	\item Choi and Jo~\cite{emotiv_hybrid} designed hybrid \gls{BCI};
 	\item Zier~\cite{emotiv_psda} used \gls{PSDA} method;
-	\item Hvaring and Ulltveit-Moe~\cite{emotiv_comparison} compared different \gls{feature extraction} methods using Emotiv EPOC;
+	\item Hvaring and Ulltveit-Moe~\cite{emotiv_comparison} compared different \gls{feature extraction} methods;
 	\item Duvinage \textit{et al.}~\cite{emotiv_p300_comp} used P300 method and compared the performance of Emotiv EPOC and a medical-grade device.
 \end{itemize}
 %This thesis focuses on two of these methods: \gls{PSDA} and \gls{CCA} methods.
@@ -132,22 +134,42 @@ In this thesis, Emotiv EPOC is used to record brain activity. The following pape
 
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
-The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. 
-This section describes the \gls{PSDA} and \gls{CCA} method. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design application for controlling a robot. 
+The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design application for controlling a robot. 
 
 \subsection{Power spectral density analysis}
 
-\Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is based on a \gls{power spectral density} estimation, usually periodogram. Calculating the periodogram was discussed in section~\ref{sec:fourier}.
+\Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is based on a \gls{power spectral density} estimation. \Gls{power spectral density} estimation method called \gls{periodogram} was discussed in section~\ref{sec:fourier}.
 
-There are different ways how to use the periodogram for \gls{feature extraction}. Some \glspl{BCI} use a training session to find the threshold value that certain frequency power has to exceed. Other \glspl{BCI} calculate signal-to-noise ratio or other values that are related to signal-to-noise ratio. For example, if target frequency is $f$, then the ratio of frequency $f$ power to the sum of adjacent frequency bins is calculated. Another possibility is to use the ratio of the frequency $f$ power to the whole periodogram. All the methods can use in addition to the target frequency $f$ also its harmonics. Usually three harmonics are used.
+There are different ways how to use the \gls{power spectral density} estimation for \gls{feature extraction}. Some \glspl{BCI} use a training session to find a threshold value that certain frequency's amplitude or power has to exceed in order to select the \gls{target} with corresponding frequency as user's choice. This method requires a training session during which the threshold values are determined, but \gls{SSVEP}-based \glspl{BCI} could be implemented without the need for a training session. Threshold values, however, can be used together with other methods that \gls{power spectral density}. For example, article by Lin \textit{et al.} describes \gls{BCI} that uses peak finding to find highest values in \gls{power spectral density}~\cite{cca_lin}.
 
-One problem that occurs is that the periodogram is discrete. Periodogram might not have frequency bins on the exact frequencies of interest. More precisely, the frequencies of targets used in \gls{BCI}. In this case interpolation can be used. Interpolation is method for constructing the signal between the discrete points.
+Common method in \glspl{BCI} that use \gls{PSDA} \gls{feature extraction} is to calculate \gls{SNR} or other values that are related to \gls{SNR}. For example, the ratio of frequency's power to the mean of adjacent frequency bins can be calculated
+\begin{equation}
+	\label{eq:snr1}
+	\mbox{SNR}(f_k) = \frac{2P(f_k)}{P(f_{k+1})+P(f_{k-1})}
+\end{equation}
+where $\mbox{SNR}(f_k)$ is the \gls{SNR} of frequency $f_k$, $k$ is the number of the \gls{frequency bin} in \gls{periodogram}, assuming that the \glspl{frequency bin} are numbered in order of increasing frequencies and $P$ is the function representing \gls{power spectral density}~\cite{psda_snr1}. The \gls{SNR} as defined in equation~\ref{eq:snr1} can be calculated for every \gls{target} frequency and the \gls{target} that has the frequency with highest \gls{SNR} is assumed to be the user's choice. More than two adjacent frequency bins can be used to calculate the \gls{SNR}. Therefore, the equation~\ref{eq:snr1} can be generalised
+\begin{equation}
+	\mbox{SNR}(f_k) = \frac{nP(f_k)}{\sum_{i=1}^{n/2}P(f_{k-i})+P(f_{k+i})}
+\end{equation}
+where n is the number of adjacent frequency bins used~\cite{psda_snr2}. To generalise it even more, the ratio of the frequency's power to the whole \gls{power spectral density} or all the \glspl{frequency bin} can be calculated
+\begin{equation}
+	\mbox{SNR}(f_k) = \frac{P(f_k)}{\sum_i P(f_i)}
+\end{equation}
+This is the same as using normalised \gls{power spectral density} and comparing the normalised powers. It is also possible to just compare the powers of different \gls{target} frequencies and select the \gls{target} with highest power~\cite{cca_psda}. All these methods can use in addition to the \gls{target} frequency also its \glspl{harmonic}. In this case the sum of the \glspl{SNR} can be used
+\begin{equation}
+	\mbox{SNR}(f_k, 2f_k, \dots, hf_k)=\sum_{i=1}^{h}\mbox{SNR}(if_k)
+\end{equation}
+where $h$ is the number of \glspl{harmonic} used. Often three \glspl{harmonic} are used. After calculating the \gls{SNR} for all the \gls{target} frequencies and for their \glspl{harmonic} if necessary, the \gls{target} with highest \gls{SNR} or the highest sum of \glspl{SNR} can be selected as user's choice.
+
+One problem that occurs is that the \gls{power spectral density} is discrete. \Gls{power spectral density} might not have frequency bins on the exact frequencies of interest---the frequencies of \glspl{target} used in \gls{BCI}. In this case \gls{interpolation} can be used~\cite{cca_psda}. \Gls{interpolation} is used to construct a discrete signal between the discrete points or in other words to approximate the continuous signal from which the discrete values were extracted from. Another possibility to solve this problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if acquired from zero-padded signal.
+
+To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or powers of different \glspl{target} are compared to determine the user's choice. Some signal processing techniques that are required or can be used to enhance the performance of a \gls{BCI} will be discussed in section~\ref{sec:signal_pipeline}.
 
 \subsection{Canonical correlation analysis}
 
 \Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007~\cite{cca_lin}. 
 
-\Gls{CCA} is statistical method that can be used when analysing two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is the \gls{fundamental} frequency and \glspl{harmonic} of the \gls{flickering} frequency. Both sine and cosine waves are used in the second data set % since the phase of the \gls{SSVEP} is not known.
+\Gls{CCA} is statistical method that can be used when analysing the correlation between two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is the \gls{fundamental} frequency and \glspl{harmonic} of the \gls{flickering} frequency. Both sine and cosine waves are used in the second data set % since the phase of the \gls{SSVEP} is not known.
 \begin{equation}
 	\label{eq:cca_ref}
 	Y=\left(\begin{matrix}
