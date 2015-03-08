@@ -160,9 +160,16 @@ When comparing the \glspl{VEP} elicited by
 	\item the stimulation of the \gls{peripheral vision}
 \end{enumerate*} by the same stimuli, it can be seen that the stimulation of the \gls{central visual field} produces larger \glspl{VEP}~\cite{VEP_size}. In other words, the stimulus which a subject is looking at elicits larger \glspl{VEP} than those stimuli that are not in the very centre of gaze. Therefore, it is possible to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
 
-To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway does not have enough time to fully recover between stimulus presentations, then the elicited response becomes continuous and it is called the \gls{SSVEP}~\cite{VEP}. In a broad sense, \gls{SSVEP} is composed of many \glspl{VEP} that are elicited one after another in certain rate. See figure X for an example of \gls{VEP} and \gls{SSVEP}.
+To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway does not have enough time to fully recover between stimulus presentations, then the elicited response becomes continuous and it is called the \gls{SSVEP}~\cite{VEP}. In a broad sense, \gls{SSVEP} is composed of many \glspl{VEP} that are elicited one after another in certain rate. See figure~\ref{fig:ssvep} for an example of \gls{VEP} and \gls{SSVEP}.
 
-\gls{SSVEP} is continuous and therefore it is easier to detect it in the \gls{EEG} recording than \gls{VEP}, which is not continuous. Detecting continuous response is easier and more efficient because it is always present in the recording. Therefore, only \gls{SSVEP}-based methods used to detect \gls{SSVEP} in \gls{EEG} recording are discussed in this thesis.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.75\textwidth]{ssvep.png}
+	\caption{SSVEP~\cite[p.~120]{ERP}}
+	\label{fig:ssvep}
+\end{figure}
+
+\gls{SSVEP} is continuous and therefore it is easier to detect it in the \gls{EEG} recording than \gls{VEP}, which is not continuous. Detecting continuous response is easier and more efficient because it is always present in the recording. Thus usually \glspl{SSVEP} are elicited instead of \glspl{VEP} when the goal is to efficiently communicate with external device through brain responses to visual stimuli. This thesis also focuses on \gls{SSVEP}-based methods used to extract information from \gls{EEG} recording.
 
 %Thus the kind of response that is elicited in the brain depends on the visual stimulus. 
 
@@ -212,5 +219,5 @@ From the more consumer-friendly devices, Emotiv EPOC seems to offer good price-q
 	\label{fig:electrode_locations}
 \end{figure}
 
-Research has shown that Emotiv EPOC performs significantly worse than a medical-grade device~\cite{emotiv_p300_comp}. But the performance of Emotiv EPOC is good enough to detect \glspl{SSVEP} in the recording~\cite{emotiv_11hz, emotiv_psda, emotiv_walking, emotiv_comparison}. It has also been shown that it is possible to use Emotiv EPOC even when the subject is walking during recording~\cite{emotiv_walking}. Walking during the recording session causes the device to move and this movement produces artefacts in the recording. Despite the artefacts in the recording, it is still possible to detect \glspl{SSVEP} in the recording. Thus the performance of Emotiv EPOC is sufficient for detecting \glspl{SSVEP} and it is chosen as \gls{EEG} device for controlling a robot in this thesis.
+Research has shown that Emotiv EPOC performs significantly worse than a medical-grade device~\cite{emotiv_p300_comp}. But the performance of Emotiv EPOC is good enough to detect \glspl{SSVEP} in the recording~\cite{emotiv_11hz, emotiv_psda, emotiv_walking, emotiv_comparison}. It has also been shown that it is possible to use Emotiv EPOC even when the subject is walking during recording. Walking during the recording session causes the device to move on subject's head and this movement produces artefacts in the recording. Despite the artefacts it is still possible to detect \glspl{SSVEP} in the recording~\cite{emotiv_walking}. Thus the performance of Emotiv EPOC is sufficient for detecting \glspl{SSVEP} and it is chosen as \gls{EEG} device for controlling a robot in this thesis.
 \footnotetext{http://emotiv.wikia.com/wiki/Emotiv\_EPOC}
