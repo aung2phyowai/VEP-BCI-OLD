@@ -134,7 +134,7 @@ In this thesis, Emotiv EPOC is used to record brain activity. The following pape
 
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
-The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design application for controlling a robot. 
+The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
 
 \subsection{Power spectral density analysis}
 
@@ -161,24 +161,54 @@ This is the same as using normalised \gls{power spectral density} and comparing 
 \end{equation}
 where $h$ is the number of \glspl{harmonic} used. Often three \glspl{harmonic} are used. After calculating the \gls{SNR} for all the \gls{target} frequencies and for their \glspl{harmonic} if necessary, the \gls{target} with highest \gls{SNR} or the highest sum of \glspl{SNR} can be selected as user's choice.
 
-One problem that occurs is that the \gls{power spectral density} is discrete. \Gls{power spectral density} might not have frequency bins on the exact frequencies of interest---the frequencies of \glspl{target} used in \gls{BCI}. In this case \gls{interpolation} can be used~\cite{cca_psda}. \Gls{interpolation} is used to construct a discrete signal between the discrete points or in other words to approximate the continuous signal from which the discrete values were extracted from. Another possibility to solve this problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if acquired from zero-padded signal.
-
 To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or powers of different \glspl{target} are compared to determine the user's choice. Some signal processing techniques that are required or can be used to enhance the performance of a \gls{BCI} will be discussed in section~\ref{sec:signal_pipeline}.
 
 \subsection{Canonical correlation analysis}
 
-\Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007~\cite{cca_lin}. 
+\Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007~\cite{cca_lin}.
 
-\Gls{CCA} is statistical method that can be used when analysing the correlation between two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is the \gls{fundamental} frequency and \glspl{harmonic} of the \gls{flickering} frequency. Both sine and cosine waves are used in the second data set % since the phase of the \gls{SSVEP} is not known.
+\subsubsection{Template matching}
+
+Mathematically \gls{EEG} recording can be modelled as a discrete random process. Random process is a collection of random variables that are associated with time or in other words random process shows the evolution of a process over time. Therefore, \gls{EEG} recording can be represented as a sequence of random variables $X_1, X_2, X_3, \dots, X_N$. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance.
+
+A specific \gls{EEG} recording can be viewed as a realisation of random variables, for example $x_1, x_2, x_3, \dots, x_N$. The mean of these realisations can be calculated with
+\begin{equation}
+	\bar{x} = \frac{1}{N}\sum_{i=1}^{N}x_i
+\end{equation}
+To measure the similarity of two \gls{EEG} recordings, cross-covariance can be used. Cross-covariance measures how much two recordings change together at the same time points. Thus for two \gls{EEG} recordings $x=x_1,\dots,x_N$ and $y=y_1, \dots, y_N$ the cross-covariance is
+\begin{equation}
+	q_{xy} = \frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})(y_i-\bar{y})
+\end{equation}
+Cross-covariance can be normalised so that the result will be in interval $[-1, 1]$. Normalised cross-covariance is called cross-correlation. Cross-correlation can be calculated with
+\begin{equation}
+	\label{eq:corr}
+	r{xy} = \frac{q_{xy}}{\sqrt{q_{xx}q_{yy}}}
+\end{equation}
+The equation~\ref{eq:corr} can be used to measure the similarity between two \gls{EEG} recordings. Thus it is possible to use it as \gls{feature extraction} method. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
+
+\subsubsection{Reference signals}
+
+\gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} uses sine and cosine waves instead of templates and measures the similarity between multiple \gls{EEG} recordings and multiple reference signals. In contrast the equation~\ref{eq:corr} can be used to measure the similarity between only two signals.
+
+\gls{CCA} is used to analyse the correlation between two random vectors. Random vector can be used to represent a list of random processes $\mathbf{x}=(x_{O1}, x_{O2})$.
+
+\Gls{CCA} is statistical method that can be used when analysing the correlation between two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is the \glspl{harmonic} of the \gls{flickering} frequency. Both sine and cosine waves are used in the second data set % since the phase of the \gls{SSVEP} is not known.
 \begin{equation}
 	\label{eq:cca_ref}
-	Y=\left(\begin{matrix}
-		sin(2\pi)\\
-		cos(2\pi)\\
-		sin(2\pi)\\
-		cos(2\pi)\\
-		sin(2\pi)\\
-		cos(2\pi)\\
-	\end{matrix}\right)
+	Y=\begin{pmatrix}
+		y_1(t)\\
+		y_2(t)\\
+		y_3(t)\\
+		y_4(t)\\
+		y_5(t)\\
+		y_6(t)\\
+	\end{pmatrix}=\begin{pmatrix}
+		sin(2\pi ft)\\
+		cos(2\pi ft)\\
+		sin(2\pi 2ft)\\
+		cos(2\pi 2ft)\\
+		sin(2\pi 3ft)\\
+		cos(2\pi 3ft)\\
+	\end{pmatrix}
 \end{equation}
 In the method proposed by ... \textit{et al.} three harmonics are used as in equation~\ref{eq:cca_ref}.
