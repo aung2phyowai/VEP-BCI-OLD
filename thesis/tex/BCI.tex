@@ -169,46 +169,65 @@ To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extrac
 
 \subsubsection{Template matching}
 
-Mathematically \gls{EEG} recording can be modelled as a discrete random process. Random process is a collection of random variables that are associated with time or in other words random process shows the evolution of a process over time. Therefore, \gls{EEG} recording can be represented as a sequence of random variables $X_1, X_2, X_3, \dots, X_N$. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance.
+Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\bar{x}=(x_1, x_2, x_3, \dots, x_N)$. 
 
-A specific \gls{EEG} recording can be viewed as a realisation of random variables, for example $x_1, x_2, x_3, \dots, x_N$. The mean of these realisations can be calculated with
+As was the case with \gls{power spectral density}, the statistics calculated from the data sample are not the exact parameters for the whole \gls{EEG} signal. Statistics are used to estimate the theoretical values. The sample mean of a data set, for example \gls{EEG} recording can be calculated with
 \begin{equation}
 	\bar{x} = \frac{1}{N}\sum_{i=1}^{N}x_i
 \end{equation}
-To measure the similarity of two \gls{EEG} recordings, cross-covariance can be used. Cross-covariance measures how much two recordings change together at the same time points. Thus for two \gls{EEG} recordings $x=x_1,\dots,x_N$ and $y=y_1, \dots, y_N$ the cross-covariance is
+
+To measure the similarity of two \gls{EEG} recordings, sample covariance can be used. Sample covariance measures how much two data sets change together. Thus for two \gls{EEG} recordings $\bar{x}=(x_1,\dots,x_N)$ and $\bar{y}=(y_1, \dots, y_N)$ the sample covariance is
 \begin{equation}
+	\label{eq:cov}
 	q_{xy} = \frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})(y_i-\bar{y})
 \end{equation}
-Cross-covariance can be normalised so that the result will be in interval $[-1, 1]$. Normalised cross-covariance is called cross-correlation. Cross-correlation can be calculated with
+The addend $(x_i-\bar{x})(y_i-\bar{y})$ in the equation~\ref{eq:cov} is positive, if both signals change similarly at the corresponding time point or in other words, if both signals are above or below their means at the same time. The addend is negative, if the signals change in the opposite way or in other words, if one signal is above its mean and the other is below its mean.
+
+Sample covariance can be normalised so that the result will be between 1 and -1. Normalised covariance is called correlation. Correlation can be calculated with
 \begin{equation}
 	\label{eq:corr}
-	r{xy} = \frac{q_{xy}}{\sqrt{q_{xx}q_{yy}}}
+	r_{xy} = \frac{q_{xy}}{\sqrt{q_{xx}q_{yy}}}
 \end{equation}
+There is somewhat different correlation defined for time-domain signals, called cross-correlation. Cross-correlation also takes into account the possible shift in time between signals. For example, the correlation of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to this equation sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. Therefore, cross-correlation can be used to calculate a function of covariance versus time lag between the signals
+\begin{equation}
+	(x\star y)(t)=\sum_{i}x_iy_{i+t}
+\end{equation}
+
 The equation~\ref{eq:corr} can be used to measure the similarity between two \gls{EEG} recordings. Thus it is possible to use it as \gls{feature extraction} method. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
 
 \subsubsection{Reference signals}
 
-\gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} uses sine and cosine waves instead of templates and measures the similarity between multiple \gls{EEG} recordings and multiple reference signals. In contrast the equation~\ref{eq:corr} can be used to measure the similarity between only two signals.
+\gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} uses sine and cosine waves instead of templates in \gls{SSVEP}-based \glspl{BCI}. \gls{CCA} is a statistical method used to measure the similarity between two sets of signals or two sets of data samples. Therefore, \gls{CCA} can be used to measure the similarity between multichannel \gls{EEG} recording and multiple reference signals. In contrast the equation~\ref{eq:corr} can be used to measure the similarity between only two signals or two data samples.
 
-\gls{CCA} is used to analyse the correlation between two random vectors. Random vector can be used to represent a list of random processes $\mathbf{x}=(x_{O1}, x_{O2})$.
-
-\Gls{CCA} is statistical method that can be used when analysing the correlation between two sets of data. In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented with canonical variable~$X=x_{O1}+x_{O2}$. The second set of data is the \glspl{harmonic} of the \gls{flickering} frequency. Both sine and cosine waves are used in the second data set % since the phase of the \gls{SSVEP} is not known.
+In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector $X=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains the \glspl{harmonic} of a \gls{target} frequency. There is different set of reference signals for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
 \begin{equation}
 	\label{eq:cca_ref}
 	Y=\begin{pmatrix}
-		y_1(t)\\
-		y_2(t)\\
-		y_3(t)\\
-		y_4(t)\\
-		y_5(t)\\
-		y_6(t)\\
+		y_{sin1}(t)\\
+		y_{cos1}(t)\\
+		y_{sin2}(t)\\
+		y_{cos2}(t)\\
+		y_{sin3}(t)\\
+		y_{cos3}(t)\\
 	\end{pmatrix}=\begin{pmatrix}
-		sin(2\pi ft)\\
-		cos(2\pi ft)\\
-		sin(2\pi 2ft)\\
-		cos(2\pi 2ft)\\
-		sin(2\pi 3ft)\\
-		cos(2\pi 3ft)\\
+		\sin(2\pi 1ft)\\
+		\cos(2\pi 1ft)\\
+		\sin(2\pi 2ft)\\
+		\cos(2\pi 2ft)\\
+		\sin(2\pi 3ft)\\
+		\cos(2\pi 3ft)\\
 	\end{pmatrix}
 \end{equation}
-In the method proposed by ... \textit{et al.} three harmonics are used as in equation~\ref{eq:cca_ref}.
+
+In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three harmonics are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine as reference signals gives optimal minimum correlation of $\frac{1}{\sqrt{2}}$ between a reference signal and ideal \gls{SSVEP} component.
+
+The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}$. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation similarly.
+%This can be seen by analysing the following equation:
+%\begin{equation}
+%	\max[(y_{sin}\star x)(t),(y_{cos}\star x)(t)] = \max[(\sum_{i}sin(2\pi fi)x_{i+t}), (\sum_{i}cos(2\pi fi)x_{i+t})] > \frac{1}{\sqrt{2}}
+%\end{equation}
+Thus when there is \gls{SSVEP} component that corresponds to \gls{target} frequency or its harmonic, then there is positive correlation between the \gls{SSVEP} component and at least one of the reference signals.
+
+\subsubsection{title}
+
+

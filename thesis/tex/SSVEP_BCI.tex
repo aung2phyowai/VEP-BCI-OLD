@@ -21,6 +21,9 @@ Linear trend or constant increase or decrease of values in the \gls{EEG} recordi
 
 When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it has to be decided how long signal segments are used or in other words, how many samples have to be acquired before performing \gls{FFT}. Dividing the signal into segments can make the \gls{SSVEP} detection less accurate, because some periodic components might
 
+% phase in CCA
+The phase information from the frequency spectrum can be used to make correct reference signals in \gls{CCA} method. Then it would not be necessary to use both sine and cosine waves and the correlation would be more accurate.
+
 \section{Target identification}
 asd
 \section{The robot}
