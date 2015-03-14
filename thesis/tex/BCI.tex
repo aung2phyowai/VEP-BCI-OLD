@@ -101,36 +101,7 @@ Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does no
 
 Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering}, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
 
-%. Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
-
-\section{Related work}
-
-There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a detailed overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different methods are required to analyse \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}. %In this thesis, main focus is on \gls{SSVEP}-based \glspl{BCI}. 
-
-\gls{SSVEP}-based \glspl{BCI} can be divided in categories according to the method used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are also called \gls{feature extraction} methods. Current \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} methods include:
-\begin{itemize}
-	\item \Gls{PSDA} method introduced by Cheng \textit{et al.}~\cite{psda}.
-	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
-	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
-	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
-	\item \Gls{MEC} method introduced by Friman \textit{et al.}~\cite{mec}. This method has shown better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
-	\item \Gls{CCA} method introduced by Lin \textit{et al.}~\cite{cca_lin}. This method has shown better performance than \gls{PSDA} method~\cite{cca_psda, bin2009cca, cca_lin}.
-	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
-	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
-\end{itemize}
-There is also an improvement of \gls{CCA} method available called multiway \gls{CCA}, which has shown slightly better performance than standard \gls{CCA} method~\cite{mcca}. For more comprehensive review see article by Liu \textit{et al.}~\cite{feature_extraction}.
-
-In this thesis, Emotiv EPOC is used to record brain activity. The following papers also describe \glspl{BCI} that used Emotiv EPOC to record brain activity:
-\begin{itemize}
-	\item Liu \textit{et al.}~\cite{emotiv_11hz} used \gls{CCA} method;
-	\item Lin \textit{et al.}~\cite{emotiv_walking} used \gls{CCA} method;
-	\item Choi and Jo~\cite{emotiv_hybrid} designed hybrid \gls{BCI};
-	\item Zier~\cite{emotiv_psda} used \gls{PSDA} method;
-	\item Hvaring and Ulltveit-Moe~\cite{emotiv_comparison} compared different \gls{feature extraction} methods;
-	\item Duvinage \textit{et al.}~\cite{emotiv_p300_comp} used P300 method and compared the performance of Emotiv EPOC and a medical-grade device.
-\end{itemize}
-%This thesis focuses on two of these methods: \gls{PSDA} and \gls{CCA} methods.
-
+%Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
 \section{SSVEP-based brain-computer interface}
 \label{sec:SSVEP_detection}
@@ -167,16 +138,16 @@ To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extrac
 
 \Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007~\cite{cca_lin}.
 
-\subsubsection{Template matching}
+\subsubsection{Comparing two signals}
 
-Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\bar{x}=(x_1, x_2, x_3, \dots, x_N)$. 
+Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\mathbf{x}=(x_1, x_2, x_3, \dots, x_N)$. 
 
 As was the case with \gls{power spectral density}, the statistics calculated from the data sample are not the exact parameters for the whole \gls{EEG} signal. Statistics are used to estimate the theoretical values. The sample mean of a data set, for example \gls{EEG} recording can be calculated with
 \begin{equation}
 	\bar{x} = \frac{1}{N}\sum_{i=1}^{N}x_i
 \end{equation}
 
-To measure the similarity of two \gls{EEG} recordings, sample covariance can be used. Sample covariance measures how much two data sets change together. Thus for two \gls{EEG} recordings $\bar{x}=(x_1,\dots,x_N)$ and $\bar{y}=(y_1, \dots, y_N)$ the sample covariance is
+To measure the similarity of two \gls{EEG} recordings, sample covariance can be used. Sample covariance measures how much two data sets change together. Thus for two \gls{EEG} recordings $\mathbf{x}=(x_1,\dots,x_N)$ and $\mathbf{y}=(y_1, \dots, y_N)$ the sample covariance is
 \begin{equation}
 	\label{eq:cov}
 	q_{xy} = \frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})(y_i-\bar{y})
@@ -226,8 +197,24 @@ The optimal minimum correlation means that if \gls{SSVEP} component with the sam
 %\begin{equation}
 %	\max[(y_{sin}\star x)(t),(y_{cos}\star x)(t)] = \max[(\sum_{i}sin(2\pi fi)x_{i+t}), (\sum_{i}cos(2\pi fi)x_{i+t})] > \frac{1}{\sqrt{2}}
 %\end{equation}
-Thus when there is \gls{SSVEP} component that corresponds to \gls{target} frequency or its harmonic, then there is positive correlation between the \gls{SSVEP} component and at least one of the reference signals.
+Thus if there is \gls{SSVEP} component that corresponds to \gls{target} frequency or its \gls{harmonic}, then there is positive correlation between the \gls{SSVEP} component and at least one of the reference signals.
 
-\subsubsection{title}
+\subsubsection{Comparing two sets of signals}
 
+Using the equation~\ref{eq:cov}, the covariance between two sets of data samples $X=(\mathbf{x_1},\dots\mathbf{x_n})$ and $Y=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the covariances of all the possible combinations of two data samples:
+\begin{equation}
+	q_{XY} = \sum_{i=1}^{n}\sum_{j=1}^{n}q_{x_iy_j}
+\end{equation}
 
+The canonical correlation, however, is not just the correlation between two sets of data samples, but the correlation between the linear combination of one set and the linear combination of the other set of data samples. Linear combinations of $X$ and $Y$ are
+\begin{equation}
+	U = a_1x_1 + a_2x_2 + a_3x_3 + \dots a_nx_n \quad V = b_1y_1 + b_2y_2 + b_3y_3 + \dots b_my_m
+\end{equation}
+
+\gls{CCA} seeks linear combinations $U$ and $V$ of two sets of data samples $X$ and $Y$ that have the maximum correlation among all the possible linear combinations
+\begin{equation}
+	p = \frac{q_{UV}}{\sqrt{q_{UU}q_{VV}}}
+\end{equation}
+This correlation is called canonical correlation. The pair $(U, V)$ is called the first pair of canonical variates. It is also possible to find second, third, \dots, $\min(m, n)$ pair of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} other pairs of canonical variates are not used.
+
+Thus the canonical correlation between the \gls{EEG} recording and every set of reference signals is calculated. Every target has different set of reference signals as already mentioned in the previous section and therefore target whose set of reference signals has the highest canonical correlation with \gls{EEG} recording will be selected as user's choice.

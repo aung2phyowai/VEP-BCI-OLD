@@ -1,8 +1,36 @@
 
-\chapter{SSVEP-based BCI for controlling a robot}
+\chapter{Application for controlling a robot via SSVEP}
 \label{sec:SSVEP_BCI}
 
 The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed \dots. The \gls{BCI} is written in python 2.7 and the code is accessible from Github repository. See appendix~\ref{sec:bci_manual} for installation and usage instructions. The visual stimuli are designed using PsychoPy~\cite{psychopy}. \gls{CCA} algorithm is calculated using Scikit-Learn module~\cite{scikit-learn}. Most of other mathematical algorithms including \gls{FFT} are calculated using Scipy and Numpy modules~\cite{scipy}. The \gls{BCI} requires only Emotiv EPOC headset and a laptop computer, no specific hardware like digital signal processors or \glspl{LED} are used.
+
+\section{Related work}
+
+There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a detailed overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses two different neuromechanisms in a \gls{BCI} and therefore two different methods are required to analyse \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}. %In this thesis, main focus is on \gls{SSVEP}-based \glspl{BCI}. 
+
+\gls{SSVEP}-based \glspl{BCI} can be divided in categories according to the method used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are also called \gls{feature extraction} methods. Current \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} methods include:
+\begin{itemize}
+	\item \Gls{PSDA} method introduced by Cheng \textit{et al.}~\cite{psda}.
+	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
+	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
+	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
+	\item \Gls{MEC} method introduced by Friman \textit{et al.}~\cite{mec}. This method has shown better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
+	\item \Gls{CCA} method introduced by Lin \textit{et al.}~\cite{cca_lin}. This method has shown better performance than \gls{PSDA} method~\cite{cca_psda, bin2009cca, cca_lin}.
+	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
+	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
+\end{itemize}
+There is also an improvement of \gls{CCA} method available called multiway \gls{CCA}, which has shown slightly better performance than standard \gls{CCA} method~\cite{mcca}. For more comprehensive review see article by Liu \textit{et al.}~\cite{feature_extraction}.
+
+In this thesis, Emotiv EPOC is used to record brain activity. The following papers also describe \glspl{BCI} that used Emotiv EPOC to record brain activity:
+\begin{itemize}
+	\item Liu \textit{et al.}~\cite{emotiv_11hz} used \gls{CCA} method;
+	\item Lin \textit{et al.}~\cite{emotiv_walking} used \gls{CCA} method;
+	\item Choi and Jo~\cite{emotiv_hybrid} designed hybrid \gls{BCI};
+	\item Zier~\cite{emotiv_psda} used \gls{PSDA} method;
+	\item Hvaring and Ulltveit-Moe~\cite{emotiv_comparison} compared different \gls{feature extraction} methods;
+	\item Duvinage \textit{et al.}~\cite{emotiv_p300_comp} used P300 method and compared the performance of Emotiv EPOC and a medical-grade device.
+\end{itemize}
+%This thesis focuses on two of these methods: \gls{PSDA} and \gls{CCA} methods.
 
 \section{Signal pipeline}
 \label{sec:signal_pipeline}
