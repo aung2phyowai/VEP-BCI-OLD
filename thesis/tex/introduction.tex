@@ -1,3 +1,14 @@
 
 \chapter*{Introduction}
-It isn't about convenience -- for severely disabled people, development of a brain-computer interface (BCI) could be the most important technological breakthrough in decades (http://computer.howstuffworks.com/brain-computer-interface.htm)
+
+Over the last decade the question how to implement direct communication channel between the brain and an external device has received much attention. This communication channel works by translating recorded brain activity into commands to control the device or the other way round---by sending signals into the brain. Sending signals into the brain requires a surgery to implant the device that can send those signals. This approach can be used for example to repair damaged movement, vision or hearing.
+
+Measuring the brain activity, however, can be done without implanting anything into the brain and therefore it is easier and less expensive than invasive methods. This approach can be used for example to operate a wheelchair or for typing. Nowadays the brain activity can be measured using non-invasive and inexpensive devices and thus many people could benefit from an application that efficiently implements this new communication channel between the brain and an external device.
+
+This thesis describes an application that uses device called Emotiv EPOC to measure brain activity and translates the recorded signal into commands to control a robot. The application was written as a practical part of this thesis and the focus was on implementing an inexpensive application. Compared to existing applications, the practical part of this thesis combines different methods for extracting information from brain recording in a way which to the best of my knowledge has not been done before.
+
+The first chapter of this thesis describes the biology of the brain and discusses, what aspect of the brain activity can actually be measured. In the first chapter also different techniques and devices that can be used to measure brain activity are compared.
+
+The second chapter describes how to evoke a brain response that can be extracted from the recording using only Emotiv EPOC and a laptop computer. This chapter describes the mathematical algorithms that can be used to extract the information from brain recording.
+
+The third chapter describes the application implemented as a practical part of this thesis. This chapter contains overview of related works, describes the signal processing and explains the novelty of the application.

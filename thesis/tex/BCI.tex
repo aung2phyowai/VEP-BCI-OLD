@@ -1,23 +1,23 @@
 
-\chapter{VEP-based brain-computer interface}
+\chapter{Implementing VEP-based brain-computer interface}
 
 The previous chapter discussed the biology of the brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit \gls{SSVEP} and how to detect \gls{SSVEP} in a \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
 
 \section{Visual stimulus}
 \label{sec:stimuli}
 
-As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that used \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, in this thesis only the stimulus that can be presented by a computer monitor is discussed.
+As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed on a computer screen. Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that used \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be presented by a computer monitor are discussed in this thesis.
 
-A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor \gls{refresh rate}, on the other hand, limits the blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore, monitor \gls{refresh rate} is used for timing also in this thesis.
+A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor \gls{refresh rate}, on the other hand, limits the presentation rate or blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore, monitor \gls{refresh rate} is used for timing also in this thesis.
 
-Monitor \gls{refresh rate} is the number of consecutive images or \glspl{frame} shown on the screen in a second, assuming that the \glspl{frame} are produces at least as fast as they can be displayed. A \gls{frame} is one of the images that compose the changing picture on screen. Monitor with a \gls{refresh rate} of 60 Hz can display 60 \glspl{frame} per second. 
+Monitor \gls{refresh rate} is the number of consecutive images or \glspl{frame} shown on the screen in a second, assuming that the \glspl{frame} are produces at least as fast as they can be displayed. A \gls{frame} is one of the images that compose the changing picture on the screen. Monitor with a \gls{refresh rate} of 60 Hz can display 60 \glspl{frame} per second. 
 
-Often blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target}. The blinking of a target is called \gls{flickering}.
+Often blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target} and the blinking of a \gls{target} is called \gls{flickering}.
 
-In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when current \gls{frame} is replaced with next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is 60 Hz, then
+In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is 60 Hz, then
 \begin{itemize}
-	\item 10 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is even number, 10 Hz \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
-	\item 12 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame} and since 5 is odd number, the amount of time the target is in on \gls{state} and in off \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that the waveform is a \gls{rectangular wave}.
+	\item 10 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is an even number, 10 Hz \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
+	\item 12 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the target is in on \gls{state} and in off \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that the waveform is a \gls{rectangular wave}.
 	\item 11 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 5.45 \glspl{frame}. Since 5.45 is not a natural number, the \gls{flickering} will be irregular. 11 Hz target \gls{flickering} from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although 11 Hz frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 \end{itemize}
 
@@ -45,9 +45,9 @@ In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---disp
 	\caption{Adjusting target flickering to refresh rate}
 	\label{fig:flickering}
 \end{figure}
-A \gls{duty cycle} is used to characterise a \gls{rectangular wave}. \Gls{duty cycle} is the percentage of the amount of time the \gls{target} is in displayed \gls{state} in one period. If the target is in displayed \gls{state} for 2 \glspl{frame} and in not displayed \gls{state} for 3 \glspl{frame} in one period, then the \gls{duty cycle} of the \gls{rectangular wave} is $\frac{2}{2+3}\cdot 100\%=40\%$. \Gls{square wave} has a \gls{duty cycle} of 50\%. Research has shown that the \gls{SSVEP} elicited by \gls{square wave} \gls{flickering} can be more accurately detected than those elicited by \glspl{rectangular wave} \gls{flickering}~\cite{ssvep_stim}.
+A \gls{duty cycle} is used to characterise a \gls{rectangular wave}. \Gls{duty cycle} is the percentage of the amount of time the \gls{target} is in displayed \gls{state} in one period. If the target is in displayed \gls{state} for 2 \glspl{frame} and in not displayed \gls{state} for 3 \glspl{frame} in one period, then the \gls{duty cycle} of the \gls{rectangular wave} is $\frac{2}{2+3}\cdot 100\%=40\%$. \Gls{square wave} has a \gls{duty cycle} of 50\%. Research has shown that the \gls{SSVEP} elicited by a \gls{square wave} \gls{flickering} can be more accurately detected than those elicited by a \gls{rectangular wave} \gls{flickering}~\cite{ssvep_stim}.
 
-The previous discussion was about blinking shapes or \gls{single graphic} stimuli. There is another type of \gls{SSVEP} stimuli called \gls{pattern reversal} stimuli that can also be presented by computer screen. \Gls{pattern reversal} stimuli is rendered by changing between two different patterns, for example alternating the colours of a chequerboard~\cite{ssvep_stim}. The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}.
+The previous discussion was about blinking shapes or \gls{single graphic} stimuli. There is another type of \gls{SSVEP} stimuli called \gls{pattern reversal} stimuli that can also be displayed on a computer screen. \Gls{pattern reversal} stimuli is rendered by changing between two different patterns, for example alternating the colours of a chequerboard~\cite{ssvep_stim}. The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}.
 
 The fastest possible target frequency can be achieved by changing between on and off \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
 \begin{equation}
@@ -88,22 +88,22 @@ Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and c
 
 This section will focus on the decomposition of the \glspl{flickering waveform}. The \gls{target} \gls{flickering} and decomposition process were discussed in section~\ref{sec:stimuli} and section~\ref{sec:fourier} respectively. As discussed in previous section, only sine and cosine waves are composed of single frequency. Other waveforms have more \gls{frequency component}. The \gls{frequency component} with lowest frequency is called \gls{fundamental} or the first \gls{harmonic} of the signal. \Gls{harmonic} of a signal is a \gls{frequency component} with frequency that is integer multiple of the \gls{fundamental} frequency of the signal. If the \gls{fundamental} frequency is $f$, then first, second are third \glspl{harmonic} have frequencies of $1f$, $2f$, $3f$ respectively.
 
-It can be shown that a \gls{square wave} is composed of odd \glspl{harmonic}. If the \gls{flickering waveform} is \gls{square wave} or \gls{rectangular wave}, the \gls{fundamental} frequency of the waveform is the frequency of the stimuli presentation. Therefore, \gls{square wave} with \gls{fundamental} frequency $f$ can be represented as a sum of sine waves
+It can be shown that a \gls{square wave} is composed of odd \glspl{harmonic}. If the \gls{flickering waveform} is a \gls{square wave} or a \gls{rectangular wave}, the \gls{fundamental} frequency of the waveform is the frequency of the stimuli presentation. Therefore, a \gls{square wave} with \gls{fundamental} frequency $f$ can be represented as a sum of sine waves
 \begin{equation}
 	\label{eq:square}
 	square(t) = \sum_{n=1,3,5,\dots}^{\infty}\frac{1}{n} \sin(2\pi nft)
 \end{equation}
-where $square(t)$ is the \gls{flickering} represented as \gls{state} versus time, $\frac{1}{n}$ is the amplitude of a \gls{frequency component} and $f$ is the \gls{fundamental} frequency of the waveform. It can be seen that the \gls{fundamental} has the highest amplitude. \Gls{rectangular wave}'s \glspl{frequency component} depend on the \gls{duty cycle} of the wave. But as is the case with \glspl{square wave}, the \gls{fundamental} has the highest amplitude also in \gls{rectangular wave}.
+where $square(t)$ is the \gls{flickering} represented as \gls{state} versus time, $\frac{1}{n}$ is the amplitude of a \gls{frequency component} and $f$ is the \gls{fundamental} frequency of the waveform. It can be seen that the \gls{fundamental} has the highest amplitude. \Gls{rectangular wave}'s \glspl{frequency component} depend on the \gls{duty cycle} of the wave. But as is the case with \glspl{square wave}, the \gls{fundamental} has the highest amplitude also in a \gls{rectangular wave}.
 
 Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is \gls{frequency component} with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is an integer.
 
-\gls{SSVEP} contains \glspl{harmonic} of the \gls{flickering} frequency~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that the frequencies are not each other \glspl{harmonic} or \glspl{subharmonic}. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response since. For example, if 6 Hz ans 12 Hz \gls{flickering} frequencies are used, then 6 Hz \gls{flickering} also elicits 12 Hz frequency in the \gls{SSVEP} since 12 Hz is the second harmonic of 6 Hz \gls{flickering}.
+\gls{SSVEP} contains \glspl{harmonic} of the \gls{flickering} frequency of the stimuli~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that the frequencies are not each other \glspl{harmonic} or \glspl{subharmonic}. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response. For example, if 6 Hz and 12 Hz \gls{flickering} frequencies are both used, then 6 Hz \gls{flickering} also elicits 12 Hz frequency in the \gls{SSVEP} since 12 Hz is the second harmonic of 6 Hz \gls{flickering} and thus it cannot be distinguished whether a 12 Hz response is elicited by 6 Hz \gls{target} or 12 Hz \gls{target}.
 
-Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering}, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
+Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in the \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering}, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
 
 %Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
-\section{SSVEP-based brain-computer interface}
+\section{SSVEP-based BCI feature extraction methods}
 \label{sec:SSVEP_detection}
 The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
 
@@ -111,18 +111,18 @@ The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} 
 
 \Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is based on a \gls{power spectral density} estimation. \Gls{power spectral density} estimation method called \gls{periodogram} was discussed in section~\ref{sec:fourier}.
 
-There are different ways how to use the \gls{power spectral density} estimation for \gls{feature extraction}. Some \glspl{BCI} use a training session to find a threshold value that certain frequency's amplitude or power has to exceed in order to select the \gls{target} with corresponding frequency as user's choice. This method requires a training session during which the threshold values are determined, but \gls{SSVEP}-based \glspl{BCI} could be implemented without the need for a training session. Threshold values, however, can be used together with other methods that \gls{power spectral density}. For example, article by Lin \textit{et al.} describes \gls{BCI} that uses peak finding to find highest values in \gls{power spectral density}~\cite{cca_lin}.
+There are different ways how to use the \gls{power spectral density} estimation for \gls{feature extraction}. Some \glspl{BCI} use peak finding to find highest values in the \gls{power spectral density}~\cite{cca_lin}. Other \glspl{BCI} use a training session to find a threshold value that certain frequency's amplitude or power has to exceed in order to select the \gls{target} with corresponding frequency as user's choice. This method requires a training session during which the threshold values are determined, but \gls{SSVEP}-based \glspl{BCI} could be implemented without the need for a training session. Threshold values, however, can be used together with other methods. 
 
-Common method in \glspl{BCI} that use \gls{PSDA} \gls{feature extraction} is to calculate \gls{SNR} or other values that are related to \gls{SNR}. For example, the ratio of frequency's power to the mean of adjacent frequency bins can be calculated
+Common method in \glspl{BCI} that use \gls{PSDA} \gls{feature extraction} is to calculate \gls{SNR} or other values that are related to \gls{SNR}. For example, the ratio of frequency's power to the mean of adjacent frequency bins can be calculated~\cite{psda_snr1}
 \begin{equation}
 	\label{eq:snr1}
 	\mbox{SNR}(f_k) = \frac{2P(f_k)}{P(f_{k+1})+P(f_{k-1})}
 \end{equation}
-where $\mbox{SNR}(f_k)$ is the \gls{SNR} of frequency $f_k$, $k$ is the number of the \gls{frequency bin} in \gls{periodogram}, assuming that the \glspl{frequency bin} are numbered in order of increasing frequencies and $P$ is the function representing \gls{power spectral density}~\cite{psda_snr1}. The \gls{SNR} as defined in equation~\ref{eq:snr1} can be calculated for every \gls{target} frequency and the \gls{target} that has the frequency with highest \gls{SNR} is assumed to be the user's choice. More than two adjacent frequency bins can be used to calculate the \gls{SNR}. Therefore, the equation~\ref{eq:snr1} can be generalised
+where $\mbox{SNR}(f_k)$ is the \gls{SNR} of the frequency $f_k$, $P$ is the function representing \gls{power spectral density} and $f_1,\dots, f_k,\dots,f_m$ are the \glspl{frequency bin} of the \gls{periodogram} in increasing order. The \gls{SNR} as defined in equation~\ref{eq:snr1} can be calculated for every \gls{target} frequency and the \gls{target} that has the frequency with highest \gls{SNR} is assumed to be the user's choice. More than two adjacent frequency bins can be used to calculate the \gls{SNR}~\cite{psda_snr2}. Therefore, the equation~\ref{eq:snr1} can be generalised
 \begin{equation}
 	\mbox{SNR}(f_k) = \frac{nP(f_k)}{\sum_{i=1}^{n/2}P(f_{k-i})+P(f_{k+i})}
 \end{equation}
-where n is the number of adjacent frequency bins used~\cite{psda_snr2}. To generalise it even more, the ratio of the frequency's power to the whole \gls{power spectral density} or all the \glspl{frequency bin} can be calculated
+where n is the number of adjacent frequency bins used. To generalise it even more, the ratio of the frequency's power to the whole \gls{power spectral density} or all the \glspl{frequency bin} can be calculated
 \begin{equation}
 	\mbox{SNR}(f_k) = \frac{P(f_k)}{\sum_i P(f_i)}
 \end{equation}
@@ -136,13 +136,13 @@ To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extrac
 
 \subsection{Canonical correlation analysis}
 
-\Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007~\cite{cca_lin}.
+\Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 by Lin~\textit{et al.}~\cite{cca_lin}. This section gives necessary background information and describes the method proposed by Lin~\textit{et al.}.
 
 \subsubsection{Comparing two signals}
 
 Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\mathbf{x}=(x_1, x_2, x_3, \dots, x_N)$. 
 
-As was the case with \gls{power spectral density}, the statistics calculated from the data sample are not the exact parameters for the whole \gls{EEG} signal. Statistics are used to estimate the theoretical values. The sample mean of a data set, for example \gls{EEG} recording can be calculated with
+As was the case with \gls{power spectral density}, the statistics calculated from a data sample are not the exact parameters for the whole \gls{EEG} signal. Statistics are used to estimate the theoretical values. The sample mean of a data set, for example of an \gls{EEG} recording can be calculated with
 \begin{equation}
 	\bar{x} = \frac{1}{N}\sum_{i=1}^{N}x_i
 \end{equation}
@@ -154,26 +154,26 @@ To measure the similarity of two \gls{EEG} recordings, sample covariance can be 
 \end{equation}
 The addend $(x_i-\bar{x})(y_i-\bar{y})$ in the equation~\ref{eq:cov} is positive, if both signals change similarly at the corresponding time point or in other words, if both signals are above or below their means at the same time. The addend is negative, if the signals change in the opposite way or in other words, if one signal is above its mean and the other is below its mean.
 
-Sample covariance can be normalised so that the result will be between 1 and -1. Normalised covariance is called correlation. Correlation can be calculated with
+Sample covariance can be normalised so that the result will be between 1 and -1. Normalised covariance is called sample correlation. Sample correlation can be calculated with
 \begin{equation}
 	\label{eq:corr}
 	r_{xy} = \frac{q_{xy}}{\sqrt{q_{xx}q_{yy}}}
 \end{equation}
-There is somewhat different correlation defined for time-domain signals, called cross-correlation. Cross-correlation also takes into account the possible shift in time between signals. For example, the correlation of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to this equation sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. Therefore, cross-correlation can be used to calculate a function of covariance versus time lag between the signals
+There is somewhat different correlation defined for time-domain signals, called cross-correlation. Cross-correlation takes also into account the possible shift in time between signals. For example, the correlation of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to this equation sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. Therefore, cross-correlation can be used to calculate a function of covariance versus time lag between the signals
 \begin{equation}
 	(x\star y)(t)=\sum_{i}x_iy_{i+t}
 \end{equation}
 
-The equation~\ref{eq:corr} can be used to measure the similarity between two \gls{EEG} recordings. Thus it is possible to use it as \gls{feature extraction} method. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
+The equation~\ref{eq:corr} can be used to measure the similarity between two \gls{EEG} recordings. Thus it is possible to use it as \gls{feature extraction} method called template matching. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
 
 \subsubsection{Reference signals}
 
 \gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} uses sine and cosine waves instead of templates in \gls{SSVEP}-based \glspl{BCI}. \gls{CCA} is a statistical method used to measure the similarity between two sets of signals or two sets of data samples. Therefore, \gls{CCA} can be used to measure the similarity between multichannel \gls{EEG} recording and multiple reference signals. In contrast the equation~\ref{eq:corr} can be used to measure the similarity between only two signals or two data samples.
 
-In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector $X=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains the \glspl{harmonic} of a \gls{target} frequency. There is different set of reference signals for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
+In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector $\mathbf{X}=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains the \glspl{harmonic} of a \gls{target} frequency. There is different set of reference signals for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
 \begin{equation}
 	\label{eq:cca_ref}
-	Y=\begin{pmatrix}
+	\mathbf{Y}=\begin{pmatrix}
 		y_{sin1}(t)\\
 		y_{cos1}(t)\\
 		y_{sin2}(t)\\
@@ -190,7 +190,7 @@ In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} r
 	\end{pmatrix}
 \end{equation}
 
-In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three harmonics are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine as reference signals gives optimal minimum correlation of $\frac{1}{\sqrt{2}}$ between a reference signal and ideal \gls{SSVEP} component.
+In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three harmonics are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine as reference signals gives optimal minimum correlation of $\frac{1}{\sqrt{2}}$ between a reference signal and an ideal \gls{SSVEP} component.
 
 The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}$. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation similarly.
 %This can be seen by analysing the following equation:
@@ -201,20 +201,24 @@ Thus if there is \gls{SSVEP} component that corresponds to \gls{target} frequenc
 
 \subsubsection{Comparing two sets of signals}
 
-Using the equation~\ref{eq:cov}, the covariance between two sets of data samples $X=(\mathbf{x_1},\dots\mathbf{x_n})$ and $Y=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the covariances of all the possible combinations of two data samples:
+The covariance between two sets of data samples $\mathbf{X}=(\mathbf{x_1},\dots\mathbf{x_n})$ and $\mathbf{Y}=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the covariances of all the possible combinations of two data samples:
 \begin{equation}
 	q_{XY} = \sum_{i=1}^{n}\sum_{j=1}^{n}q_{x_iy_j}
 \end{equation}
+where $q_{x_iy_j}$ is calculated using the equation~\ref{eq:cov}.
 
 The canonical correlation, however, is not just the correlation between two sets of data samples, but the correlation between the linear combination of one set and the linear combination of the other set of data samples. Linear combinations of $X$ and $Y$ are
-\begin{equation}
-	U = a_1x_1 + a_2x_2 + a_3x_3 + \dots a_nx_n \quad V = b_1y_1 + b_2y_2 + b_3y_3 + \dots b_my_m
-\end{equation}
+\begin{equation*}
+	U = a_1x_1 + a_2x_2 + a_3x_3 + \dots a_nx_n
+\end{equation*}
+\begin{equation*}
+	V = b_1y_1 + b_2y_2 + b_3y_3 + \dots b_my_m
+\end{equation*}
 
-\gls{CCA} seeks linear combinations $U$ and $V$ of two sets of data samples $X$ and $Y$ that have the maximum correlation among all the possible linear combinations
+\gls{CCA} seeks linear combinations $U$ and $V$ of two sets of data samples $X$ and $Y$ that have the maximum correlation among all the possible linear combinations of $X$ and $Y$
 \begin{equation}
 	p = \frac{q_{UV}}{\sqrt{q_{UU}q_{VV}}}
 \end{equation}
-This correlation is called canonical correlation. The pair $(U, V)$ is called the first pair of canonical variates. It is also possible to find second, third, \dots, $\min(m, n)$ pair of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} other pairs of canonical variates are not used.
+This correlation is called canonical correlation. The pair $(U, V)$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates are used.
 
 Thus the canonical correlation between the \gls{EEG} recording and every set of reference signals is calculated. Every target has different set of reference signals as already mentioned in the previous section and therefore target whose set of reference signals has the highest canonical correlation with \gls{EEG} recording will be selected as user's choice.
