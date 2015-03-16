@@ -33,6 +33,7 @@ In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---disp
 		\caption{Ideal target flickering}
 	\end{subfigure}
 	\begin{subfigure}{\textwidth}
+		\vspace{10pt}
 		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
 			10 Hz & [C] 10{3H 3L}\\
 			11 Hz & [C] 3H 3L 3H 2L 3H 3L 3H 2L 3H 3L 2H 3L 3H 3L 2H 3L 3H 3L 2H 3L 3H 2L\\
@@ -42,7 +43,7 @@ In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---disp
 		\end{tikztimingtable}
 		\caption{Target flickering adjusted to refresh rate}
 	\end{subfigure}
-	\caption{Adjusting target flickering to refresh rate}
+	\caption{Adjusting target flickering to 60 Hz refresh rate}
 	\label{fig:flickering}
 \end{figure}
 A \gls{duty cycle} is used to characterise a \gls{rectangular wave}. \Gls{duty cycle} is the percentage of the amount of time the \gls{target} is in displayed \gls{state} in one period. If the target is in displayed \gls{state} for 2 \glspl{frame} and in not displayed \gls{state} for 3 \glspl{frame} in one period, then the \gls{duty cycle} of the \gls{rectangular wave} is $\frac{2}{2+3}\cdot 100\%=40\%$. \Gls{square wave} has a \gls{duty cycle} of 50\%. Research has shown that the \gls{SSVEP} elicited by a \gls{square wave} \gls{flickering} can be more accurately detected than those elicited by a \gls{rectangular wave} \gls{flickering}~\cite{ssvep_stim}.
@@ -63,6 +64,11 @@ Therefore computer monitor can be used to present visual stimuli to a subject an
 As discussed in the previous section, the \gls{flickering} of a \gls{target} can produce different waveforms. This section will discuss how these waveforms and other signals can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
 
 The following paragraph is based on the book by Hartmann~\cite{pure_tone}. The simpler trigonometric functions that a signal is decomposed into are \glspl{pure tone}---the waveforms that contain only one frequency. All other waveforms have at least two frequencies. \Gls{pure tone} waveforms are sine and cosine waves. Important property of a \gls{pure tone} is that linear operations do not change the shape of the \gls{pure tone} waveform.
+
+\begin{figure}[h]
+	\input{./tikz/pure_tone}
+	\caption{Sine wave in time domain and its frequency component}
+\end{figure}
 
 The \glspl{pure tone} are used to represent all possible frequencies that a signal may contain. The decomposition process of a signal is called \gls{Fourier transform} and it is used to decompose a function of time into \glspl{pure tone} or \glspl{frequency component} that make it up. The function of time can be for example the \gls{EEG} recording represented as voltage versus time or the \gls{target} \gls{flickering} represented as \gls{state} versus time. \Gls{Fourier transform} converts signal from time domain or the function of time to frequency domain or the function of frequency. The representation of a time-domain signal in a frequency domain is called \gls{frequency spectrum}. \Gls{frequency spectrum} contains information about amplitude and phase of different frequencies. Therefore, \gls{frequency spectrum} can be presented as a function of frequency versus amplitude and phase.
 
@@ -85,6 +91,7 @@ Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and c
 %Thus higher sampling rate and \gls{ADC} resolution lead to more accurate \gls{SSVEP} detection.
 
 \section{Decomposition of target flickering}
+\label{sec:decomposition}
 
 This section will focus on the decomposition of the \glspl{flickering waveform}. The \gls{target} \gls{flickering} and decomposition process were discussed in section~\ref{sec:stimuli} and section~\ref{sec:fourier} respectively. As discussed in previous section, only sine and cosine waves are composed of single frequency. Other waveforms have more \gls{frequency component}. The \gls{frequency component} with lowest frequency is called \gls{fundamental} or the first \gls{harmonic} of the signal. \Gls{harmonic} of a signal is a \gls{frequency component} with frequency that is integer multiple of the \gls{fundamental} frequency of the signal. If the \gls{fundamental} frequency is $f$, then first, second are third \glspl{harmonic} have frequencies of $1f$, $2f$, $3f$ respectively.
 
@@ -95,6 +102,11 @@ It can be shown that a \gls{square wave} is composed of odd \glspl{harmonic}. If
 \end{equation}
 where $square(t)$ is the \gls{flickering} represented as \gls{state} versus time, $\frac{1}{n}$ is the amplitude of a \gls{frequency component} and $f$ is the \gls{fundamental} frequency of the waveform. It can be seen that the \gls{fundamental} has the highest amplitude. \Gls{rectangular wave}'s \glspl{frequency component} depend on the \gls{duty cycle} of the wave. But as is the case with \glspl{square wave}, the \gls{fundamental} has the highest amplitude also in a \gls{rectangular wave}.
 
+\begin{figure}[h]
+	\input{./tikz/square_wave}
+	\caption{Square wave components}
+\end{figure}
+
 Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is \gls{frequency component} with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is an integer.
 
 \gls{SSVEP} contains \glspl{harmonic} of the \gls{flickering} frequency of the stimuli~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that the frequencies are not each other \glspl{harmonic} or \glspl{subharmonic}. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response. For example, if 6 Hz and 12 Hz \gls{flickering} frequencies are both used, then 6 Hz \gls{flickering} also elicits 12 Hz frequency in the \gls{SSVEP} since 12 Hz is the second harmonic of 6 Hz \gls{flickering} and thus it cannot be distinguished whether a 12 Hz response is elicited by 6 Hz \gls{target} or 12 Hz \gls{target}.
@@ -103,9 +115,36 @@ Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequen
 
 %Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
+\section{Signal processing}
+
+The aim of this section is to describe some digital signal processing techniques that can improve the performance of a \gls{SSVEP}-based \gls{BCI}.
+
+\subsection{Zero padding and interpolation}
+
+One problem that occurs when analysing \gls{power spectral density} is that the \gls{power spectral density} is discrete and therefore it might not have frequency bins at the exact values of interest. For example, if designing a \gls{BCI}, the frequencies of interest are the \glspl{target} frequencies or the \glspl{harmonic} of \glspl{target} \glspl{flickering}, since these are the \glspl{frequency component} of \gls{SSVEP} as discussed in section~\ref{sec:decomposition}.
+
+\Gls{interpolation} can be used to approximate the value between \glspl{frequency bin} to calculate the power of a \gls{target} frequency that does not correspond to any \gls{frequency bin}~\cite{cca_psda}. In general, \gls{interpolation} is used to construct a discrete signal between the discrete points or in other words to approximate the continuous signal from which the discrete values were extracted from. Therefore, \gls{interpolation} can also be used to approximate the \gls{EEG} recording if some of the values are lost in the process of sending values from the recording device to the computer.
+
+Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a zero-padded signal.
+
+\subsection{Trend in the signal}
+
+Linear trend or constant increase or decrease of values in the \gls{EEG} recording can decrease the accuracy of detecting \glspl{SSVEP}. Since Fourier analysis is used to decompose the recorded signal into \glspl{frequency component}, the linear trend present in the recording will also be decomposed. The decomposed trend will not provide any useful information in the \gls{power spectral density} and it makes detecting the actual \gls{SSVEP} \glspl{frequency component} less accurate.
+
+\begin{figure}
+	\input{./tikz/detrend_example}
+	\caption{The power spectral density of a signal with trend, without trend and the trend itself}
+\end{figure}
+
+Removing trend from a signal is called detrending. The average value or the mean of a detrended signal is 0. therefore the signal should be detrended before performing \gls{FFT}.
+
+\subsection{Windowing the signal}
+
+When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it has to be decided how long signal segments are used or in other words, how many samples have to be acquired before performing \gls{FFT}. Dividing the signal into segments can make the \gls{SSVEP} detection less accurate, because some periodic components might
+
 \section{SSVEP-based BCI feature extraction methods}
 \label{sec:SSVEP_detection}
-The aim of this chapter is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
+The aim of this section is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
 
 \subsection{Power spectral density analysis}
 
@@ -132,7 +171,7 @@ This is the same as using normalised \gls{power spectral density} and comparing 
 \end{equation}
 where $h$ is the number of \glspl{harmonic} used. Often three \glspl{harmonic} are used. After calculating the \gls{SNR} for all the \gls{target} frequencies and for their \glspl{harmonic} if necessary, the \gls{target} with highest \gls{SNR} or the highest sum of \glspl{SNR} can be selected as user's choice.
 
-To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or powers of different \glspl{target} are compared to determine the user's choice. Some signal processing techniques that are required or can be used to enhance the performance of a \gls{BCI} will be discussed in section~\ref{sec:signal_pipeline}.
+To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or powers of different \glspl{target} are compared to determine the user's choice.
 
 \subsection{Canonical correlation analysis}
 

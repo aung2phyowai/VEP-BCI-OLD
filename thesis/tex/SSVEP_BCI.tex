@@ -35,20 +35,6 @@ In this thesis, Emotiv EPOC is used to record brain activity. The following pape
 \section{Signal pipeline}
 \label{sec:signal_pipeline}
 
-\subsubsection{Discrete spectrum}
-
-One problem that occurs when using \gls{PSDA} is that the \gls{power spectral density} is discrete and therefore it might not have frequency bins at the values that correspond to \glspl{target} frequencies or its \glspl{harmonic}. In this case \gls{interpolation} can be used to approximate the value between frequency bins that exactly corresponds to \gls{target} frequency~\cite{cca_psda}. \Gls{interpolation} is used to construct a discrete signal between the discrete points or in other words to approximate the continuous signal from which the discrete values were extracted from.
-
-Another possibility to solve this problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from zero-padded signal.
-
-\subsubsection{Trend in the signal}
-
-Linear trend or constant increase or decrease of values in the \gls{EEG} recording can make detecting the \gls{SSVEP} less accurate. Since Fourier analysis is used to decompose the recorded signal into \glspl{pure tone}, the linear trend present in the recording will also be decomposed. The decomposed trend will not provide any useful information and therefore the signal should be detrended before performing \gls{FFT}.
-
-\subsubsection{Windowing the signal}
-
-When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it has to be decided how long signal segments are used or in other words, how many samples have to be acquired before performing \gls{FFT}. Dividing the signal into segments can make the \gls{SSVEP} detection less accurate, because some periodic components might
-
 % phase in CCA
 The phase information from the frequency spectrum can be used to make correct reference signals in \gls{CCA} method. Then it would not be necessary to use both sine and cosine waves and the correlation would be more accurate.
 
