@@ -1,3 +1,13 @@
+% This file was created by matplotlib v0.1.0.
+% Copyright (c) 2010--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
 \begin{tikzpicture}[scale=0.9]
 
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=50pt}]
@@ -7,7 +17,9 @@ ymin=-1, ymax=1,
 axis on top,
 xlabel = Time,
 ylabel = Signal,
-ylabel shift = -10 pt
+ylabel shift = -10 pt,
+enlarge x limits = 0.1,
+enlarge y limits = 0.1
 ]
 \addplot [blue, mark=*]
 coordinates {
@@ -63,33 +75,35 @@ coordinates {
 
 \nextgroupplot[
 xmin=0, xmax=10,
-ymin=0, ymax=20,
+ymin=0, ymax=1,
 axis on top,
 xlabel = Frequency,
-ylabel = Power
+ylabel = Amplitude,
+enlarge x limits = 0.1,
+enlarge y limits = 0.1
 ]
 \addplot [blue, mark=*]
 coordinates {
-(0.5,0.634592070821286)
-(1,19.6572725105721)
-(1.5,1.28497793694873)
-(2,0.701377430616883)
-(2.5,0.501941618964042)
-(3,0.398513615145854)
-(3.5,0.33456663604226)
-(4,0.291051002961931)
-(4.5,0.259637542309996)
-(5,0.236066929955907)
-(5.5,0.217920879254412)
-(6,0.203720797192742)
-(6.5,0.192512416164967)
-(7,0.183655057099486)
-(7.5,0.176706595954197)
-(8,0.171357042570062)
-(8.5,0.167388551174804)
-(9,0.16465068685387)
-(9.5,0.1630450218929)
-(10,0.162515818018282)
+(0.5,0.0317296035410643)
+(1,0.982863625528606)
+(1.5,0.0642488968474364)
+(2,0.0350688715308441)
+(2.5,0.0250970809482021)
+(3,0.0199256807572927)
+(3.5,0.016728331802113)
+(4,0.0145525501480966)
+(4.5,0.0129818771154998)
+(5,0.0118033464977954)
+(5.5,0.0108960439627206)
+(6,0.0101860398596371)
+(6.5,0.00962562080824836)
+(7,0.0091827528549743)
+(7.5,0.00883532979770986)
+(8,0.00856785212850308)
+(8.5,0.00836942755874022)
+(9,0.0082325343426935)
+(9.5,0.008152251094645)
+(10,0.0081257909009141)
 
 };
 \path [draw=black, fill opacity=0] (axis cs:13,20)--(axis cs:13,20);

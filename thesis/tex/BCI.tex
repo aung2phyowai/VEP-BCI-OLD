@@ -123,6 +123,11 @@ The aim of this section is to describe some digital signal processing techniques
 
 One problem that occurs when analysing \gls{power spectral density} is that the \gls{power spectral density} is discrete and therefore it might not have frequency bins at the exact values of interest. For example, if designing a \gls{BCI}, the frequencies of interest are the \glspl{target} frequencies or the \glspl{harmonic} of \glspl{target} \glspl{flickering}, since these are the \glspl{frequency component} of \gls{SSVEP} as discussed in section~\ref{sec:decomposition}.
 
+\begin{figure}[h]
+	\input{./tikz/zero_padding}
+	\caption{Signal in time domain and its a}
+\end{figure}
+
 \Gls{interpolation} can be used to approximate the value between \glspl{frequency bin} to calculate the power of a \gls{target} frequency that does not correspond to any \gls{frequency bin}~\cite{cca_psda}. In general, \gls{interpolation} is used to construct a discrete signal between the discrete points or in other words to approximate the continuous signal from which the discrete values were extracted from. Therefore, \gls{interpolation} can also be used to approximate the \gls{EEG} recording if some of the values are lost in the process of sending values from the recording device to the computer.
 
 Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a zero-padded signal.
@@ -131,9 +136,9 @@ Another possibility to solve the lack of \glspl{frequency bin} problem is to use
 
 Linear trend or constant increase or decrease of values in the \gls{EEG} recording can decrease the accuracy of detecting \glspl{SSVEP}. Since Fourier analysis is used to decompose the recorded signal into \glspl{frequency component}, the linear trend present in the recording will also be decomposed. The decomposed trend will not provide any useful information in the \gls{power spectral density} and it makes detecting the actual \gls{SSVEP} \glspl{frequency component} less accurate.
 
-\begin{figure}
+\begin{figure}[h]
 	\input{./tikz/detrend_example}
-	\caption{The power spectral density of a signal with trend, without trend and the trend itself}
+	\caption{The frequency components' amplitudes of a signal with trend, without trend and of the trend itself}
 \end{figure}
 
 Removing trend from a signal is called detrending. The average value or the mean of a detrended signal is 0. therefore the signal should be detrended before performing \gls{FFT}.
@@ -179,31 +184,32 @@ To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extrac
 
 \subsubsection{Comparing two signals}
 
-Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\mathbf{x}=(x_1, x_2, x_3, \dots, x_N)$. 
+Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\mathbf{x}=(x_1, x_2, x_3, \dots, x_n)$. 
 
 As was the case with \gls{power spectral density}, the statistics calculated from a data sample are not the exact parameters for the whole \gls{EEG} signal. Statistics are used to estimate the theoretical values. The sample mean of a data set, for example of an \gls{EEG} recording can be calculated with
 \begin{equation}
-	\bar{x} = \frac{1}{N}\sum_{i=1}^{N}x_i
+	m(\mathbf{x}) = \frac{1}{n}\sum_{i=1}^{n}x_i
 \end{equation}
 
-To measure the similarity of two \gls{EEG} recordings, sample covariance can be used. Sample covariance measures how much two data sets change together. Thus for two \gls{EEG} recordings $\mathbf{x}=(x_1,\dots,x_N)$ and $\mathbf{y}=(y_1, \dots, y_N)$ the sample covariance is
+To measure the similarity of two \gls{EEG} recordings, sample covariance can be used. Sample covariance measures how much two data sets change together. Thus for two \gls{EEG} recordings $\mathbf{x}=(x_1,\dots,x_n)$ and $\mathbf{y}=(y_1, \dots, y_n)$ the sample covariance is
 \begin{equation}
 	\label{eq:cov}
-	q_{xy} = \frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})(y_i-\bar{y})
+	q(\mathbf{x},\mathbf{y}) = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-m(\mathbf{x}))(y_i-m(\mathbf{y}))
 \end{equation}
-The addend $(x_i-\bar{x})(y_i-\bar{y})$ in the equation~\ref{eq:cov} is positive, if both signals change similarly at the corresponding time point or in other words, if both signals are above or below their means at the same time. The addend is negative, if the signals change in the opposite way or in other words, if one signal is above its mean and the other is below its mean.
+The addend $(x_i-m(\mathbf{x}))(y_i-m(\mathbf{y}))$ in the equation~\ref{eq:cov} is positive, if both signals change similarly at the corresponding time point or in other words, if both signals are above or below their means at the same time. The addend is negative, if the signals change in the opposite way or in other words, if one signal is above its mean and the other is below its mean.
 
 Sample covariance can be normalised so that the result will be between 1 and -1. Normalised covariance is called sample correlation. Sample correlation can be calculated with
 \begin{equation}
 	\label{eq:corr}
-	r_{xy} = \frac{q_{xy}}{\sqrt{q_{xx}q_{yy}}}
+	r(\mathbf{x},\mathbf{x}) = \frac{q(\mathbf{x},\mathbf{y})}{\sqrt{q(\mathbf{x},\mathbf{x})q(\mathbf{y},\mathbf{y})}}
 \end{equation}
-There is somewhat different correlation defined for time-domain signals, called cross-correlation. Cross-correlation takes also into account the possible shift in time between signals. For example, the correlation of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to this equation sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. Therefore, cross-correlation can be used to calculate a function of covariance versus time lag between the signals
+There is somewhat different correlation defined for time-domain signals, called cross-correlation. Cross-correlation takes also into account the possible shift in time between the signals. For example, the correlation of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to equation~\ref{eq:corr} sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. Cross-correlation is the function of the measure of similarity versus time lag between the signals
 \begin{equation}
-	(x\star y)(t)=\sum_{i}x_iy_{i+t}
+	\label{eq:cross_corr}
+	(\mathbf{x}\star \mathbf{y})(t)=\sum_{i}x_iy_{i+t}
 \end{equation}
 
-The equation~\ref{eq:corr} can be used to measure the similarity between two \gls{EEG} recordings. Thus it is possible to use it as \gls{feature extraction} method called template matching. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
+The equations \ref{eq:corr} and \ref{eq:cross_corr} can be used to measure the similarity between two \gls{EEG} recordings. Measuring the similarity between two signals can be used as \gls{feature extraction} method called template matching. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
 
 \subsubsection{Reference signals}
 
@@ -231,33 +237,36 @@ In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} r
 
 In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three harmonics are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine as reference signals gives optimal minimum correlation of $\frac{1}{\sqrt{2}}$ between a reference signal and an ideal \gls{SSVEP} component.
 
-The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}$. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation similarly.
-%This can be seen by analysing the following equation:
-%\begin{equation}
-%	\max[(y_{sin}\star x)(t),(y_{cos}\star x)(t)] = \max[(\sum_{i}sin(2\pi fi)x_{i+t}), (\sum_{i}cos(2\pi fi)x_{i+t})] > \frac{1}{\sqrt{2}}
-%\end{equation}
+The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the cross-correlation of the \gls{SSVEP} component with both signals and taking the absolute value of these correlations. See figure~\ref{fig:cross_corr} for example. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation similarly.
+
+\begin{figure}[h]
+	\label{fig:cross_corr}
+	\input{./tikz/cross_correlation}
+	\caption{Cross}
+\end{figure}
+
 Thus if there is \gls{SSVEP} component that corresponds to \gls{target} frequency or its \gls{harmonic}, then there is positive correlation between the \gls{SSVEP} component and at least one of the reference signals.
 
 \subsubsection{Comparing two sets of signals}
 
-The covariance between two sets of data samples $\mathbf{X}=(\mathbf{x_1},\dots\mathbf{x_n})$ and $\mathbf{Y}=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the covariances of all the possible combinations of two data samples:
+The covariance between two sets of data samples $\mathbf{X}=(\mathbf{x}_1,\dots\mathbf{x}_n)$ and $\mathbf{Y}=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the covariances of all the possible combinations of two data samples:
 \begin{equation}
-	q_{XY} = \sum_{i=1}^{n}\sum_{j=1}^{n}q_{x_iy_j}
+	q(\mathbf{X}, \mathbf{Y}) = \sum_{i=1}^{n}\sum_{j=1}^{n}q(\mathbf{x}_i, \mathbf{y}_j)
 \end{equation}
-where $q_{x_iy_j}$ is calculated using the equation~\ref{eq:cov}.
+where $q(\mathbf{x}_i, \mathbf{y}_j)$ is calculated using the equation~\ref{eq:cov}.
 
-The canonical correlation, however, is not just the correlation between two sets of data samples, but the correlation between the linear combination of one set and the linear combination of the other set of data samples. Linear combinations of $X$ and $Y$ are
+The canonical correlation, however, is not just the correlation between two sets of data samples, but the correlation between the linear combination of one set and the linear combination of the other set of data samples. Linear combinations of $\mathbf{X}$ and $\mathbf{Y}$ are
 \begin{equation*}
-	U = a_1x_1 + a_2x_2 + a_3x_3 + \dots a_nx_n
+	\mathbf{U} = a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + a_3\mathbf{x}_3 + \dots + a_n\mathbf{x}_n
 \end{equation*}
 \begin{equation*}
-	V = b_1y_1 + b_2y_2 + b_3y_3 + \dots b_my_m
+	\mathbf{V} = b_1\mathbf{y}_1 + b_2\mathbf{y}_2 + b_3\mathbf{y}_3 + \dots + b_m\mathbf{y}_m
 \end{equation*}
 
-\gls{CCA} seeks linear combinations $U$ and $V$ of two sets of data samples $X$ and $Y$ that have the maximum correlation among all the possible linear combinations of $X$ and $Y$
+\gls{CCA} seeks linear combinations $\mathbf{U}$ and $\mathbf{V}$ that have the maximum correlation among all the possible linear combinations of $\mathbf{X}$ and $\mathbf{Y}$
 \begin{equation}
-	p = \frac{q_{UV}}{\sqrt{q_{UU}q_{VV}}}
+	p = \frac{q(\mathbf{U}, \mathbf{V})}{\sqrt{q(\mathbf{U},\mathbf{U})q(\mathbf{V},\mathbf{V})}}
 \end{equation}
-This correlation is called canonical correlation. The pair $(U, V)$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates are used.
+This correlation is called canonical correlation. The pair $(\mathbf{U}, \mathbf{V})$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates is used.
 
 Thus the canonical correlation between the \gls{EEG} recording and every set of reference signals is calculated. Every target has different set of reference signals as already mentioned in the previous section and therefore target whose set of reference signals has the highest canonical correlation with \gls{EEG} recording will be selected as user's choice.
