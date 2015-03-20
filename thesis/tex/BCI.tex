@@ -1,90 +1,113 @@
 
 \chapter{Implementing VEP-based brain-computer interface}
 
-The previous chapter discussed the biology of the brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit \gls{SSVEP} and how to detect \gls{SSVEP} in a \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
+The previous chapter discussed the biology of the brain and described the brain potential called \gls{SSVEP}. The aim of this chapter is to describe which kind of visual stimuli can be used to elicit an \gls{SSVEP} and how to detect the elicited \gls{SSVEP} in the \gls{EEG} recording. This knowledge is needed to extract information from the \gls{EEG} recording and use this information to control a robot. In other words, this chapter will discuss how to implement a \gls{VEP}-based \gls{BCI}.
 
 \section{Designing visual stimuli}
 \label{sec:stimuli}
 
-As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed by a computer screen. Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that used \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be presented by a computer monitor are discussed in this thesis.
+As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed by a computer monitor.
 
-A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor \gls{refresh rate}, on the other hand, limits the presentation rate or blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore, monitor \gls{refresh rate} is used for timing also in this thesis.
+Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \glspl{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that use \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be displayed by a computer monitor are discussed in this thesis.
 
-Monitor \gls{refresh rate} is the number of consecutive images or \glspl{frame} shown on the screen in a second, assuming that the \glspl{frame} are produces at least as fast as they can be displayed. A \gls{frame} is one of the images that compose the changing picture on the screen. Monitor with a \gls{refresh rate} of 60 Hz can display 60 \glspl{frame} per second. 
+A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor \gls{refresh rate}, on the other hand, limits the presentation rate or blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore, monitor \gls{refresh rate} is used for timing and synchronisation also in this thesis.
+
+Monitor \gls{refresh rate} is the number of consecutive images or \glspl{frame} shown on the screen in a second, assuming that the \glspl{frame} are produces at least as fast as they can be displayed. A \gls{frame} is one of the images that compose the changing picture on the screen. Monitor with a \gls{refresh rate} of \SI{60}{Hz} can display 60 \glspl{frame} per second. 
 
 Often blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target} and the blinking of a \gls{target} is called \gls{flickering}.
 
-In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is 60 Hz, then
+In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is \SI{60}{Hz}, then
 \begin{itemize}
-	\item 10 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is an even number, 10 Hz \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
-	\item 12 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the target is in on \gls{state} and in off \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that the waveform is a \gls{rectangular wave}.
-	\item 11 Hz \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 5.45 \glspl{frame}. Since 5.45 is not a natural number, the \gls{flickering} will be irregular. 11 Hz target \gls{flickering} from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although 11 Hz frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
+	\item \SI{10}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is an even number, \SI{10}{Hz} \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
+	\item \SI{12}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the target is in on \gls{state} and in off \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{rectangular wave}.
+	\item \SI{11}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 5.45 \glspl{frame}. Since 5.45 is not a natural number, the \gls{flickering} will be irregular. \SI{11}{Hz} target \gls{flickering} from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although \SI{11}{Hz} frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 \end{itemize}
 
 \begin{figure}[h]
+	\centering
 	\begin{subfigure}{\textwidth}
 		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
-			10 Hz & [C] 10{3H 3L}\\
-			11 Hz & [C] 11{2.73H 2.73L}\\
-			12 Hz & [C] 12{2.5H 2.5L}\\
+			\SI{10}{Hz} & [C] 10{3H 3L}\\
+			\SI{11}{Hz} & [C] 11{2.73H 2.73L}\\
+			\SI{12}{Hz} & [C] 12{2.5H 2.5L}\\
 			\extracode
 			\tablegrid[black!25,step=1]
 		\end{tikztimingtable}
-		\caption{Ideal target flickering}
+		\caption{Ideal target flickering that does not correspond to frame changes.}
 	\end{subfigure}
 	\begin{subfigure}{\textwidth}
 		\vspace{10pt}
 		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
-			10 Hz & [C] 10{3H 3L}\\
-			11 Hz & [C] 3H 3L 3H 2L 3H 3L 3H 2L 3H 3L 2H 3L 3H 3L 2H 3L 3H 3L 2H 3L 3H 2L\\
-			12 Hz & [C] 12{3H 2L}\\
+			\SI{10}{Hz} & [C] 10{3H 3L}\\
+			\SI{11}{Hz} & [C] 3H 3L 3H 2L 3H 3L 3H 2L 3H 3L 2H 3L 3H 3L 2H 3L 3H 3L 2H 3L 3H 2L\\
+			\SI{12}{Hz} & [C] 12{3H 2L}\\
 			\extracode
 			\tablegrid[black!25,step=1]
 		\end{tikztimingtable}
-		\caption{Target flickering adjusted to refresh rate}
+		\caption{Target flickering adjusted to refresh rate.}
 	\end{subfigure}
-	\caption{Adjusting target flickering to 60 Hz refresh rate}
+	\caption{Adjusting target flickering to \SI{60}{Hz} refresh rate. The black line represents the flickering as state versus time. The states are displayed and not displayed. Vertical grid lines represent frame changes. There are 60 vertical grid lines and thus this figure shows the state changes of targets with different frequencies in one second.}
 	\label{fig:flickering}
 \end{figure}
 A \gls{duty cycle} is used to characterise a \gls{rectangular wave}. \Gls{duty cycle} is the percentage of the amount of time the \gls{target} is in displayed \gls{state} in one period. If the target is in displayed \gls{state} for 2 \glspl{frame} and in not displayed \gls{state} for 3 \glspl{frame} in one period, then the \gls{duty cycle} of the \gls{rectangular wave} is $\frac{2}{2+3}\cdot 100\%=40\%$. \Gls{square wave} has a \gls{duty cycle} of 50\%. Research has shown that the \gls{SSVEP} elicited by a \gls{square wave} \gls{flickering} can be more accurately detected than those elicited by a \gls{rectangular wave} \gls{flickering}~\cite{ssvep_stim}.
 
-The previous discussion was about blinking shapes or \gls{single graphic} stimuli. There is another type of \gls{SSVEP} stimuli called \gls{pattern reversal} stimuli that can also be displayed on a computer screen. \Gls{pattern reversal} stimuli is rendered by changing between two different patterns, for example alternating the colours of a chequerboard~\cite{ssvep_stim}. The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}.
+The previous discussion was about blinking shapes or \gls{single graphic} stimuli. There is another type of \gls{SSVEP} stimuli called \gls{pattern reversal} stimuli that can also be displayed on a computer screen. \Gls{pattern reversal} stimuli is rendered by changing between two different patterns, for example alternating the colours of a chequerboard~\cite{ssvep_stim}. See figure~\ref{fig:stimuli} for an example of \gls{single graphic} and \gls{pattern reversal} stimuli.
 
-The fastest possible target frequency can be achieved by changing between on and off \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=0.48\textwidth]{monitor.png}
+		~
+		\includegraphics[width=0.48\textwidth]{single_graphic.png}
+		\caption{The states of a single graphic stimulus.}
+	\end{subfigure}
+	~
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=0.48\textwidth]{pattern_reversal1.png}
+		~
+		\includegraphics[width=0.48\textwidth]{pattern_reversal2.png}
+		\caption{The states of a pattern reversal stimulus.}
+	\end{subfigure}
+	\caption{Different types of visual stimuli. A stimulus alternates between the two given states.}
+	\label{fig:stimuli}
+\end{figure}
+
+The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}. The fastest possible target frequency can be achieved by changing between on and off \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
 \begin{equation}
 	f_{single\mbox{ }graphic} = \frac{n}{2T} \qquad f_{pattern\mbox{ }reversal} = \frac{n}{T}
 \end{equation}
 where $T$ is the period of the \gls{flickering waveform}, $n$ is the number of times the \gls{target} \gls{state} is switched in a time period of $T$ and $f$ is the \gls{flickering} frequency.
 
-Therefore computer monitor can be used to present visual stimuli to a subject and monitor \gls{refresh rate} should be used to measure the time between stimuli presentations. Adjusting \gls{target} \gls{flickering} to the \gls{frame} changes can produce different \glspl{flickering waveform} for different \gls{flickering} frequencies. Since the \glspl{flickering waveform} are different, the \gls{SSVEP} response will also be different.
+Therefore, a computer monitor can be used to present visual stimuli to a subject and the \gls{refresh rate} of the monitor should be used for measuring the time between stimuli presentations. Adjusting \gls{target} \gls{flickering} to the rate at which the \glspl{frame} are changed can produce different \glspl{flickering waveform} for different \gls{flickering} frequencies. Since the \glspl{flickering waveform} are different, the \gls{SSVEP} response will also be different.
 
 \section{Overview of Fourier analysis}
 \label{sec:fourier}
 
 As discussed in the previous section, the \gls{flickering} of a \gls{target} can produce different waveforms. This section will discuss how these waveforms and other signals can be represented by sums of simpler trigonometric functions. The study of this decomposition process is called Fourier analysis, named after Joseph Fourier, whose insight to model all functions by trigonometric series was a breakthrough in the field in 1807.
 
-The following paragraph is based on the book by Hartmann~\cite{pure_tone}. The simpler trigonometric functions that a signal is decomposed into are \glspl{pure tone}---the waveforms that contain only one frequency. All other waveforms have at least two frequencies. \Gls{pure tone} waveforms are sine and cosine waves. Important property of a \gls{pure tone} is that linear operations do not change the shape of the \gls{pure tone} waveform.
-
-\begin{figure}[h]
-	\input{./tikz/pure_tone}
-	\caption{Sine wave in time domain and its frequency component}
-\end{figure}
+The following paragraph is based on the book by Hartmann~\cite{pure_tone}. The simpler trigonometric functions that a signal is decomposed into are \glspl{pure tone}---the waveforms that contain only one frequency. All other waveforms contain at least two frequencies. \Gls{pure tone} waveforms are sine and cosine waves. Important property of a \gls{pure tone} is that linear operations do not change the shape of the \gls{pure tone} waveform. See figure~\ref{fig:pure_tone} for an example of a \gls{pure tone}.
 
 The \glspl{pure tone} are used to represent all possible frequencies that a signal may contain. The decomposition process of a signal is called \gls{Fourier transform} and it is used to decompose a function of time into \glspl{pure tone} or \glspl{frequency component} that make it up. The function of time can be for example the \gls{EEG} recording represented as voltage versus time or the \gls{target} \gls{flickering} represented as \gls{state} versus time. \Gls{Fourier transform} converts signal from time domain or the function of time to frequency domain or the function of frequency. The representation of a time-domain signal in a frequency domain is called \gls{frequency spectrum}. \Gls{frequency spectrum} contains information about amplitude and phase of different frequencies. Therefore, \gls{frequency spectrum} can be presented as a function of frequency versus amplitude and phase.
 
-To represent both amplitude and phase, complex numbers are used. Complex numbers can be represented as a pair of real numbers and therefore complex numbers can be used to represent two values. The amplitude and phase do not correspond to the real and imaginary part of the complex number but rather are related to the absolute value or the modulus and phase of the complex number. In this thesis the phase information from the \gls{frequency spectrum} is not used. There are, however, \glspl{BCI} that also use the phase information~\cite{MPCC}. Since only the information about amplitude is required in this thesis, it is possible to convert the \gls{frequency spectrum} into \gls{power spectral density}, which is represented as a function of amplitude squared or power versus frequency.
+\begin{figure}[h]
+	\input{./tikz/pure_tone}
+	\caption{A sine wave in time domain~(A) and its frequency components' amplitudes~(B). Theoretically pure tone has only one frequency, but since the signal in time domain is digital, it is an approximation of the actual pure tone and therefore the representation of frequency components' amplitudes is not perfect.}
+	\label{fig:pure_tone}
+\end{figure}
+
+To represent both amplitude and phase, complex numbers are used. Complex numbers can be represented as a pair of real numbers and therefore complex numbers can be used to represent two values. The amplitude and phase do not correspond to the real and imaginary part of the complex number but rather are related to the absolute value or the modulus and the phase of the complex number. In this thesis the phase information from the \gls{frequency spectrum} is not used. There are, however, \glspl{BCI} that also use the phase information~\cite{MPCC}. Since only the information about amplitude is required in this thesis, it is possible to convert the \gls{frequency spectrum} into \gls{power spectral density}, which can be represented as a function of amplitude squared or power versus frequency.
 
 To conclude previous discussion, the amount of frequency $f$ present in a signal can be calculated by first calculating the \gls{frequency spectrum} with \gls{Fourier transform} and then taking modulus squared of the \gls{frequency spectrum}'s value at frequency $f$.
 
 In digital devices, however, theoretical \gls{power spectral density} cannot be calculated. The measurement period would have to be infinitely long to a acquire the true \gls{power spectral density}~\cite{psd}. Therefore, spectral estimation is used. The modulus squared of frequency spectrum in a real-world application is called \gls{periodogram} and it is the estimation of the \gls{power spectral density}. There are other spectral estimation methods available.
 
-Since digital devices work with discrete signals as discussed in section~\ref{sec:EEG_comparison}, in a real-world application discrete version of the \gls{Fourier transform} is used. The algorithm used to compute the discrete \gls{Fourier transform} is called \gls{FFT}. The \gls{frequency spectrum} calculated by \gls{FFT} is discrete---if the discrete real-valued input signal, as is the case with \gls{EEG} recording, has $N$ values then the output has $\frac{N}{2}$ values. This derives from the definition and symmetric property of the discrete \gls{Fourier transform}. %The higher the sampling rate and \gls{ADC} resolution of a recording device, the more accurate the recording and therefore the more accurate the frequency spectrum and the periodogram of the signal.
+Since digital devices work with \glspl{digital signal} as discussed in section~\ref{sec:EEG_comparison}, in a real-world application discrete version of the \gls{Fourier transform} is used. The algorithm used to compute the discrete \gls{Fourier transform} is called \gls{FFT}. The \gls{frequency spectrum} calculated by \gls{FFT} is discrete---if the digital real-valued input signal, as is the case with \gls{EEG} recording, has $N$ values then the output has the integer part of $\frac{N}{2}$ values. This derives from the definition and symmetric property of the discrete \gls{Fourier transform}. %The higher the sampling rate and \gls{ADC} resolution of a recording device, the more accurate the recording and therefore the more accurate the frequency spectrum and the periodogram of the signal.
 
-The signal that is recorded, however, may contain frequencies that are too high to be detected from the discrete signal. Theoretically, the \gls{sampling rate} of the device has to be more than two times higher than the highest frequency in the signal to reconstruct the continuous signal from the discrete signal and also to decompose the signal into \glspl{frequency component}. When looking it from different angle, the highest frequency that can be detected with a \gls{sampling rate} of $f$ is $\frac{2}{f}$ and it is called \gls{Nyguist frequency}. But since real-world application are imperfect, even higher \gls{sampling rate} is needed.
+The signal that is recorded, however, may contain frequencies that are too high to be detected from the \gls{digital signal}. Theoretically, the \gls{sampling rate} of the device has to be more than two times higher than the highest frequency in the signal to reconstruct the continuous signal from the recorded \gls{digital signal} and also to decompose the signal into \glspl{frequency component}. The highest frequency that can be detected with a \gls{sampling rate} of $f$ is $\frac{2}{f}$ and it is called \gls{Nyguist frequency}. But since real-world application are imperfect, even higher \gls{sampling rate} is needed. For example, as discussed in section~\ref{sec:EEG_comparison}, Emotiv EPOC has internal \gls{sampling rate} of \SI{2048}{Hz} to more accurately record frequencies up to its \gls{Nyguist frequency} of $\frac{\SI{128}{Hz}}{2}=\SI{64}{Hz}$.
 
-To conclude previous discussion, the \gls{frequency spectrum} calculated by \gls{FFT} from real-valued time-domain signal with $N$ values is defined at frequencies $\frac{1}{N}, \frac{2}{N}, \dots\frac{f}{2N}$. These frequencies are also called \glspl{frequency bin}. The length of a \gls{frequency spectrum} depends on the length of the signal from which it is calculated. The longer the input signal, the more \glspl{frequency bin} will be acquired.
+To conclude previous discussion, the \gls{frequency spectrum} calculated by \gls{FFT} from real-valued time-domain signal with $N$ values is defined at frequencies $\frac{1}{N}, \frac{2}{N}, \dots\frac{f/2}{N}$. These frequencies are also called \glspl{frequency bin}. The length of a \gls{frequency spectrum} depends on the length of the signal from which it is calculated. The longer the input signal, the more \glspl{frequency bin} will be acquired.
 
-Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and cosine waves using \gls{FFT}. \gls{FFT} calculates the \gls{frequency spectrum} of a time-domain signal. \Gls{frequency spectrum} can be converted to the estimation of \gls{power spectral density} which contains only the information about the amplitude of the \glspl{pure tone}. This knowledge can be used to detect \glspl{SSVEP} in \gls{EEG} recording.
+Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and cosine waves using \gls{FFT}. \gls{FFT} calculates the \gls{frequency spectrum} of a time-domain signal. \Gls{frequency spectrum} can be converted to the estimation of \gls{power spectral density} which contains only the information about the amplitudes of the \glspl{pure tone}. This knowledge can be used to detect \glspl{SSVEP} in an \gls{EEG} recording.
 
 %As already discussed in section~\ref{sec:EEG_comparison}, Emotiv EPOC has high internal sampling rate to filter out high frequencies
 
@@ -93,50 +116,32 @@ Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and c
 \section{Decomposing target flickering}
 \label{sec:decomposition}
 
-This section will focus on the decomposition of the \glspl{flickering waveform}. The \gls{target} \gls{flickering} and decomposition process were discussed in section~\ref{sec:stimuli} and section~\ref{sec:fourier} respectively. As discussed in previous section, only sine and cosine waves are composed of single frequency. Other waveforms have more \gls{frequency component}. The \gls{frequency component} with lowest frequency is called \gls{fundamental} or the first \gls{harmonic} of the signal. \Gls{harmonic} of a signal is a \gls{frequency component} with frequency that is integer multiple of the \gls{fundamental} frequency of the signal. If the \gls{fundamental} frequency is $f$, then first, second are third \glspl{harmonic} have frequencies of $1f$, $2f$, $3f$ respectively.
+This section will focus on the decomposition of the \glspl{flickering waveform}, which were described in section~\ref{sec:stimuli}. The decomposition process was discussed in section~\ref{sec:fourier}. As discussed in previous section, only sine and cosine waves are composed of a single frequency. Other waveforms have more \glspl{frequency component}. The \gls{frequency component} of a signal with lowest frequency is called \gls{fundamental} or the first \gls{harmonic} of the signal. \Gls{harmonic} of a signal is a \gls{frequency component} with frequency that is an integer multiple of the \gls{fundamental} frequency of the signal. If the \gls{fundamental} frequency is $f$, then first, second are third \glspl{harmonic} have frequencies of $1f$, $2f$, $3f$ respectively.
 
-It can be shown that a \gls{square wave} is composed of odd \glspl{harmonic}. If the \gls{flickering waveform} is a \gls{square wave} or a \gls{rectangular wave}, the \gls{fundamental} frequency of the waveform is the frequency of the stimuli presentation. Therefore, a \gls{square wave} with \gls{fundamental} frequency $f$ can be represented as a sum of sine waves
+It can be shown that a \gls{square wave} is composed of its odd \glspl{harmonic}. If the \gls{flickering waveform} is a \gls{square wave} or a \gls{rectangular wave}, the \gls{fundamental} frequency of the waveform is the frequency of the stimuli presentation. Therefore, a \gls{square wave} with \gls{fundamental} frequency $f$ can be represented as a sum of sine waves
 \begin{equation}
 	\label{eq:square}
 	\mbox{square}(t) = \sum_{n=1,3,5,\dots}^{\infty}\frac{1}{n} \sin(2\pi nft)
 \end{equation}
-where $\mbox{square}(t)$ is the \gls{flickering} represented as \gls{state} versus time, $\frac{1}{n}$ is the amplitude of a \gls{frequency component} and $f$ is the \gls{fundamental} frequency of the waveform. See figure~\ref{fig:square_wave} for an example of a square wave, three of its harmonics and their amplitude spectrum. It can be seen that the \gls{fundamental} has the highest amplitude. \Gls{rectangular wave}'s \glspl{frequency component} depend on the \gls{duty cycle} of the wave. But as is the case with \glspl{square wave}, the \gls{fundamental} has the highest amplitude also in a \gls{rectangular wave}.
+where $\mbox{square}(t)$ is the \gls{flickering} represented as \gls{state} versus time, $\frac{1}{n}$ is the amplitude of a \gls{frequency component} and $f$ is the \gls{fundamental} frequency of the waveform. See figure~\ref{fig:square_wave} for an example of a \gls{square wave}, three of its \glspl{harmonic} and their amplitude spectrum. It can be seen that the \gls{fundamental} of the square wave has the highest amplitude among its \glspl{frequency component}. \Gls{rectangular wave}'s \glspl{frequency component} depend on the \gls{duty cycle} of the wave. But as is the case with \glspl{square wave}, the \gls{fundamental} has the highest amplitude also in a \gls{rectangular wave}.
 
 \begin{figure}[h]
 	\input{./tikz/square_wave}
-	\caption{Square wave components}
+	\caption{A square wave in time domain (A), its first harmonic (blue), the sum of its first two harmonics (green) and the sum of its first three harmonics (red). The amplitude spectrum (B) shows the frequency components of the same signals with same colour-coding. Please note that the green signal also contains the blue signal, the red signal contains both blue and green signal and black signal contains all the previous signals. In general, every next signal in amplitude spectrum also contains the previous signals.}
 	\label{fig:square_wave}
 \end{figure}
 
-Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is \gls{frequency component} with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is an integer.
+Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is a \gls{frequency component} of the signal with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is a natural number.
 
-\gls{SSVEP} contains \glspl{harmonic} of the \gls{flickering} frequency of the stimuli~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that the frequencies are not each other \glspl{harmonic} or \glspl{subharmonic}. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response. For example, if 6 Hz and 12 Hz \gls{flickering} frequencies are both used, then 6 Hz \gls{flickering} also elicits 12 Hz frequency in the \gls{SSVEP} since 12 Hz is the second harmonic of 6 Hz \gls{flickering} and thus it cannot be distinguished whether a 12 Hz response is elicited by 6 Hz \gls{target} or 12 Hz \gls{target}.
+An \gls{SSVEP} contains \glspl{frequency component} with frequencies that are integer multiples of the \gls{flickering} frequency~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that neither of these frequencies is an integer multiple of the other. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response. For example, if \SI{6}{Hz} and \SI{12}{Hz} Hz \gls{flickering} frequencies are both used, then \SI{6}{Hz} \gls{flickering} also elicits \SI{12}{Hz} frequency in the \gls{SSVEP} since \SI{12}{Hz} is the second harmonic of \SI{6}{Hz} \gls{flickering} and thus it might not be possible to distinguish this \SI{12}{Hz} component from the \SI{12}{Hz} component elicited by \SI{12}{Hz} \gls{flickering}.
 
 Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in the \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering}, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
 
 %Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
-\section{Evaluating the performance of brain-computer interface}
-
-The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998:
-\begin{equation}
-	\label{eq:itr_unit}
-	B=\log_2 N+ P\log_2 P +(1-P)\log_2[(1-P)/(N-1)]
-\end{equation}
-where $B$ is the \gls{ITR} in units of bits per trial or bits per command, $N$ is the number of targets and $P$ is the accuracy or the probability that the user's choice is actually selected. To make the units of \gls{ITR} more understandable, \gls{ITR} is calculated in units of bits per minute~\cite{itr_wolpaw} instead
-\begin{equation}
-	\label{eq:itr}
-	B_t=B\cdot(\frac{60}{T})
-\end{equation}
-where $B_t$ is the \gls{ITR}, $B$ is calculated with equation~\ref{eq:itr_unit} and $T$ is the time needed to identify a chosen command.
-
-There are, however, preconditions that have to be fulfilled in order to calculate correct \gls{ITR} with the previously given equations. These preconditions are the following: \gls{BCI} is memoryless, all commands are equally likely to be chosen, the accuracy of choosing a target is the same for every target and in case of choosing a wrong target, all wrong targets are equally likely to he chosen~\cite{itr}.
-
-If these preconditions are met, the \gls{ITR} of a \gls{BCI} can be calculated using equation~\ref{eq:itr}.
-
 \section{Improving the accuracy of a spectrum with signal processing}
 
-The aim of this section is to describe some digital signal processing techniques that can improve the performance of a \gls{SSVEP}-based \gls{BCI} by improving the accuracy of amplitude spectrum or \gls{power spectral density}.
+The aim of this section is to describe some digital signal processing techniques that can improve the performance of a \gls{SSVEP}-based \gls{BCI} by improving the accuracy of an amplitude spectrum or \gls{power spectral density}.
 
 \subsection{Detrending the signal}
 
@@ -160,19 +165,25 @@ When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it
 \end{equation}
 where $s$ is signal segment, $w$ is window function and $ws$ is windowed signal.
 
-The non-zero values of a window function usually increase until the centre of the range, at the centre there is the highest value and then values start decreasing again until the end of the range. The general purpose of multiplying signals with window function is to smooth the start and the end of the signals. If the recorded signal has a clear periodic component but the length of the signal segment is such that there is not exactly integer multiple of periods of the component in the segment, then phenomena called spectral leakage will happen. Spectral leakage means that some of the power of the periodic component will be distributed over other \glspl{frequency bin}. Smoothing the start and the end of a signal is used to minimise the spectral leakage. See figure~\ref{fig:window} for an example of the hanning window, a sine wave windowed with hanning window and a comparison of amplitudes acquired from actual signal and windowed signal.
+The non-zero values of a window function usually increase until the centre of the range, at the centre there is the highest value and then values start decreasing again until the end of the range. See figure~\ref{fig:hanning_window} for an example of hanning window. The general purpose of multiplying signals with window function is to smooth the start and the end of the signals. If the recorded signal has a clear periodic component but the length of the signal segment is such that there is not exactly integer multiple of periods of the component in the segment, then phenomena called spectral leakage will happen. Spectral leakage means that some of the power of the periodic component will be distributed over other \glspl{frequency bin}. Smoothing the start and the end of a signal is used to minimise the spectral leakage.
 
 \begin{figure}[h!]
-	\input{./tikz/window_example}
-	\caption{The frequency components' amplitudes of a signal with zero mean, non-zero mean and signals multiplied with window function}
-	\label{fig:window}
+	\input{./tikz/hanning_window}
+	\caption{Hanning window and its frequency components' amplitudes}
+	\label{fig:hanning_window}
 \end{figure}
 
 Multiplying signal with window function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. For example, if signal $s(x)$ does not have zero mean, then it can be detrended, which means that the trend $t(x)$ will subtracted from the signal. Therefore when multiplying signal $s(x)$ with window $w(x)$, then
 \begin{equation}
 	(w\cdot s)(x) = w(x)\cdot(s(x)+t(x))=w(x)\cdot s(x)+w(x)\cdot t(x)
 \end{equation}
-It can be seen that if the $t(x)$ is not constantly zero, then windowing adds a component $w(x)\cdot t(x)$ to the signal in addition to changing the amplitudes of $s(x)$. If $t(x)$ is constantly zero, then the signal has zero mean and no additional component is added. Therefore signals with zero mean should be windowed. Another thing to keep in mind is that windowing a signal makes the peaks in the \gls{power spectral density} wider.
+It can be seen that if the $t(x)$ is not constantly zero, then windowing adds a component $w(x)\cdot t(x)$ to the signal in addition to changing the amplitudes of $s(x)$. If $t(x)$ is constantly zero, then the signal has zero mean and no additional component is added. Therefore signals with zero mean should be windowed. Another thing to keep in mind is that windowing a signal makes the peaks in the \gls{power spectral density} wider. See figure~\ref{fig:window} for an example of sine waves with zero mean and non-zero mean windowed with hanning window and a comparison of amplitudes acquired from actual signal and windowed signal.
+
+\begin{figure}[h!]
+	\input{./tikz/window_example}
+	\caption{The frequency components' amplitudes of a signal with zero mean, non-zero mean and these signals multiplied with hanning window}
+	\label{fig:window}
+\end{figure}
 
 The longer the recording period before each \gls{FFT}, the more samples will be acquired and the estimated \gls{power spectral density} will be more accurate. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the recording period before each \gls{FFT} or window should be as short as possible. Therefore, choosing the right window length is important in designing fast and accurate \gls{BCI}.
 
@@ -185,12 +196,18 @@ Another problem that occurs when analysing \gls{power spectral density} is that 
 In the paper by Hakvoort \textit{et al.}~\cite{cca_psda}, linear interpolation was used to approximate the amplitude of frequencies that did not correspond to \glspl{frequency bin}. However, linear interpolation is not the best option to estimate peaks in \gls{power spectral density}. In figure~\ref{fig:interpolation} there is a comparison of amplitude estimation of linear interpolation and barycentric interpolation.
 
 \begin{figure}[h!]
-	\input{./tikz/zero_padding}
-	\caption{The frequency components' amplitudes of a signal, the same signal with zero padding and the same signal windowed and zero padded. Red dot shows the approximation of the amplitude of 1.85 Hz frequency component using linear interpolation; green dot shows the approximation of the amplitude of the same frequency using barycentric interpolation.}
+	\input{./tikz/interpolation_example}
+	\caption{The frequency components' amplitudes of a signal and the amplitude of \SI{1.85}{Hz} frequency component approximated using linear interpolation (red) and barycentric interpolation (green)}
 	\label{fig:interpolation}
 \end{figure}
 
-Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a zero-padded signal. The comparison of amplitudes acquired from actual signal and zero-padded signal can be seen in figure~\ref{fig:interpolation}. Multiplying signal with window function before zero padding results in a smoother transition between signal and zero padding.
+Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a zero-padded signal. The comparison of amplitudes acquired from actual signal and zero-padded signal can be seen in figure~\ref{fig:zero_padding}. Multiplying signal with window function before zero padding results in a smoother transition between signal and zero padding.
+
+\begin{figure}[h!]
+	\input{./tikz/zero_padding}
+	\caption{The frequency components' amplitudes of a zero padded signal and the same signal windowed and then zero padded}
+	\label{fig:zero_padding}
+\end{figure}
 
 When zero padding a signal, the signal should be windowed or in other words multiplied a window function that smooths the start and the end of the signal. Windowing a signal requires the signal to have zero mean as discussed in previous section and therefore the signal should be detrended before windowing. Thus the correct order of using signal processing techniques described in this thesis is: interpolating to approximate lost packets or discrete signal values, detrending, windowing, zero padding and then interpolating to approximate values between \glspl{frequency bin}.
 
@@ -284,11 +301,11 @@ In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} r
 
 In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three harmonics are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine as reference signals gives optimal minimum correlation of $\frac{1}{\sqrt{2}}$ between a reference signal and an ideal \gls{SSVEP} component.
 
-The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the cross-correlation of the \gls{SSVEP} component with both signals and taking the absolute value of the resulting values. See figure~\ref{fig:cross_corr} for example. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation similarly.
+The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the cross-correlation of the \gls{SSVEP} component with both signals and taking the absolute value of the resulting values. See figure~\ref{fig:cross_corr} for example. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation or positive and negative correlation similarly.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\input{./tikz/cross_correlation}
-	\caption{Cross}
+	\caption{Cross-correlation of a signal (red) with sine wave (blue) and a cosine wave (green)}
 	\label{fig:cross_corr}
 \end{figure}
 
@@ -317,3 +334,21 @@ The canonical correlation, however, is not just the correlation between two sets
 This correlation is called canonical correlation. The pair $(\mathbf{U}, \mathbf{V})$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates is used.
 
 Thus the canonical correlation between the \gls{EEG} recording and every set of reference signals is calculated. Every target has different set of reference signals as already mentioned in the previous section and therefore target whose set of reference signals has the highest canonical correlation with \gls{EEG} recording will be selected as user's choice.
+
+\section{Evaluating the performance of brain-computer interface}
+
+The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998:
+\begin{equation}
+	\label{eq:itr_unit}
+	B=\log_2 N+ P\log_2 P +(1-P)\log_2[(1-P)/(N-1)]
+\end{equation}
+where $B$ is the \gls{ITR} in units of bits per trial or bits per command, $N$ is the number of targets and $P$ is the accuracy or the probability that the user's choice is actually selected. To make the units of \gls{ITR} more understandable, \gls{ITR} is calculated in units of bits per minute~\cite{itr_wolpaw} instead
+\begin{equation}
+	\label{eq:itr}
+	B_t=B\cdot(\frac{60}{T})
+\end{equation}
+where $B_t$ is the \gls{ITR}, $B$ is calculated with equation~\ref{eq:itr_unit} and $T$ is the time needed to identify a chosen command.
+
+There are, however, preconditions that have to be fulfilled in order to calculate correct \gls{ITR} with the previously given equations. These preconditions are the following: \gls{BCI} is memoryless, all commands are equally likely to be chosen, the accuracy of choosing a target is the same for every target and in case of choosing a wrong target, all wrong targets are equally likely to he chosen~\cite{itr}.
+
+If these preconditions are met, the \gls{ITR} of a \gls{BCI} can be calculated using equation~\ref{eq:itr}. Using the same evaluation method allows the performance of different \glspl{BCI} to be easily compared.

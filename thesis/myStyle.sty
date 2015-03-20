@@ -12,6 +12,14 @@
 \usepgfplotslibrary{groupplots}
 \usepackage{tikz-timing}
 %\usetikztiminglibrary{nicetabs} 
+\usepackage{alphalph} 			% subfigure letters to plots
+\makeatletter
+\pgfplotsset{
+    auto title/.style={
+        title=(\AlphAlph{\pgfplots@group@current@plot})
+    }
+}
+\makeatother
 
 \usepackage[nogroupskip, acronym]{glossaries}	% for acronyms
 \renewcommand{\glossarysection}[2][]{}			% no title for glossary
