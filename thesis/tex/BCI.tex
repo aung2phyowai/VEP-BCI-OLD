@@ -127,7 +127,7 @@ where $\mbox{square}(t)$ is the \gls{flickering} represented as \gls{state} vers
 
 \begin{figure}[h]
 	\input{./tikz/square_wave}
-	\caption{A square wave in time domain (A), its first harmonic (blue), the sum of its first two harmonics (green) and the sum of its first three harmonics (red). The amplitude spectrum (B) shows the frequency components of the same signals with same colour-coding. Please note that the green signal also contains the blue signal, the red signal contains both blue and green signal and black signal contains all the previous signals. In general, every next signal in amplitude spectrum also contains the previous signals.}
+	\caption{A square wave in time domain (A), its first harmonic (blue), the sum of its first two harmonics (green) and the sum of its first three harmonics (red). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with same colour-coding. Please note that the green signal also contains the blue signal, the red signal contains both blue and green signal and black signal contains all the previous signals. In general, every next signal in amplitude spectrum also contains the previous signals.}
 	\label{fig:square_wave}
 \end{figure}
 
@@ -139,77 +139,95 @@ Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequen
 
 %Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
+\section{Evaluating the performance of brain-computer interface}
+
+The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998:
+\begin{equation}
+	\label{eq:itr_unit}
+	B=\log_2 N+ P\log_2 P +(1-P)\log_2[(1-P)/(N-1)]
+\end{equation}
+where $B$ is the \gls{ITR} in units of bits per trial or bits per command, $N$ is the number of targets and $P$ is the accuracy or the probability that the user's choice is actually selected. To make the units of \gls{ITR} more understandable, \gls{ITR} is calculated in units of bits per minute~\cite{itr_wolpaw}
+\begin{equation}
+	\label{eq:itr}
+	B_t=B\cdot(\frac{60}{T})
+\end{equation}
+where $B_t$ is the \gls{ITR}, $B$ is calculated with equation~\ref{eq:itr_unit} and $T$ is the time needed to identify a chosen command.
+
+There are, however, preconditions that have to be fulfilled in order to calculate correct \gls{ITR} with the previously given equations. These preconditions are the following: \gls{BCI} is memoryless, all commands are equally likely to be chosen, the accuracy of choosing a target is the same for every target and in case of choosing a wrong target, all wrong targets are equally likely to he chosen~\cite{itr}.
+
+If these preconditions are met, the \gls{ITR} of a \gls{BCI} can be calculated using equation~\ref{eq:itr}. Using the same evaluation method allows the performance of different \glspl{BCI} to be easily compared.
+
 \section{Improving the accuracy of a spectrum with signal processing}
 
 The aim of this section is to describe some digital signal processing techniques that can improve the performance of a \gls{SSVEP}-based \gls{BCI} by improving the accuracy of an amplitude spectrum or \gls{power spectral density}.
 
 \subsection{Detrending the signal}
 
-A linear trend or steady increase or decrease of values in the \gls{EEG} recording can decrease the accuracy of detecting \glspl{SSVEP}. Since Fourier analysis is used to decompose the recorded signal into \glspl{frequency component}, the linear trend present in the recording will also be decomposed. The decomposed trend will not provide any useful information in the \gls{power spectral density} and it makes detecting the actual \gls{SSVEP} \glspl{frequency component} less accurate. A comparison of amplitudes acquired from a signal with trend and from detrended signal can be seen in figure~\ref{fig:detrend}.
+A linear \gls{trend} or steady increase or decrease of values in the \gls{EEG} recording can make the detection of \glspl{SSVEP} less accurate. As discussed in section~\ref{sec:fourier}, \gls{Fourier transform} is used to decompose a signal into \glspl{frequency component}. If the signal has a \gls{trend}, the \gls{trend} will also be decomposed. The decomposed \gls{trend} will not provide any useful information and it makes detecting the actual \gls{SSVEP} less accurate. A comparison of amplitudes acquired from a signal with trend and from the same signal without \gls{trend} can be seen in figure~\ref{fig:detrend}.
 
 \begin{figure}[h!]
 	\input{./tikz/detrend_example}
-	\caption{The frequency components' amplitudes of a signal with trend, without trend and of the trend itself}
+	\caption{A signal with trend (blue) and the same signal without trend (green) in time domain (A). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with same colour-coding. The plots in the second row show the trends of the signals in time domain (C) and the amplitude spectrums of these trends (D). Green signal actually does not have trend so its trend is presented as a constantly zero function.}
 	\label{fig:detrend}
 \end{figure}
 
-Removing trend from a signal is called detrending. The average value or the mean of a detrended signal is zero. The detrending also works if there is no steady increase or decrease of values but the average of the signal is not zero. In this case, just constant value is added to or subtracted from every value of the discrete signal. Subtracting or adding constant value to signal does not change the amplitudes of the \glspl{frequency component} of the signal and it does not add additional components to the spectrum.
+Removing \gls{trend} from a signal is called \glsdisp{detrend}{detrending}. The average value or the \gls{mean} of a \glsdisp{detrend}{detrended} signal is zero. The \glsdisp{detrend}{detrending} also works if there is no steady increase or decrease of values in the signal. In this case, just a constant value---the \gls{mean} of the signal---is subtracted from all the values of the \gls{digital signal} and as a result, the \gls{mean} of the signal will be zero. Subtracting a constant value from the signal does not change the amplitudes of the \glspl{frequency component} of the signal and it does not add additional \glspl{frequency component}.
 
-A linear trend can also be removed from the signal in segments---this means that the signal is divided into equal length segments and trend is removed from every segment separately. This is useful if the trend changes in the signal. Detrending a signal does not decrease the accuracy of detecting \gls{SSVEP} but can increase the accuracy of detecting \gls{SSVEP}. Therefore the \gls{EEG} recording should be detrended before performing \gls{FFT}.
+A linear \gls{trend} can also be removed from the signal in segments---this means that the signal is divided into equal length segments and \gls{trend} is removed from every segment separately. This is useful if the \gls{trend} changes in the signal. \glsdisp{detrend}{Detrending} a signal does not decrease the accuracy of detecting \gls{SSVEP} but can increase the accuracy of detecting \gls{SSVEP}. Therefore the \gls{EEG} recording should be \gls{detrend}{detrended} before performing \gls{FFT}.
 
 \subsection{Windowing the signal}
 
-When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it has to be decided how many samples will be acquired before performing \gls{FFT} on the acquired samples or in other words, how long window will be used. This means that the signal is divided into segments or in a sense the signal will be looked at through a window. Window function is a function that has non-zero values in a certain range and its value is zero at all the other values. Windowing a signal means that the signal is multiplied with a window function. The multiplication is element-wise.
+When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it has to be decided how many values will be recorded before performing \gls{FFT} on the acquired samples or in other words, how long \gls{window} will be used. This means that the signal is divided into segments or in a sense the signal will be looked at through a window. \Gls{window} function is a function that has non-zero values in a certain range and its value is zero outside that range. \glsdisp{window}{Windowing} means that a signal is multiplied with a \gls{window} function. The multiplication is element-wise
 \begin{equation}
 	(w\cdot s)(x)=w(x)\cdot s(x)
 \end{equation}
-where $s$ is signal segment, $w$ is window function and $ws$ is windowed signal.
+where $s$ is signal segment ans $w$ is \gls{window} function.
 
-The non-zero values of a window function usually increase until the centre of the range, at the centre there is the highest value and then values start decreasing again until the end of the range. See figure~\ref{fig:hanning_window} for an example of hanning window. The general purpose of multiplying signals with window function is to smooth the start and the end of the signals. If the recorded signal has a clear periodic component but the length of the signal segment is such that there is not exactly integer multiple of periods of the component in the segment, then phenomena called spectral leakage will happen. Spectral leakage means that some of the power of the periodic component will be distributed over other \glspl{frequency bin}. Smoothing the start and the end of a signal is used to minimise the spectral leakage.
+The non-zero values of a \gls{window} function usually increase until the centre of the range, at the centre there is the highest value and then the values start decreasing again until the end of the range. See figure~\ref{fig:hanning_window} for an example of hanning \gls{window}. The general purpose of multiplying a signal with a \gls{window} function is to smooth the start and the end of the signal. If the recorded signal has a clear periodic component but the is divided into segments and one segment does not contain exactly integer multiple of periods of the component, then phenomena called \gls{spectral leakage} will happen. \Gls{spectral leakage} means that some of the power of the periodic component will be distributed over other \glspl{frequency bin} and thus the correct \gls{frequency bin} will have less power and incorrect \glspl{frequency bin} will have more power. Smoothing the start and the end of a signal is used to minimise the \gls{spectral leakage}.
 
 \begin{figure}[h!]
 	\input{./tikz/hanning_window}
-	\caption{Hanning window and its frequency components' amplitudes}
+	\caption{Hanning window in time domain (A) and its amplitude spectrum (B).}
 	\label{fig:hanning_window}
 \end{figure}
 
-Multiplying signal with window function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. For example, if signal $s(x)$ does not have zero mean, then it can be detrended, which means that the trend $t(x)$ will subtracted from the signal. Therefore when multiplying signal $s(x)$ with window $w(x)$, then
+Multiplying a signal with a \gls{window} function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. For example, if signal $s(x)$ does not have zero mean, then it can be \glsdisp{detrend}{detrended}, which means that the \gls{trend} $t(x)$ will be subtracted from the signal. Therefore when multiplying signal $s(x)$ with \gls{window} $w(x)$, then
 \begin{equation}
 	(w\cdot s)(x) = w(x)\cdot(s(x)+t(x))=w(x)\cdot s(x)+w(x)\cdot t(x)
 \end{equation}
-It can be seen that if the $t(x)$ is not constantly zero, then windowing adds a component $w(x)\cdot t(x)$ to the signal in addition to changing the amplitudes of $s(x)$. If $t(x)$ is constantly zero, then the signal has zero mean and no additional component is added. Therefore signals with zero mean should be windowed. Another thing to keep in mind is that windowing a signal makes the peaks in the \gls{power spectral density} wider. See figure~\ref{fig:window} for an example of sine waves with zero mean and non-zero mean windowed with hanning window and a comparison of amplitudes acquired from actual signal and windowed signal.
+It can be seen that if the \gls{trend} $t(x)$ is not constantly zero, then \glsdisp{window}{windowing} adds a component $w(x)\cdot t(x)$ to the signal in addition to changing the amplitudes of $s(x)$. If $t(x)$ is constantly zero, then the signal has zero mean and no additional component is added. Therefore, signals with zero mean should be \glsdisp{window}{windowed}. Another thing to keep in mind is that \glsdisp{window}{windowing} a signal makes the peaks in the \gls{power spectral density} wider. See figure~\ref{fig:window} for an example of sine waves with zero mean and non-zero mean windowed with hanning window and a comparison of amplitudes acquired from actual signal and windowed signal.
 
 \begin{figure}[h!]
 	\input{./tikz/window_example}
-	\caption{The frequency components' amplitudes of a signal with zero mean, non-zero mean and these signals multiplied with hanning window}
+	\caption{A signal with zero mean (blue) and the same signal multiplied with window function (green) in time domain (A). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with same colour-coding. Plots in the second row show the same information for a signal with non-zero mean.}
 	\label{fig:window}
 \end{figure}
 
-The longer the recording period before each \gls{FFT}, the more samples will be acquired and the estimated \gls{power spectral density} will be more accurate. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the recording period before each \gls{FFT} or window should be as short as possible. Therefore, choosing the right window length is important in designing fast and accurate \gls{BCI}.
+The longer the recording period before each \gls{FFT}, the more values will be acquired and the estimated \gls{power spectral density} will be more accurate. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the recording period before each \gls{FFT} or \gls{window} length should be as short as possible. Therefore, choosing the right \gls{window} length is important in designing a fast and accurate \gls{BCI}.
 
 \subsection{Zero padding the signal and approximating unknown values}
 
-Another problem that occurs when analysing \gls{power spectral density} is that the \gls{power spectral density} of a discrete signal is discrete and therefore it might not have frequency bins at the exact values of interest. For example, if designing a \gls{BCI}, the frequencies of interest are the \glspl{target} frequencies or the \glspl{harmonic} of \glspl{target} \glspl{flickering}, since these are the \glspl{frequency component} of \gls{SSVEP} as discussed in section~\ref{sec:decomposition}.
+Another problem that occurs when analysing \gls{power spectral density} is that the \gls{power spectral density} of a \gls{digital signal} is discrete and therefore it might not have \glspl{frequency bin} at the exact values of interest. For example, if designing a \gls{BCI}, the frequencies of interest are the \glspl{target} frequencies or integer multiples of the \glspl{target} frequencies, because these are the \glspl{frequency component} of \gls{SSVEP} as discussed in section~\ref{sec:decomposition}.
 
-\Gls{interpolation} can be used to approximate the value between \glspl{frequency bin} to calculate the power of a \gls{target} frequency that does not correspond to any \gls{frequency bin}. In general, \gls{interpolation} is used to construct a discrete signal between the discrete points or in other words to approximate the continuous signal from which the discrete values were extracted from. Therefore, \gls{interpolation} can also be used to approximate the \gls{EEG} recording if some of the values are lost in the process of sending values from the recording device to the computer.
+\Gls{interpolation} can be used to approximate the value between \glspl{frequency bin} to calculate the power of a frequency that does not correspond to any \gls{frequency bin}. In general, \gls{interpolation} is used to construct a \gls{digital signal} between its discrete values or in other words to approximate the continuous signal from which the discrete values were extracted from. Therefore, \gls{interpolation} can also be used to approximate the \gls{EEG} recording if some of the values are lost in the process of sending values from the recording device to the computer.
 
-In the paper by Hakvoort \textit{et al.}~\cite{cca_psda}, linear interpolation was used to approximate the amplitude of frequencies that did not correspond to \glspl{frequency bin}. However, linear interpolation is not the best option to estimate peaks in \gls{power spectral density}. In figure~\ref{fig:interpolation} there is a comparison of amplitude estimation of linear interpolation and barycentric interpolation.
+In the paper by Hakvoort \textit{et al.}~\cite{cca_psda}, linear interpolation was used to approximate the amplitude of frequencies that did not correspond to any \gls{frequency bin}. However, linear interpolation is not the best option to estimate peaks in \gls{power spectral density}. In figure~\ref{fig:interpolation} there is a comparison of amplitude estimation of linear interpolation and barycentric interpolation.
 
 \begin{figure}[h!]
 	\input{./tikz/interpolation_example}
-	\caption{The frequency components' amplitudes of a signal and the amplitude of \SI{1.85}{Hz} frequency component approximated using linear interpolation (red) and barycentric interpolation (green)}
+	\caption{A signal in time domain (A) and its amplitude spectrum (B). The amplitude spectrum shows the comparison of the amplitude approximation of \SI{1.85}{Hz} frequency component using linear interpolation (red) and barycentric interpolation (green).}
 	\label{fig:interpolation}
 \end{figure}
 
-Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the discrete signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a zero-padded signal. The comparison of amplitudes acquired from actual signal and zero-padded signal can be seen in figure~\ref{fig:zero_padding}. Multiplying signal with window function before zero padding results in a smoother transition between signal and zero padding.
+Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a \glsdisp{zero padding}{zero-padded} signal. The comparison of amplitudes acquired from actual signal and a \glsdisp{zero padding}{zero-padded} signal can be seen in figure~\ref{fig:zero_padding}. Multiplying a signal with a \gls{window} function before \gls{zero padding} results in a smoother transition between the signal and its \gls{zero padding}.
 
 \begin{figure}[h!]
 	\input{./tikz/zero_padding}
-	\caption{The frequency components' amplitudes of a zero padded signal and the same signal windowed and then zero padded}
+	\caption{A zero-padded signal in time domain (A) and the same signal first windowed and then zero padded in time domain (C). Plots in the second column show the amplitude spectrum of the corresponding signal in the first column.}
 	\label{fig:zero_padding}
 \end{figure}
 
-When zero padding a signal, the signal should be windowed or in other words multiplied a window function that smooths the start and the end of the signal. Windowing a signal requires the signal to have zero mean as discussed in previous section and therefore the signal should be detrended before windowing. Thus the correct order of using signal processing techniques described in this thesis is: interpolating to approximate lost packets or discrete signal values, detrending, windowing, zero padding and then interpolating to approximate values between \glspl{frequency bin}.
+When \gls{zero padding} a signal, the signal should be \glsdisp{window}{windowed} or in other words multiplied a \gls{window} function that smooths the start and the end of the signal. \glsdisp{window}{Windowing} a signal requires the signal to have zero \gls{mean} as discussed in the previous section and therefore the signal should be \glsdisp{detrend}{detrended} before \glsdisp{window}{windowing}. Thus the correct order of using signal processing techniques described in this chapter is: \glsdisp{interpolation}{interpolating} to approximate lost packets or \gls{digital signal} values, \glsdisp{detrend}{detrending}, \glsdisp{window}{windowing}, \gls{zero padding} and then \glsdisp{interpolation}{interpolating} to approximate values between \glspl{frequency bin}.
 
 \section{SSVEP-based BCI feature extraction methods}
 \label{sec:SSVEP_detection}
@@ -217,7 +235,7 @@ The aim of this section is to describe two methods used to detect \glspl{SSVEP} 
 
 \subsection{Power spectral density analysis method}
 
-\Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is based on a \gls{power spectral density} estimation. \Gls{power spectral density} estimation method called \gls{periodogram} was discussed in section~\ref{sec:fourier}.
+This section describes \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} method called \gls{PSDA}. \Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is based on a \gls{power spectral density} estimation; one of the estimation methods called \gls{periodogram} was discussed in section~\ref{sec:fourier}.
 
 There are different ways how to use the \gls{power spectral density} estimation for \gls{feature extraction}. Some \glspl{BCI} use peak finding to find highest values in the \gls{power spectral density}~\cite{cca_lin}. Other \glspl{BCI} use a training session to find a threshold value that certain frequency's amplitude or power has to exceed in order to select the \gls{target} with corresponding frequency as user's choice. This method requires a training session during which the threshold values are determined, but \gls{SSVEP}-based \glspl{BCI} could be implemented without the need for a training session. Threshold values, however, can be used together with other methods. 
 
@@ -329,26 +347,15 @@ The canonical correlation, however, is not just the correlation between two sets
 
 \gls{CCA} seeks linear combinations $\mathbf{U}$ and $\mathbf{V}$ that have the maximum correlation among all the possible linear combinations of $\mathbf{X}$ and $\mathbf{Y}$
 \begin{equation}
-	p = \frac{q(\mathbf{U}, \mathbf{V})}{\sqrt{q(\mathbf{U},\mathbf{U})q(\mathbf{V},\mathbf{V})}}
+	p_k = \frac{q(\mathbf{U}, \mathbf{V})}{\sqrt{q(\mathbf{U},\mathbf{U})q(\mathbf{V},\mathbf{V})}}
 \end{equation}
 This correlation is called canonical correlation. The pair $(\mathbf{U}, \mathbf{V})$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates is used.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{cca.png}
+	\caption{The visualisation of CCA feature extraction method steps~\cite{bin2009cca}.}
+	\label{fig:cca}
+\end{figure}
+
 Thus the canonical correlation between the \gls{EEG} recording and every set of reference signals is calculated. Every target has different set of reference signals as already mentioned in the previous section and therefore target whose set of reference signals has the highest canonical correlation with \gls{EEG} recording will be selected as user's choice.
-
-\section{Evaluating the performance of brain-computer interface}
-
-The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998:
-\begin{equation}
-	\label{eq:itr_unit}
-	B=\log_2 N+ P\log_2 P +(1-P)\log_2[(1-P)/(N-1)]
-\end{equation}
-where $B$ is the \gls{ITR} in units of bits per trial or bits per command, $N$ is the number of targets and $P$ is the accuracy or the probability that the user's choice is actually selected. To make the units of \gls{ITR} more understandable, \gls{ITR} is calculated in units of bits per minute~\cite{itr_wolpaw} instead
-\begin{equation}
-	\label{eq:itr}
-	B_t=B\cdot(\frac{60}{T})
-\end{equation}
-where $B_t$ is the \gls{ITR}, $B$ is calculated with equation~\ref{eq:itr_unit} and $T$ is the time needed to identify a chosen command.
-
-There are, however, preconditions that have to be fulfilled in order to calculate correct \gls{ITR} with the previously given equations. These preconditions are the following: \gls{BCI} is memoryless, all commands are equally likely to be chosen, the accuracy of choosing a target is the same for every target and in case of choosing a wrong target, all wrong targets are equally likely to he chosen~\cite{itr}.
-
-If these preconditions are met, the \gls{ITR} of a \gls{BCI} can be calculated using equation~\ref{eq:itr}. Using the same evaluation method allows the performance of different \glspl{BCI} to be easily compared.
