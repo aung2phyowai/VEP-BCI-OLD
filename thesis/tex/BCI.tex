@@ -19,7 +19,7 @@ Often blinking one-coloured squares on one-coloured background are used as visua
 In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is \SI{60}{Hz}, then
 \begin{itemize}
 	\item \SI{10}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is an even number, \SI{10}{Hz} \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
-	\item \SI{12}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the target is in on \gls{state} and in off \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{rectangular wave}.
+	\item \SI{12}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the target is in displayed \gls{state} and in not displayed \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{rectangular wave}.
 	\item \SI{11}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 5.45 \glspl{frame}. Since 5.45 is not a natural number, the \gls{flickering} will be irregular. \SI{11}{Hz} target \gls{flickering} from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although \SI{11}{Hz} frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 \end{itemize}
 
@@ -33,7 +33,7 @@ In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---disp
 			\extracode
 			\tablegrid[black!25,step=1]
 		\end{tikztimingtable}
-		\caption{Ideal target flickering that does not correspond to frame changes.}
+		\caption{Ideal target flickering that might not correspond to frame changes.}
 	\end{subfigure}
 	\begin{subfigure}{\textwidth}
 		\vspace{10pt}
@@ -72,13 +72,13 @@ The previous discussion was about blinking shapes or \gls{single graphic} stimul
 	\label{fig:stimuli}
 \end{figure}
 
-The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}. The fastest possible target frequency can be achieved by changing between on and off \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
+The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}. The fastest possible target frequency can be achieved by changing between the \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
 \begin{equation}
 	f_{single\mbox{ }graphic} = \frac{n}{2T} \qquad f_{pattern\mbox{ }reversal} = \frac{n}{T}
 \end{equation}
 where $T$ is the period of the \gls{flickering waveform}, $n$ is the number of times the \gls{target} \gls{state} is switched in a time period of $T$ and $f$ is the \gls{flickering} frequency.
 
-Therefore, a computer monitor can be used to present visual stimuli to a subject and the \gls{refresh rate} of the monitor should be used for measuring the time between stimuli presentations. Adjusting \gls{target} \gls{flickering} to the rate at which the \glspl{frame} are changed can produce different \glspl{flickering waveform} for different \gls{flickering} frequencies. Since the \glspl{flickering waveform} are different, the \gls{SSVEP} response will also be different.
+A computer monitor can be used to present visual stimuli to a subject and the \gls{refresh rate} of the monitor should be used for measuring the time between stimuli presentations. Adjusting \gls{target} \gls{flickering} to the rate at which the \glspl{frame} are changed can produce different \glspl{flickering waveform} for different \gls{flickering} frequencies. Since the \glspl{flickering waveform} are different, the \gls{SSVEP} responses are also different.
 
 \section{Overview of Fourier analysis}
 \label{sec:fourier}
@@ -87,7 +87,7 @@ As discussed in the previous section, the \gls{flickering} of a \gls{target} can
 
 The following paragraph is based on the book by Hartmann~\cite{pure_tone}. The simpler trigonometric functions that a signal is decomposed into are \glspl{pure tone}---the waveforms that contain only one frequency. All other waveforms contain at least two frequencies. \Gls{pure tone} waveforms are sine and cosine waves. Important property of a \gls{pure tone} is that linear operations do not change the shape of the \gls{pure tone} waveform. See figure~\ref{fig:pure_tone} for an example of a \gls{pure tone}.
 
-The \glspl{pure tone} are used to represent all possible frequencies that a signal may contain. The decomposition process of a signal is called \gls{Fourier transform} and it is used to decompose a function of time into \glspl{pure tone} or \glspl{frequency component} that make it up. The function of time can be for example the \gls{EEG} recording represented as voltage versus time or the \gls{target} \gls{flickering} represented as \gls{state} versus time. \Gls{Fourier transform} converts signal from time domain or the function of time to frequency domain or the function of frequency. The representation of a time-domain signal in a frequency domain is called \gls{frequency spectrum}. \Gls{frequency spectrum} contains information about amplitude and phase of different frequencies. Therefore, \gls{frequency spectrum} can be presented as a function of frequency versus amplitude and phase.
+The \glspl{pure tone} are used to represent all possible frequencies that a signal may contain. The decomposition process of a signal is called \gls{Fourier transform} and it is used to decompose a function of time into \glspl{pure tone} or \glspl{frequency component} that make it up. The function of time can be for example the \gls{EEG} recording represented as voltage versus time or the \gls{target} \gls{flickering} represented as \gls{state} versus time. \Gls{Fourier transform} converts signal from time domain or the function of time to frequency domain or the function of frequency. The representation of a time-domain signal in a frequency domain is called \gls{frequency spectrum}. \Gls{frequency spectrum} contains information about amplitude and phase of different \glspl{frequency component}. Therefore, \gls{frequency spectrum} can be presented as a function of frequency versus amplitude and phase.
 
 \begin{figure}[h]
 	\input{./tikz/pure_tone}
@@ -103,11 +103,11 @@ In digital devices, however, theoretical \gls{power spectral density} cannot be 
 
 Since digital devices work with \glspl{digital signal} as discussed in section~\ref{sec:EEG_comparison}, in a real-world application discrete version of the \gls{Fourier transform} is used. The algorithm used to compute the discrete \gls{Fourier transform} is called \gls{FFT}. The \gls{frequency spectrum} calculated by \gls{FFT} is discrete---if the digital real-valued input signal, as is the case with \gls{EEG} recording, has $N$ values then the output has the integer part of $\frac{N}{2}$ values. This derives from the definition and symmetric property of the discrete \gls{Fourier transform}. %The higher the sampling rate and \gls{ADC} resolution of a recording device, the more accurate the recording and therefore the more accurate the frequency spectrum and the periodogram of the signal.
 
-The signal that is recorded, however, may contain frequencies that are too high to be detected from the \gls{digital signal}. Theoretically, the \gls{sampling rate} of the device has to be more than two times higher than the highest frequency in the signal to reconstruct the continuous signal from the recorded \gls{digital signal} and also to decompose the signal into \glspl{frequency component}. The highest frequency that can be detected with a \gls{sampling rate} of $f$ is $\frac{2}{f}$ and it is called \gls{Nyguist frequency}. But since real-world application are imperfect, even higher \gls{sampling rate} is needed. For example, as discussed in section~\ref{sec:EEG_comparison}, Emotiv EPOC has internal \gls{sampling rate} of \SI{2048}{Hz} to more accurately record frequencies up to its \gls{Nyguist frequency} of $\frac{\SI{128}{Hz}}{2}=\SI{64}{Hz}$.
+The signal that is recorded, however, may contain frequencies that are too high to be detected from the \gls{digital signal}. Theoretically, the \gls{sampling rate} of the device has to be more than two times higher than the highest frequency in the signal to reconstruct the continuous signal from the recorded \gls{digital signal} and also to decompose the signal into \glspl{frequency component}. The highest frequency that can be detected with a \gls{sampling rate} of $f$ is $\frac{2}{f}$ and it is called \gls{Nyguist frequency}. But since real-world application are imperfect, even higher \gls{sampling rate} is needed. For example, as discussed in section~\ref{sec:EEG_comparison}, Emotiv EPOC has internal \gls{sampling rate} of \SI{2048}{Hz} to more accurately record frequencies up to its \gls{Nyguist frequency} of $\frac{\SI{128}{Hz}}{2}=\SI{64}{Hz}$, since the actual \gls{sampling rate} is \SI{128}{Hz}.
 
 To conclude previous discussion, the \gls{frequency spectrum} calculated by \gls{FFT} from real-valued time-domain signal with $N$ values is defined at frequencies $\frac{1}{N}, \frac{2}{N}, \dots\frac{f/2}{N}$. These frequencies are also called \glspl{frequency bin}. The length of a \gls{frequency spectrum} depends on the length of the signal from which it is calculated. The longer the input signal, the more \glspl{frequency bin} will be acquired.
 
-Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and cosine waves using \gls{FFT}. \gls{FFT} calculates the \gls{frequency spectrum} of a time-domain signal. \Gls{frequency spectrum} can be converted to the estimation of \gls{power spectral density} which contains only the information about the amplitudes of the \glspl{pure tone}. This knowledge can be used to detect \glspl{SSVEP} in an \gls{EEG} recording.
+Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and cosine waves using \gls{FFT}. \gls{FFT} calculates the \gls{frequency spectrum} of a time-domain signal. \Gls{frequency spectrum} can be converted to the estimation of \gls{power spectral density} which contains only the information about the amplitudes of the \glspl{pure tone}. Analysing the \gls{power spectral density} can be used to detect \glspl{SSVEP} in an \gls{EEG} recording.
 
 %As already discussed in section~\ref{sec:EEG_comparison}, Emotiv EPOC has high internal sampling rate to filter out high frequencies
 
@@ -116,7 +116,9 @@ Thus a time-domain signal can be decomposed into \glspl{pure tone} or sine and c
 \section{Decomposing target flickering}
 \label{sec:decomposition}
 
-This section will focus on the decomposition of the \glspl{flickering waveform}, which were described in section~\ref{sec:stimuli}. The decomposition process was discussed in section~\ref{sec:fourier}. As discussed in previous section, only sine and cosine waves are composed of a single frequency. Other waveforms have more \glspl{frequency component}. The \gls{frequency component} of a signal with lowest frequency is called \gls{fundamental} or the first \gls{harmonic} of the signal. \Gls{harmonic} of a signal is a \gls{frequency component} with frequency that is an integer multiple of the \gls{fundamental} frequency of the signal. If the \gls{fundamental} frequency is $f$, then first, second are third \glspl{harmonic} have frequencies of $1f$, $2f$, $3f$ respectively.
+This section will focus on the decomposition of the \glspl{flickering waveform}, which were described in section~\ref{sec:stimuli}. The decomposition process was discussed in section~\ref{sec:fourier}. As discussed in previous section, only sine and cosine waves are composed of a single frequency. Other waveforms have more \glspl{frequency component}.
+
+The \gls{frequency component} of a signal that has the lowest frequency among all the \glspl{frequency component} of the signal is called \gls{fundamental} or the first \gls{harmonic} of the signal. \Gls{harmonic} of a signal is a \gls{frequency component} with frequency that is an integer multiple of the \gls{fundamental} frequency of the signal. If the \gls{fundamental} frequency is $f$, then first, second are third \glspl{harmonic} have frequencies of $1f$, $2f$, $3f$ respectively.
 
 It can be shown that a \gls{square wave} is composed of its odd \glspl{harmonic}. If the \gls{flickering waveform} is a \gls{square wave} or a \gls{rectangular wave}, the \gls{fundamental} frequency of the waveform is the frequency of the stimuli presentation. Therefore, a \gls{square wave} with \gls{fundamental} frequency $f$ can be represented as a sum of sine waves
 \begin{equation}
@@ -127,21 +129,23 @@ where $\mbox{square}(t)$ is the \gls{flickering} represented as \gls{state} vers
 
 \begin{figure}[h]
 	\input{./tikz/square_wave}
-	\caption{A square wave in time domain (A), its first harmonic (blue), the sum of its first two harmonics (green) and the sum of its first three harmonics (red). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with same colour-coding. Please note that the green signal also contains the blue signal, the red signal contains both blue and green signal and black signal contains all the previous signals. In general, every next signal in amplitude spectrum also contains the previous signals.}
+	\caption{A square wave in time domain (A), its first harmonic (blue), the sum of its first two harmonics (green) and the sum of its first three harmonics (red). The amplitude spectrum (B) shows the amplitudes of the same signals with the same colour-coding. Please note that the green signal also contains the blue signal, the red signal contains both blue and green signal and black signal contains all the previous signals. In general, every next signal in amplitude spectrum also contains the previous signals.}
 	\label{fig:square_wave}
 \end{figure}
 
-Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}. It has even been reported that \gls{SSVEP} contains small \glspl{subharmonic} of the \gls{flickering waveform}~\cite{ssvep_response}. \Gls{subharmonic} of a signal is a \gls{frequency component} of the signal with frequency $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the signal and $n$ is a natural number.
+Unfortunately, the \gls{SSVEP} response to \gls{target} \gls{flickering} does not contain only the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform}---\gls{SSVEP} contains other frequencies too. However, the frequencies that are present in the \glspl{frequency component} of the \gls{flickering waveform} are more successfully elicited in \gls{SSVEP} response~\cite{square_sine}.
 
-An \gls{SSVEP} contains \glspl{frequency component} with frequencies that are integer multiples of the \gls{flickering} frequency~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that neither of these frequencies is an integer multiple of the other. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response. For example, if \SI{6}{Hz} and \SI{12}{Hz} Hz \gls{flickering} frequencies are both used, then \SI{6}{Hz} \gls{flickering} also elicits \SI{12}{Hz} frequency in the \gls{SSVEP} since \SI{12}{Hz} is the second harmonic of \SI{6}{Hz} \gls{flickering} and thus it might not be possible to distinguish this \SI{12}{Hz} component from the \SI{12}{Hz} component elicited by \SI{12}{Hz} \gls{flickering}.
+Generally an \gls{SSVEP} contains \glspl{frequency component} with frequencies that are integer multiples of the \gls{flickering} frequency~\cite{ssvep_response}. Therefore, \gls{target} frequencies should be chosen so that neither of these frequencies is an integer multiple of the other. Otherwise it might not be distinguishable which \gls{target} \gls{flickering} elicits which frequency in the \gls{SSVEP} response. For example, if \SI{6}{Hz} and \SI{12}{Hz} Hz \gls{flickering} frequencies are both used, then \SI{6}{Hz} \gls{flickering} also elicits \SI{12}{Hz} frequency in the \gls{SSVEP} since \SI{12}{Hz} is the second harmonic of \SI{6}{Hz} \gls{flickering} and thus it might not be possible to distinguish this \SI{12}{Hz} component from the \SI{12}{Hz} component elicited by \SI{12}{Hz} \gls{flickering}.
 
-Thus \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in the \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering}, but to improve the performance other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
+It has even been reported that \gls{SSVEP} contains \glspl{frequency component} that have lower frequency than the \gls{fundamental} of the \gls{flickering waveform}~\cite{ssvep_response}. These \glspl{frequency component} have frequency of $\frac{f}{n}$, where $f$ is the \gls{fundamental} frequency of the \gls{flickering waveform} and $n$ is a natural number. But since these components have very small amplitudes, these components are not used in \gls{SSVEP}-based \glspl{BCI}.
+
+An \gls{SSVEP} reflects certain properties of the visual stimulus. The frequencies that are present in the \gls{flickering waveform} are likely to be found also in the \gls{SSVEP} response, but other \glspl{frequency component} are present in the \gls{SSVEP} too~\cite{square_sine}. It is sufficient to detect only the \gls{frequency component} with the same frequency as the \gls{target} \gls{flickering} in a \gls{SSVEP}-based \gls{BCI}, but to improve the performance of the \gls{BCI} other \glspl{frequency component} should be detected too~\cite{harmonic_imrpovement}.
 
 %Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
 \section{Evaluating the performance of brain-computer interface}
 
-The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998:
+The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998
 \begin{equation}
 	\label{eq:itr_unit}
 	B=\log_2 N+ P\log_2 P +(1-P)\log_2[(1-P)/(N-1)]
@@ -163,17 +167,17 @@ The aim of this section is to describe some digital signal processing techniques
 
 \subsection{Detrending the signal}
 
-A linear \gls{trend} or steady increase or decrease of values in the \gls{EEG} recording can make the detection of \glspl{SSVEP} less accurate. As discussed in section~\ref{sec:fourier}, \gls{Fourier transform} is used to decompose a signal into \glspl{frequency component}. If the signal has a \gls{trend}, the \gls{trend} will also be decomposed. The decomposed \gls{trend} will not provide any useful information and it makes detecting the actual \gls{SSVEP} less accurate. A comparison of amplitudes acquired from a signal with trend and from the same signal without \gls{trend} can be seen in figure~\ref{fig:detrend}.
+A linear \gls{trend} or steady increase or decrease of values in an \gls{EEG} recording can make the detection of \glspl{SSVEP} less accurate. As discussed in section~\ref{sec:fourier}, \gls{Fourier transform} is used to decompose a signal into \glspl{frequency component}. If the signal has a \gls{trend}, the \gls{trend} will also be decomposed. The decomposed \gls{trend} will not provide any useful information and it makes detecting the actual \gls{SSVEP} less accurate. A comparison of amplitudes acquired from a signal with trend and from the same signal without \gls{trend} can be seen in figure~\ref{fig:detrend}.
 
 \begin{figure}[h!]
 	\input{./tikz/detrend_example}
-	\caption{A signal with trend (blue) and the same signal without trend (green) in time domain (A). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with same colour-coding. The plots in the second row show the trends of the signals in time domain (C) and the amplitude spectrums of these trends (D). Green signal actually does not have trend so its trend is presented as a constantly zero function.}
+	\caption{A signal with trend (blue) and the same signal without trend (green) in time domain (A). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with the same colour-coding. The plots in the second row show the trends of the signals in time domain (C) and the amplitude spectrums of these trends (D). The green signal in time domain does not have a trend so its trend is presented as a constantly zero function.}
 	\label{fig:detrend}
 \end{figure}
 
 Removing \gls{trend} from a signal is called \glsdisp{detrend}{detrending}. The average value or the \gls{mean} of a \glsdisp{detrend}{detrended} signal is zero. The \glsdisp{detrend}{detrending} also works if there is no steady increase or decrease of values in the signal. In this case, just a constant value---the \gls{mean} of the signal---is subtracted from all the values of the \gls{digital signal} and as a result, the \gls{mean} of the signal will be zero. Subtracting a constant value from the signal does not change the amplitudes of the \glspl{frequency component} of the signal and it does not add additional \glspl{frequency component}.
 
-A linear \gls{trend} can also be removed from the signal in segments---this means that the signal is divided into equal length segments and \gls{trend} is removed from every segment separately. This is useful if the \gls{trend} changes in the signal. \glsdisp{detrend}{Detrending} a signal does not decrease the accuracy of detecting \gls{SSVEP} but can increase the accuracy of detecting \gls{SSVEP}. Therefore the \gls{EEG} recording should be \gls{detrend}{detrended} before performing \gls{FFT}.
+A linear \gls{trend} can also be removed from the signal in segments---this means that the signal is divided into equal length segments and \gls{trend} is removed from every segment separately. This is useful if the \gls{trend} changes in the signal. \glsdisp{detrend}{Detrending} a signal does not decrease the accuracy of detecting \glspl{SSVEP} but can increase the accuracy of detecting \glspl{SSVEP}. Therefore the \gls{EEG} recording should be \glsdisp{detrend}{detrended} before performing \gls{FFT}.
 
 \subsection{Windowing the signal}
 
@@ -183,7 +187,7 @@ When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it
 \end{equation}
 where $s$ is signal segment ans $w$ is \gls{window} function.
 
-The non-zero values of a \gls{window} function usually increase until the centre of the range, at the centre there is the highest value and then the values start decreasing again until the end of the range. See figure~\ref{fig:hanning_window} for an example of hanning \gls{window}. The general purpose of multiplying a signal with a \gls{window} function is to smooth the start and the end of the signal. If the recorded signal has a clear periodic component but the is divided into segments and one segment does not contain exactly integer multiple of periods of the component, then phenomena called \gls{spectral leakage} will happen. \Gls{spectral leakage} means that some of the power of the periodic component will be distributed over other \glspl{frequency bin} and thus the correct \gls{frequency bin} will have less power and incorrect \glspl{frequency bin} will have more power. Smoothing the start and the end of a signal is used to minimise the \gls{spectral leakage}.
+The non-zero values of a \gls{window} function usually increase until the centre of the range, at the centre there is the highest value and then the values start decreasing again until the end of the range. See figure~\ref{fig:hanning_window} for an example of hanning \gls{window}. The general purpose of multiplying a signal with a \gls{window} function is to smooth the start and the end of the signal. If the recorded signal has a clear periodic component but the signal is divided into segments so that one segment does not contain exactly integer multiple of periods of the component, then phenomena called \gls{spectral leakage} will happen. \Gls{spectral leakage} means that some of the power of the periodic component will be distributed over other \glspl{frequency bin} and thus the correct \gls{frequency bin} will have less power and incorrect \glspl{frequency bin} will have more power. Smoothing the start and the end of a signal is used to minimise the \gls{spectral leakage}.
 
 \begin{figure}[h!]
 	\input{./tikz/hanning_window}
@@ -191,15 +195,15 @@ The non-zero values of a \gls{window} function usually increase until the centre
 	\label{fig:hanning_window}
 \end{figure}
 
-Multiplying a signal with a \gls{window} function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. For example, if signal $s(x)$ does not have zero mean, then it can be \glsdisp{detrend}{detrended}, which means that the \gls{trend} $t(x)$ will be subtracted from the signal. Therefore when multiplying signal $s(x)$ with \gls{window} $w(x)$, then
+Multiplying a signal with a \gls{window} function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. For example, if signal $s(x)$ has \gls{trend} or does not have zero \gls{mean}, then it can be \glsdisp{detrend}{detrended}, which means that the \gls{trend} or non-zero \gls{mean} $t(x)$ will be subtracted from the signal. Therefore, if multiplying the signal $s(x)$ that can be presented as a sum of \glsdisp{detrend}{detrended} signal $z(x)$ and the trend $t(x)$ with \gls{window} $w(x)$, then
 \begin{equation}
-	(w\cdot s)(x) = w(x)\cdot(s(x)+t(x))=w(x)\cdot s(x)+w(x)\cdot t(x)
+	(w\cdot s)(x) = w(x)\cdot(z(x)+t(x))=w(x)\cdot z(x)+w(x)\cdot t(x)
 \end{equation}
-It can be seen that if the \gls{trend} $t(x)$ is not constantly zero, then \glsdisp{window}{windowing} adds a component $w(x)\cdot t(x)$ to the signal in addition to changing the amplitudes of $s(x)$. If $t(x)$ is constantly zero, then the signal has zero mean and no additional component is added. Therefore, signals with zero mean should be \glsdisp{window}{windowed}. Another thing to keep in mind is that \glsdisp{window}{windowing} a signal makes the peaks in the \gls{power spectral density} wider. See figure~\ref{fig:window} for an example of sine waves with zero mean and non-zero mean windowed with hanning window and a comparison of amplitudes acquired from actual signal and windowed signal.
+It can be seen that if the \gls{trend} $t(x)$ is not constantly zero, then \glsdisp{window}{windowing} adds a component $w(x)\cdot t(x)$ to the signal in addition to changing the amplitudes of the components of $z(x)$. If $t(x)$ is constantly zero, then the signal has zero \gls{mean} and no additional component is added. Therefore, signals with non-zero \gls{mean} or \gls{trend} should be \glsdisp{detrend}{detrended} before \glsdisp{window}{windowing}. Another thing to keep in mind is that \glsdisp{window}{windowing} a signal makes the peaks in the \gls{power spectral density} wider. See figure~\ref{fig:window} for an example of sine waves with zero \gls{mean} and non-zero \gls{mean} \glsdisp{window}{windowed} with hanning \gls{window} and a comparison of amplitudes acquired from actual signal and \glsdisp{window}{windowed} signal.
 
 \begin{figure}[h!]
 	\input{./tikz/window_example}
-	\caption{A signal with zero mean (blue) and the same signal multiplied with window function (green) in time domain (A). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with same colour-coding. Plots in the second row show the same information for a signal with non-zero mean.}
+	\caption{A signal with zero mean (blue) and the same signal multiplied with window function (green) in time domain (A). The amplitude spectrum (B) shows the amplitudes of the frequency components of the same signals with the same colour-coding. Plots in the second row show the same information for a signal with non-zero mean.}
 	\label{fig:window}
 \end{figure}
 
@@ -219,19 +223,19 @@ In the paper by Hakvoort \textit{et al.}~\cite{cca_psda}, linear interpolation w
 	\label{fig:interpolation}
 \end{figure}
 
-Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a \glsdisp{zero padding}{zero-padded} signal. The comparison of amplitudes acquired from actual signal and a \glsdisp{zero padding}{zero-padded} signal can be seen in figure~\ref{fig:zero_padding}. Multiplying a signal with a \gls{window} function before \gls{zero padding} results in a smoother transition between the signal and its \gls{zero padding}.
+Another possibility to solve the lack of \glspl{frequency bin} problem is to use \gls{zero padding}. \Gls{zero padding} means that zeros are added to the end of the signal before performing \gls{FFT}. This results in more \glspl{frequency bin} in the \gls{power spectral density}, because the number of \glspl{frequency bin} depends on the length of the input signal as discussed in section~\ref{sec:fourier}. The only alteration in \gls{power spectral density} is that it has more \glspl{frequency bin} if calculated from a \glsdisp{zero padding}{zero-padded} signal. The comparison of amplitudes acquired from a signal and from the same signal with \gls{zero padding} can be seen in figure~\ref{fig:zero_padding}. Multiplying a signal with a \gls{window} function before \gls{zero padding} results in a smoother transition between the signal and its \gls{zero padding}.
 
 \begin{figure}[h!]
 	\input{./tikz/zero_padding}
-	\caption{A zero-padded signal in time domain (A) and the same signal first windowed and then zero padded in time domain (C). Plots in the second column show the amplitude spectrum of the corresponding signal in the first column.}
+	\caption{A zero-padded signal in time domain (A) and the same signal first windowed and then zero padded in time domain (C). Plots in the second column show the amplitude spectra of the corresponding signals in the first column.}
 	\label{fig:zero_padding}
 \end{figure}
 
-When \gls{zero padding} a signal, the signal should be \glsdisp{window}{windowed} or in other words multiplied a \gls{window} function that smooths the start and the end of the signal. \glsdisp{window}{Windowing} a signal requires the signal to have zero \gls{mean} as discussed in the previous section and therefore the signal should be \glsdisp{detrend}{detrended} before \glsdisp{window}{windowing}. Thus the correct order of using signal processing techniques described in this chapter is: \glsdisp{interpolation}{interpolating} to approximate lost packets or \gls{digital signal} values, \glsdisp{detrend}{detrending}, \glsdisp{window}{windowing}, \gls{zero padding} and then \glsdisp{interpolation}{interpolating} to approximate values between \glspl{frequency bin}.
+When \gls{zero padding} a signal, the signal should be \glsdisp{window}{windowed} or in other words multiplied with a \gls{window} before \gls{zero padding}. \glsdisp{window}{Windowing} a signal requires the signal to have zero \gls{mean} as discussed in the previous section and therefore the signal should be \glsdisp{detrend}{detrended} before \glsdisp{window}{windowing}. Thus the correct order of using signal processing techniques described in this chapter is: \glsdisp{interpolation}{interpolating} to approximate lost packets or \gls{digital signal} values, \glsdisp{detrend}{detrending}, \glsdisp{window}{windowing}, \gls{zero padding} and then \glsdisp{interpolation}{interpolating} to approximate values between \glspl{frequency bin}.
 
 \section{SSVEP-based BCI feature extraction methods}
 \label{sec:SSVEP_detection}
-The aim of this section is to describe two methods used to detect \glspl{SSVEP} in \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
+The aim of this section is to describe two methods used for detecting \glspl{SSVEP} in an \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
 
 \subsection{Power spectral density analysis method}
 
@@ -239,65 +243,70 @@ This section describes \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} meth
 
 There are different ways how to use the \gls{power spectral density} estimation for \gls{feature extraction}. Some \glspl{BCI} use peak finding to find highest values in the \gls{power spectral density}~\cite{cca_lin}. Other \glspl{BCI} use a training session to find a threshold value that certain frequency's amplitude or power has to exceed in order to select the \gls{target} with corresponding frequency as user's choice. This method requires a training session during which the threshold values are determined, but \gls{SSVEP}-based \glspl{BCI} could be implemented without the need for a training session. Threshold values, however, can be used together with other methods. 
 
-Common method in \glspl{BCI} that use \gls{PSDA} \gls{feature extraction} is to calculate \gls{SNR} or other values that are related to \gls{SNR}. For example, the ratio of frequency's power to the mean of adjacent frequency bins can be calculated~\cite{psda_snr1}
+\glspl{BCI} that use \gls{PSDA} \gls{feature extraction} usually calculate \gls{SNR} or other values that are related to \gls{SNR} of each \gls{target} and then select the \gls{target} with the highest \gls{SNR} or related value as user's choice. For example, the ratio of frequency's power to the \gls{mean} of adjacent \glspl{frequency bin} can be calculated to select user's choice~\cite{psda_snr1}
 \begin{equation}
 	\label{eq:snr1}
 	\mbox{SNR}(f_k) = \frac{2P(f_k)}{P(f_{k+1})+P(f_{k-1})}
 \end{equation}
-where $\mbox{SNR}(f_k)$ is the \gls{SNR} of the frequency $f_k$, $P$ is the function representing \gls{power spectral density} and $f_1,\dots, f_k,\dots,f_m$ are the \glspl{frequency bin} of the \gls{periodogram} in increasing order. The \gls{SNR} as defined in equation~\ref{eq:snr1} can be calculated for every \gls{target} frequency and the \gls{target} that has the frequency with highest \gls{SNR} is assumed to be the user's choice. More than two adjacent frequency bins can be used to calculate the \gls{SNR}~\cite{psda_snr2}. Therefore, the equation~\ref{eq:snr1} can be generalised
+where $P$ is the function representing \gls{power spectral density} and $f_1,\dots, f_k,\dots,f_m$ are the \glspl{frequency bin} of the \gls{periodogram} in increasing order. The \gls{SNR} as defined in equation~\ref{eq:snr1} can be calculated for every \gls{target} frequency and the \gls{target} that has the frequency with highest \gls{SNR} is assumed to be the user's choice. This works because \gls{SSVEP} has a component with the same frequency as the \gls{target} frequency as discussed in section~\ref{sec:decomposition}.
+
+More than two adjacent \glspl{frequency bin} can be used to calculate the \gls{SNR}~\cite{psda_snr2}. Therefore, the equation~\ref{eq:snr1} can be generalised
 \begin{equation}
 	\mbox{SNR}(f_k) = \frac{nP(f_k)}{\sum_{i=1}^{n/2}P(f_{k-i})+P(f_{k+i})}
 \end{equation}
-where n is the number of adjacent frequency bins used. To generalise it even more, the ratio of the frequency's power to the whole \gls{power spectral density} or all the \glspl{frequency bin} can be calculated
+where $n$ is the number of adjacent \glspl{frequency bin} used. To generalise the equation even more, the ratio of the frequency's power to the whole \gls{power spectral density} or all the \glspl{frequency bin} can be calculated
 \begin{equation}
 	\mbox{SNR}(f_k) = \frac{P(f_k)}{\sum_i P(f_i)}
 \end{equation}
-This is the same as using normalised \gls{power spectral density} and comparing the normalised powers. It is also possible to just compare the powers of different \gls{target} frequencies and select the \gls{target} with highest power~\cite{cca_psda}. All these methods can use in addition to the \gls{target} frequency also its \glspl{harmonic}. In this case the sum of the \glspl{SNR} can be used
+%This is the same as using normalised \gls{power spectral density} and comparing the normalised powers.
+It is also possible to just compare the powers of different \gls{target} frequencies and select the \gls{target} with highest power~\cite{cca_psda}.
+
+All these methods can use in addition to the \gls{target} frequency also its integer multiples to improve the performance of the \gls{BCI}, as mentioned in section~\ref{sec:decomposition}. In this case the sum of the \glspl{SNR} can be used
 \begin{equation}
 	\sum_{i=1}^{h}\mbox{SNR}(if_k)
 \end{equation}
-where $h$ is the number of \glspl{harmonic} used. Often three \glspl{harmonic} are used. After calculating the \gls{SNR} for all the \gls{target} frequencies and for their \glspl{harmonic} if necessary, the \gls{target} with highest \gls{SNR} or the highest sum of \glspl{SNR} can be selected as user's choice.
+where $h$ is the number of integer multiples used. Often three integer multiples are used. After calculating the \gls{SNR} for all the \gls{target} frequencies and for their integer multiples if necessary, the \gls{target} with highest \gls{SNR} or the highest sum of \glspl{SNR} can be selected as user's choice.
 
-To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or powers of different \glspl{target} are compared to determine the user's choice.
+To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or just the powers of different \glspl{target} are compared to determine the user's choice.
 
 \subsection{Canonical correlation analysis method}
 
-\Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001 \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 by Lin~\textit{et al.}~\cite{cca_lin}. This section gives necessary background information and describes the method proposed by Lin~\textit{et al.}.
+\Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001, \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 by Lin~\textit{et al.}~\cite{cca_lin}. This section gives necessary background information and describes the method proposed by Lin~\textit{et al.}
 
 \subsubsection{Overview of basic statistics}
 
-Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated statistics, such as the mean and covariance. One specific \gls{EEG} recording can be viewed as a data sample or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\mathbf{x}=(x_1, x_2, x_3, \dots, x_n)$. 
+Mathematically \gls{EEG} recordings can be modelled using random variables. This interpretation is necessary to make mathematical statements about the calculated \glspl{statistic}, such as the \gls{mean} and \gls{covariance}. One specific \gls{EEG} recording can be viewed as a data \gls{sample} or a set of data collected from the continuous signal. Therefore, \gls{EEG} recording can be represented as a sequence of recorded values $\mathbf{x}=(x_1, x_2, x_3, \dots, x_n)$. 
 
-As was the case with \gls{power spectral density}, the statistics calculated from a data sample are not the exact parameters for the whole \gls{EEG} signal. Statistics are used to estimate the theoretical values. The sample mean of a data set, for example of an \gls{EEG} recording can be calculated with
+As was the case with \gls{power spectral density}, the \glspl{statistic} calculated from a data \gls{sample} are not the exact parameters for the whole \gls{EEG} signal. \Glspl{statistic} are used to estimate the theoretical values. The \gls{sample} \gls{mean} of a data set, for example of an \gls{EEG} recording can be calculated with
 \begin{equation}
 	m(\mathbf{x}) = \frac{1}{n}\sum_{i=1}^{n}x_i
 \end{equation}
 
-To measure the similarity of two \gls{EEG} recordings, sample covariance can be used. Sample covariance measures how much two data sets change together. Thus for two \gls{EEG} recordings $\mathbf{x}=(x_1,\dots,x_n)$ and $\mathbf{y}=(y_1, \dots, y_n)$ the sample covariance is
+To measure the similarity of two \gls{EEG} recordings, \gls{sample} \gls{covariance} can be used. \Gls{sample} \gls{covariance} measures how much two data sets change similarly. For two \gls{EEG} recordings $\mathbf{x}=(x_1,\dots,x_n)$ and $\mathbf{y}=(y_1, \dots, y_n)$ the \gls{sample} \gls{covariance} is
 \begin{equation}
 	\label{eq:cov}
 	q(\mathbf{x},\mathbf{y}) = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-m(\mathbf{x}))(y_i-m(\mathbf{y}))
 \end{equation}
-The addend $(x_i-m(\mathbf{x}))(y_i-m(\mathbf{y}))$ in the equation~\ref{eq:cov} is positive, if both signals change similarly at the corresponding time point or in other words, if both signals are above or below their means at the same time. The addend is negative, if the signals change in the opposite way or in other words, if one signal is above its mean and the other is below its mean.
+The addend $(x_i-m(\mathbf{x}))(y_i-m(\mathbf{y}))$ in the equation~\ref{eq:cov} is positive, if both signals change similarly at the corresponding time point or in other words, if both signals are above or below their \glspl{mean} at the same time. The addend is negative, if the signals change in the opposite way or in other words, if one signal is above its \gls{mean} and the other is below its \gls{mean}.
 
-Sample covariance can be normalised so that the result will be between 1 and -1. Normalised covariance is called sample correlation. Sample correlation can be calculated with
+\Gls{sample} \gls{covariance} can be normalised so that the result will be between 1 and -1. Normalised \gls{covariance} is called \gls{sample} \gls{correlation}. \Gls{sample} \gls{correlation} can be calculated with
 \begin{equation}
 	\label{eq:corr}
 	r(\mathbf{x},\mathbf{x}) = \frac{q(\mathbf{x},\mathbf{y})}{\sqrt{q(\mathbf{x},\mathbf{x})q(\mathbf{y},\mathbf{y})}}
 \end{equation}
-There is somewhat different correlation defined for time-domain signals, called cross-correlation. Cross-correlation takes also into account the possible shift in time between the signals. For example, the correlation of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to equation~\ref{eq:corr} sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. Cross-correlation is the function of the measure of similarity versus time lag between the signals
+There is somewhat different \gls{correlation} defined for time-domain signals, called \gls{cross-correlation}. \Gls{cross-correlation} takes also into account the possible shift in time between the signals. For example, the \gls{correlation} of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to equation~\ref{eq:corr} sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. \Gls{cross-correlation} is the function of the measure of similarity versus time lag between the signals
 \begin{equation}
 	\label{eq:cross_corr}
 	(\mathbf{x}\star \mathbf{y})(t)=\sum_{i}x_iy_{i+t}
 \end{equation}
 
-The equations \ref{eq:corr} and \ref{eq:cross_corr} can be used to measure the similarity between two \gls{EEG} recordings. Measuring the similarity between two signals can be used as \gls{feature extraction} method called template matching. The template matching method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the target corresponding to the matching template will be selected.
+The equations \ref{eq:corr} and \ref{eq:cross_corr} can be used to measure the similarity between two \gls{EEG} recordings. Measuring the similarity between two signals can be used as \gls{feature extraction} method called \gls{template matching}. The \gls{template matching} method requires a training session to acquire templates that can be later compared to \gls{EEG} recording when a subject is using the \gls{BCI}. Each template shows the state of the brain when the subject is watching certain \gls{target}. If the template acquired during training session and the current recording are similar enough, the \gls{target} corresponding to the matching template will be selected.
 
 \subsubsection{Designing reference signals}
 
-\gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} uses sine and cosine waves instead of templates in \gls{SSVEP}-based \glspl{BCI}. \gls{CCA} is a statistical method used to measure the similarity between two sets of signals or two sets of data samples. Therefore, \gls{CCA} can be used to measure the similarity between multichannel \gls{EEG} recording and multiple reference signals. In contrast the equation~\ref{eq:corr} can be used to measure the similarity between only two signals or two data samples.
+\gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} method uses sine and cosine waves as \glspl{reference signal} instead of templates in \gls{SSVEP}-based \glspl{BCI}. \gls{CCA} is a statistical method used to measure the similarity between two sets of signals or two sets of data \glspl{sample}. Therefore, \gls{CCA} can be used to measure the similarity between multichannel \gls{EEG} recording and multiple \glspl{reference signal}. In contrast, the equation~\ref{eq:corr} can be used to measure the similarity between only two signals or two data \glspl{sample}.
 
-In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector $\mathbf{X}=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains the \glspl{harmonic} of a \gls{target} frequency. There is different set of reference signals for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
+In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector $\mathbf{X}=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains the integer multiples of a \gls{target} frequency. There is different set of \glspl{reference signal} for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
 \begin{equation}
 	\label{eq:cca_ref}
 	\mathbf{Y}=\begin{pmatrix}
@@ -317,27 +326,27 @@ In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} r
 	\end{pmatrix}
 \end{equation}
 
-In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three harmonics are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine as reference signals gives optimal minimum correlation of $\frac{1}{\sqrt{2}}$ between a reference signal and an ideal \gls{SSVEP} component.
+In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three integer multiples are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine waves as \glspl{reference signal} gives optimal minimum \gls{correlation} of $\frac{1}{\sqrt{2}}$ between a \gls{reference signal} and an ideal \gls{SSVEP} component.
 
-The optimal minimum correlation means that if \gls{SSVEP} component with the same frequency and amplitude as the reference signals but with different phase is compared to both sine and cosine reference, then the absolute value of the maximum of these two correlations will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the cross-correlation of the \gls{SSVEP} component with both signals and taking the absolute value of the resulting values. See figure~\ref{fig:cross_corr} for example. It is possible to take the absolute value of the correlations because \gls{CCA} treats correlation and anticorrelation or positive and negative correlation similarly.
+The optimal minimum \gls{correlation} means that if \gls{SSVEP} component with the same frequency and amplitude as a \gls{reference signal} but with different phase is compared to both sine and cosine reference, then the maximum of the absolute values of these two \glspl{correlation} will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the \gls{cross-correlation} of the \gls{SSVEP} component with both signals and taking the absolute value of the resulting values. This is illustrated in figure~\ref{fig:cross_corr}. It is possible to take the absolute value of the \glspl{correlation} because \gls{CCA} treats \gls{correlation} and anticorrelation or positive and negative \gls{correlation} similarly.
 
 \begin{figure}[h!]
 	\input{./tikz/cross_correlation}
-	\caption{Cross-correlation of a signal (red) with sine wave (blue) and a cosine wave (green)}
+	\caption{A signal (red) and sine (blue) and cosine (green) reference signals in time domain (A). The second plot (B) shows the absolute value of the cross-correlation of the signal with sine wave (blue) and cosine wave (green).}
 	\label{fig:cross_corr}
 \end{figure}
 
-Thus if there is \gls{SSVEP} component that corresponds to \gls{target} frequency or its \gls{harmonic}, then there is positive correlation between the \gls{SSVEP} component and at least one of the reference signals.
+Thus if there is \gls{SSVEP} component that corresponds to \gls{target} frequency or its integer multiple, then there is positive \gls{correlation} between the \gls{SSVEP} component and at least one of the \glspl{reference signal}.
 
 \subsubsection{Comparing two sets of signals}
 
-The covariance between two sets of data samples $\mathbf{X}=(\mathbf{x}_1,\dots\mathbf{x}_n)$ and $\mathbf{Y}=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the covariances of all the possible combinations of two data samples:
+The \gls{covariance} between two sets of data \glspl{sample} $\mathbf{X}=(\mathbf{x}_1,\dots\mathbf{x}_n)$ and $\mathbf{Y}=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the \glspl{covariance} of all the possible combinations of two data \glspl{sample}
 \begin{equation}
 	q(\mathbf{X}, \mathbf{Y}) = \sum_{i=1}^{n}\sum_{j=1}^{n}q(\mathbf{x}_i, \mathbf{y}_j)
 \end{equation}
 where $q(\mathbf{x}_i, \mathbf{y}_j)$ is calculated using the equation~\ref{eq:cov}.
 
-The canonical correlation, however, is not just the correlation between two sets of data samples, but the correlation between the linear combination of one set and the linear combination of the other set of data samples. Linear combinations of $\mathbf{X}$ and $\mathbf{Y}$ are
+The \gls{canonical correlation}, however, is not just the \gls{correlation} between two sets of data \glspl{sample}, but the \gls{correlation} between a \gls{linear combination} of one set and a \gls{linear combination} of the other set of data \glspl{sample}. Linear combinations of $\mathbf{X}$ and $\mathbf{Y}$ are
 \begin{equation*}
 	\mathbf{U} = a_1\mathbf{x}_1 + a_2\mathbf{x}_2 + a_3\mathbf{x}_3 + \dots + a_n\mathbf{x}_n
 \end{equation*}
@@ -345,17 +354,19 @@ The canonical correlation, however, is not just the correlation between two sets
 	\mathbf{V} = b_1\mathbf{y}_1 + b_2\mathbf{y}_2 + b_3\mathbf{y}_3 + \dots + b_m\mathbf{y}_m
 \end{equation*}
 
-\gls{CCA} seeks linear combinations $\mathbf{U}$ and $\mathbf{V}$ that have the maximum correlation among all the possible linear combinations of $\mathbf{X}$ and $\mathbf{Y}$
+\gls{CCA} seeks \glspl{linear combination} $\mathbf{U}$ and $\mathbf{V}$ that have the maximum \gls{correlation} among all the possible \glspl{linear combination} of $\mathbf{X}$ and $\mathbf{Y}$
 \begin{equation}
-	p_k = \frac{q(\mathbf{U}, \mathbf{V})}{\sqrt{q(\mathbf{U},\mathbf{U})q(\mathbf{V},\mathbf{V})}}
+	\rho = \frac{q(\mathbf{U}, \mathbf{V})}{\sqrt{q(\mathbf{U},\mathbf{U})q(\mathbf{V},\mathbf{V})}}
 \end{equation}
-This correlation is called canonical correlation. The pair $(\mathbf{U}, \mathbf{V})$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates is used.
+This \gls{correlation} is called \gls{canonical correlation}. The pair $(\mathbf{U}, \mathbf{V})$ is called the first pair of canonical variates. It is possible to find up to $\min(m, n)$ pairs of canonical variates, but in the method proposed by Lin \textit{et al.}~\cite{cca_lin} only the first pair of canonical variates is used.
+
+The \gls{canonical correlation} between the \gls{EEG} recording and every set of \glspl{reference signal} is calculated in \gls{CCA} method. Every \gls{target} has different set of \glspl{reference signal} as already mentioned in the previous section and therefore \gls{target} whose set of \glspl{reference signal} has the highest \gls{canonical correlation} with \gls{EEG} recording will be selected as user's choice. See figure~\ref{fig:cca} for graphical illustration.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{cca.png}
-	\caption{The visualisation of CCA feature extraction method steps~\cite{bin2009cca}.}
+	\caption{The visualisation of the steps of CCA feature extraction method~\cite{bin2009cca}.}
 	\label{fig:cca}
 \end{figure}
 
-Thus the canonical correlation between the \gls{EEG} recording and every set of reference signals is calculated. Every target has different set of reference signals as already mentioned in the previous section and therefore target whose set of reference signals has the highest canonical correlation with \gls{EEG} recording will be selected as user's choice.
+These two \gls{feature extraction} methods described in this chapter can be used as separate \gls{feature extraction} methods, but in the application described in chapter~\ref{sec:SSVEP_BCI}, these two methods collaborate with each other and therefore work as a single \gls{feature extraction} method.
