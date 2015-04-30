@@ -8,7 +8,7 @@ The previous chapter discussed the biology of the brain and described the brain 
 
 As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed by a computer monitor.
 
-Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \glspl{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that use \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be displayed by a computer monitor are discussed in this thesis.
+Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that use \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be displayed by a computer monitor are discussed in this thesis.
 
 A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor \gls{refresh rate}, on the other hand, limits the presentation rate or blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore, monitor \gls{refresh rate} is used for timing and synchronisation also in this thesis.
 
@@ -143,7 +143,7 @@ An \gls{SSVEP} reflects certain properties of the visual stimulus. The frequenci
 
 %Most important of these properties is that \gls{SSVEP} has a component with the same frequency as the visual stimulus. But that is not the only component frequency in \gls{SSVEP}. \gls{SSVEP} has other components too that are discussed in section~\ref{sec:fourier}. 
 
-\section{Evaluating the performance of brain-computer interface}
+\section{Evaluating the performance of a brain-computer interface}
 
 The most commonly used method for evaluating the performance of a \gls{BCI} is called \gls{ITR}~\cite{itr}. \gls{ITR} was defined by Wolpaw \textit{et al.}~\cite{itr_wolpaw} in 1998
 \begin{equation}
@@ -177,7 +177,7 @@ A linear \gls{trend} or steady increase or decrease of values in an \gls{EEG} re
 
 Removing \gls{trend} from a signal is called \glsdisp{detrend}{detrending}. The average value or the \gls{mean} of a \glsdisp{detrend}{detrended} signal is zero. The \glsdisp{detrend}{detrending} also works if there is no steady increase or decrease of values in the signal. In this case, just a constant value---the \gls{mean} of the signal---is subtracted from all the values of the \gls{digital signal} and as a result, the \gls{mean} of the signal will be zero. Subtracting a constant value from the signal does not change the amplitudes of the \glspl{frequency component} of the signal and it does not add additional \glspl{frequency component}.
 
-A linear \gls{trend} can also be removed from the signal in segments---this means that the signal is divided into equal length segments and \gls{trend} is removed from every segment separately. This is useful if the \gls{trend} changes in the signal. \glsdisp{detrend}{Detrending} a signal does not decrease the accuracy of detecting \glspl{SSVEP} but can increase the accuracy of detecting \glspl{SSVEP}. Therefore the \gls{EEG} recording should be \glsdisp{detrend}{detrended} before performing \gls{FFT}.
+A linear \gls{trend} can also be removed from the signal in segments---this means that the signal is divided into equal length segments and \gls{trend} is removed from every segment separately. This is useful if the \gls{trend} changes in the signal. \glsdisp{detrend}{Detrending} a signal does not decrease but can increase the accuracy of detecting \glspl{SSVEP}. Therefore the \gls{EEG} recording should be \glsdisp{detrend}{detrended} before performing \gls{FFT}.
 
 \subsection{Windowing the signal}
 
@@ -195,7 +195,7 @@ The non-zero values of a \gls{window} function usually increase until the centre
 	\label{fig:hanning_window}
 \end{figure}
 
-Multiplying a signal with a \gls{window} function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. For example, if signal $s(x)$ has \gls{trend} or does not have zero \gls{mean}, then it can be \glsdisp{detrend}{detrended}, which means that the \gls{trend} or non-zero \gls{mean} $t(x)$ will be subtracted from the signal. Therefore, if multiplying the signal $s(x)$ that can be presented as a sum of \glsdisp{detrend}{detrended} signal $z(x)$ and the trend $t(x)$ with \gls{window} $w(x)$, then
+Multiplying a signal with a \gls{window} function requires the signal to have zero mean. Otherwise some unwanted components will appear in the estimated \gls{power spectral density}. If multiplying the signal $s(x)$ that can be presented as a sum of \glsdisp{detrend}{detrended} signal $z(x)$ and the trend $t(x)$ with \gls{window} $w(x)$, then
 \begin{equation}
 	(w\cdot s)(x) = w(x)\cdot(z(x)+t(x))=w(x)\cdot z(x)+w(x)\cdot t(x)
 \end{equation}
@@ -207,7 +207,7 @@ It can be seen that if the \gls{trend} $t(x)$ is not constantly zero, then \glsd
 	\label{fig:window}
 \end{figure}
 
-The longer the recording period before each \gls{FFT}, the more values will be acquired and the estimated \gls{power spectral density} will be more accurate. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the recording period before each \gls{FFT} or \gls{window} length should be as short as possible. Therefore, choosing the right \gls{window} length is important in designing a fast and accurate \gls{BCI}.
+The longer the window, the more values will be acquired and the estimated \gls{power spectral density} will be closer to the actual \gls{power spectral density}~\cite{psd}. This was already briefly mentioned in section~\ref{sec:fourier}. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the \gls{window} length should be as short as possible. Thus, choosing the right \gls{window} length is important in designing a fast and accurate \gls{BCI}.
 
 \subsection{Zero padding the signal and approximating unknown values}
 
@@ -227,11 +227,11 @@ Another possibility to solve the lack of \glspl{frequency bin} problem is to use
 
 \begin{figure}[h!]
 	\input{./tikz/zero_padding}
-	\caption{A zero-padded signal in time domain (A) and the same signal first windowed and then zero padded in time domain (C). Plots in the second column show the amplitude spectra of the corresponding signals in the first column.}
+	\caption{A signal in time domain (A) and the same signal zero padded (C). Plots in the second column show the amplitude spectra of the corresponding signals in the first column.}
 	\label{fig:zero_padding}
 \end{figure}
 
-When \gls{zero padding} a signal, the signal should be \glsdisp{window}{windowed} or in other words multiplied with a \gls{window} before \gls{zero padding}. \glsdisp{window}{Windowing} a signal requires the signal to have zero \gls{mean} as discussed in the previous section and therefore the signal should be \glsdisp{detrend}{detrended} before \glsdisp{window}{windowing}. Thus the correct order of using signal processing techniques described in this chapter is: \glsdisp{interpolation}{interpolating} to approximate lost packets or \gls{digital signal} values, \glsdisp{detrend}{detrending}, \glsdisp{window}{windowing}, \gls{zero padding} and then \glsdisp{interpolation}{interpolating} to approximate values between \glspl{frequency bin}.
+To sum up, the signal should be \glsdisp{window}{windowed} or in other words multiplied with a \gls{window} before \gls{zero padding}. \glsdisp{window}{Windowing} a signal requires the signal to have zero \gls{mean} as discussed in the previous section and therefore the signal should be \glsdisp{detrend}{detrended} before \glsdisp{window}{windowing}. Thus the correct order of using signal processing techniques described in this chapter is: \glsdisp{interpolation}{interpolating} to approximate lost packets or \gls{digital signal} values, \glsdisp{detrend}{detrending}, \glsdisp{window}{windowing}, \gls{zero padding} and then \glsdisp{interpolation}{interpolating} to approximate values between \glspl{frequency bin}.
 
 \section{SSVEP-based BCI feature extraction methods}
 \label{sec:SSVEP_detection}
@@ -252,14 +252,15 @@ where $P$ is the function representing \gls{power spectral density} and $f_1,\do
 
 More than two adjacent \glspl{frequency bin} can be used to calculate the \gls{SNR}~\cite{psda_snr2}. Therefore, the equation~\ref{eq:snr1} can be generalised
 \begin{equation}
-	\mbox{SNR}(f_k) = \frac{nP(f_k)}{\sum_{i=1}^{n/2}P(f_{k-i})+P(f_{k+i})}
+	\mbox{SNR}(f_k) = \frac{nP(f_k)}{\sum_{i=1}^{n/2}\big(P(f_{k-i})+P(f_{k+i})\big)}
 \end{equation}
 where $n$ is the number of adjacent \glspl{frequency bin} used. To generalise the equation even more, the ratio of the frequency's power to the whole \gls{power spectral density} or all the \glspl{frequency bin} can be calculated
 \begin{equation}
+	\label{eq:norm_SNR}
 	\mbox{SNR}(f_k) = \frac{P(f_k)}{\sum_i P(f_i)}
 \end{equation}
 %This is the same as using normalised \gls{power spectral density} and comparing the normalised powers.
-It is also possible to just compare the powers of different \gls{target} frequencies and select the \gls{target} with highest power~\cite{cca_psda}.
+It is also possible to just compare the powers of different \gls{target} frequencies and select the \gls{target} with highest power~\cite{cca_psda}. This is equivalent to using equation~\ref{eq:norm_SNR}.
 
 All these methods can use in addition to the \gls{target} frequency also its integer multiples to improve the performance of the \gls{BCI}, as mentioned in section~\ref{sec:decomposition}. In this case the sum of the \glspl{SNR} can be used
 \begin{equation}
@@ -292,7 +293,7 @@ The addend $(x_i-m(\mathbf{x}))(y_i-m(\mathbf{y}))$ in the equation~\ref{eq:cov}
 \Gls{sample} \gls{covariance} can be normalised so that the result will be between 1 and -1. Normalised \gls{covariance} is called \gls{sample} \gls{correlation}. \Gls{sample} \gls{correlation} can be calculated with
 \begin{equation}
 	\label{eq:corr}
-	r(\mathbf{x},\mathbf{x}) = \frac{q(\mathbf{x},\mathbf{y})}{\sqrt{q(\mathbf{x},\mathbf{x})q(\mathbf{y},\mathbf{y})}}
+	r(\mathbf{x},\mathbf{y}) = \frac{q(\mathbf{x},\mathbf{y})}{\sqrt{q(\mathbf{x},\mathbf{x})q(\mathbf{y},\mathbf{y})}}
 \end{equation}
 There is somewhat different \gls{correlation} defined for time-domain signals, called \gls{cross-correlation}. \Gls{cross-correlation} takes also into account the possible shift in time between the signals. For example, the \gls{correlation} of sine and cosine calculated with equation~\ref{eq:corr} is 0, which means that according to equation~\ref{eq:corr} sine and cosine are uncorrelated despite the fact that sine and cosine waves are actually very similar. \Gls{cross-correlation} is the function of the measure of similarity versus time lag between the signals
 \begin{equation}
@@ -306,7 +307,7 @@ The equations \ref{eq:corr} and \ref{eq:cross_corr} can be used to measure the s
 
 \gls{CCA} method does not use templates as discussed in the previous section. \gls{CCA} method uses sine and cosine waves as \glspl{reference signal} instead of templates in \gls{SSVEP}-based \glspl{BCI}. \gls{CCA} is a statistical method used to measure the similarity between two sets of signals or two sets of data \glspl{sample}. Therefore, \gls{CCA} can be used to measure the similarity between multichannel \gls{EEG} recording and multiple \glspl{reference signal}. In contrast, the equation~\ref{eq:corr} can be used to measure the similarity between only two signals or two data \glspl{sample}.
 
-In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector $\mathbf{X}=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains the integer multiples of a \gls{target} frequency. There is different set of \glspl{reference signal} for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
+In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} recording. For example, if recording data with electrodes located in O1 and O2, the recorded data can be represented as a vector of vectors $\mathbf{X}=(\mathbf{x}_{O1}, \mathbf{x}_{O2})$. The second set of data contains \glspl{pure tone}, each of which has a frequency of integer multiple of a \gls{target} frequency. There is different set of \glspl{reference signal} for every \gls{target}, because \glspl{target} have different frequencies. Both sine and cosine waves are used in the second data set
 \begin{equation}
 	\label{eq:cca_ref}
 	\mathbf{Y}=\begin{pmatrix}
@@ -326,9 +327,11 @@ In \gls{SSVEP}-based \glspl{BCI} one set of data is the multichannel \gls{EEG} r
 	\end{pmatrix}
 \end{equation}
 
-In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three integer multiples are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Therefore, using both sine and cosine waves as \glspl{reference signal} gives optimal minimum \gls{correlation} of $\frac{1}{\sqrt{2}}$ between a \gls{reference signal} and an ideal \gls{SSVEP} component.
+In the method proposed by Lin \textit{et al.}~\cite{cca_lin} three integer multiples are used as in equation~\ref{eq:cca_ref}. The reason why both sine and cosine waves are used is that the phases of the \gls{SSVEP} components are not known. As already mentioned in the previous section, sine and cosine waves are uncorrelated according to equation~\ref{eq:corr}. Using both sine and cosine waves as \glspl{reference signal} gives optimal minimum \gls{correlation} of $\frac{1}{\sqrt{2}}$ between a \gls{reference signal} and an ideal \gls{SSVEP} component.
 
-The optimal minimum \gls{correlation} means that if \gls{SSVEP} component with the same frequency and amplitude as a \gls{reference signal} but with different phase is compared to both sine and cosine reference, then the maximum of the absolute values of these two \glspl{correlation} will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the \gls{cross-correlation} of the \gls{SSVEP} component with both signals and taking the absolute value of the resulting values. This is illustrated in figure~\ref{fig:cross_corr}. It is possible to take the absolute value of the \glspl{correlation} because \gls{CCA} treats \gls{correlation} and anticorrelation or positive and negative \gls{correlation} similarly.
+The optimal minimum \gls{correlation} means that if \gls{SSVEP} component with the same frequency and amplitude as a \gls{reference signal} but with different phase is compared to both sine and cosine reference, then the maximum of the absolute values of these two \glspl{correlation} will be no less than $\frac{1}{\sqrt{2}}\approx 0.707$. This can be seen when calculating the \gls{cross-correlation} of the \gls{SSVEP} component with both signals and taking the absolute value of the resulting values. This is illustrated in figure~\ref{fig:cross_corr}.
+
+It is possible to take the absolute value of the \glspl{correlation} because \gls{CCA} treats \gls{correlation} and anticorrelation or positive and negative \gls{correlation} similarly. The \glspl{cross-correlation} will be similar to the one presented in figure~\ref{fig:cross_corr} if the signal has different frequency than the \glspl{reference signal}, but in this case the \glspl{cross-correlation} will have smaller amplitude.
 
 \begin{figure}[h!]
 	\input{./tikz/cross_correlation}
@@ -342,7 +345,7 @@ Thus if there is \gls{SSVEP} component that corresponds to \gls{target} frequenc
 
 The \gls{covariance} between two sets of data \glspl{sample} $\mathbf{X}=(\mathbf{x}_1,\dots\mathbf{x}_n)$ and $\mathbf{Y}=(\mathbf{y}_1,\dots,\mathbf{y}_m)$ can be calculated by summing up the \glspl{covariance} of all the possible combinations of two data \glspl{sample}
 \begin{equation}
-	q(\mathbf{X}, \mathbf{Y}) = \sum_{i=1}^{n}\sum_{j=1}^{n}q(\mathbf{x}_i, \mathbf{y}_j)
+	q(\mathbf{X}, \mathbf{Y}) = \sum_{i=1}^{n}\sum_{j=1}^{m}q(\mathbf{x}_i, \mathbf{y}_j)
 \end{equation}
 where $q(\mathbf{x}_i, \mathbf{y}_j)$ is calculated using the equation~\ref{eq:cov}.
 
@@ -354,7 +357,7 @@ The \gls{canonical correlation}, however, is not just the \gls{correlation} betw
 	\mathbf{V} = b_1\mathbf{y}_1 + b_2\mathbf{y}_2 + b_3\mathbf{y}_3 + \dots + b_m\mathbf{y}_m
 \end{equation*}
 
-\gls{CCA} seeks \glspl{linear combination} $\mathbf{U}$ and $\mathbf{V}$ that have the maximum \gls{correlation} among all the possible \glspl{linear combination} of $\mathbf{X}$ and $\mathbf{Y}$
+\gls{CCA} seeks \glspl{linear combination} $\mathbf{U}$ and $\mathbf{V}$ that have the maximum \gls{correlation} among all the possible \glspl{linear combination} of $\mathbf{X}$ and $\mathbf{Y}$. Since $\mathbf{x}_1,\dots\mathbf{x}_n$ and $\mathbf{y}_1,\dots,\mathbf{y}_m$ are known, \gls{CCA}  needs to find sets of coefficients $a_1, a_1, \dots, a_n$ and $b_1, b_2, \dots, b_m$. Similarly to the equation~\ref{eq:corr}, the \gls{correlation} between \glspl{linear combination} $\mathbf{U}$ and $\mathbf{V}$ can be calculated with
 \begin{equation}
 	\rho = \frac{q(\mathbf{U}, \mathbf{V})}{\sqrt{q(\mathbf{U},\mathbf{U})q(\mathbf{V},\mathbf{V})}}
 \end{equation}
