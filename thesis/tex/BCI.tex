@@ -16,10 +16,10 @@ Monitor \gls{refresh rate} is the number of consecutive images or \glspl{frame} 
 
 Often blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target} and the blinking of a \gls{target} is called \gls{flickering}.
 
-In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the target frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is \SI{60}{Hz}, then
+In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the \gls{target} frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is \SI{60}{Hz}, then
 \begin{itemize}
 	\item \SI{10}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is an even number, \SI{10}{Hz} \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
-	\item \SI{12}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the target is in displayed \gls{state} and in not displayed \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{rectangular wave}.
+	\item \SI{12}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the \gls{target} is in displayed \gls{state} and in not displayed \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{rectangular wave}.
 	\item \SI{11}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{11}\approx 5.45$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 5.45 \glspl{frame}. Since 5.45 is not a natural number, the \gls{flickering} will be irregular. \SI{11}{Hz} target \gls{flickering} from the paper by Wang \textit{et al.}~\cite{11hz} is used as an example in figure~\ref{fig:flickering}. Although \SI{11}{Hz} frequency produces irregular \gls{flickering}, it is still possible to detect \gls{SSVEP} elicited by it in the Emotiv EPOC recording~\cite{emotiv_11hz}.
 \end{itemize}
 
@@ -162,10 +162,12 @@ There are, however, preconditions that have to be fulfilled in order to calculat
 If these preconditions are met, the \gls{ITR} of a \gls{BCI} can be calculated using equation~\ref{eq:itr}. Using the same evaluation method allows the performance of different \glspl{BCI} to be easily compared.
 
 \section{Improving the accuracy of a spectrum with signal processing}
+\label{sec:signal_processing}
 
 The aim of this section is to describe some digital signal processing techniques that can improve the performance of a \gls{SSVEP}-based \gls{BCI} by improving the accuracy of an amplitude spectrum or \gls{power spectral density}.
 
 \subsection{Detrending the signal}
+\label{sec:detrend}
 
 A linear \gls{trend} or steady increase or decrease of values in an \gls{EEG} recording can make the detection of \glspl{SSVEP} less accurate. As discussed in section~\ref{sec:fourier}, \gls{Fourier transform} is used to decompose a signal into \glspl{frequency component}. If the signal has a \gls{trend}, the \gls{trend} will also be decomposed. The decomposed \gls{trend} will not provide any useful information and it makes detecting the actual \gls{SSVEP} less accurate. A comparison of amplitudes acquired from a signal with trend and from the same signal without \gls{trend} can be seen in figure~\ref{fig:detrend}.
 
@@ -180,6 +182,7 @@ Removing \gls{trend} from a signal is called \glsdisp{detrend}{detrending}. The 
 A linear \gls{trend} can also be removed from the signal in segments---this means that the signal is divided into equal length segments and \gls{trend} is removed from every segment separately. This is useful if the \gls{trend} changes in the signal. \glsdisp{detrend}{Detrending} a signal does not decrease but can increase the accuracy of detecting \glspl{SSVEP}. Therefore the \gls{EEG} recording should be \glsdisp{detrend}{detrended} before performing \gls{FFT}.
 
 \subsection{Windowing the signal}
+\label{sec:window}
 
 When estimating the \gls{power spectral density} of a signal using \gls{FFT}, it has to be decided how many values will be recorded before performing \gls{FFT} on the acquired samples or in other words, how long \gls{window} will be used. This means that the signal is divided into segments or in a sense the signal will be looked at through a window. \Gls{window} function is a function that has non-zero values in a certain range and its value is zero outside that range. \glsdisp{window}{Windowing} means that a signal is multiplied with a \gls{window} function. The multiplication is element-wise
 \begin{equation}
@@ -210,6 +213,7 @@ It can be seen that if the \gls{trend} $t(x)$ is not constantly zero, then \glsd
 The longer the window, the more values will be acquired and the estimated \gls{power spectral density} will be closer to the actual \gls{power spectral density}~\cite{psd}. This was already briefly mentioned in section~\ref{sec:fourier}. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the \gls{window} length should be as short as possible. Thus, choosing the right \gls{window} length is important in designing a fast and accurate \gls{BCI}.
 
 \subsection{Zero padding the signal and approximating unknown values}
+\label{sec:interpolate}
 
 Another problem that occurs when analysing \gls{power spectral density} is that the \gls{power spectral density} of a \gls{digital signal} is discrete and therefore it might not have \glspl{frequency bin} at the exact values of interest. For example, if designing a \gls{BCI}, the frequencies of interest are the \glspl{target} frequencies or integer multiples of the \glspl{target} frequencies, because these are the \glspl{frequency component} of \gls{SSVEP} as discussed in section~\ref{sec:decomposition}.
 
@@ -238,6 +242,7 @@ To sum up, the signal should be \glsdisp{window}{windowed} or in other words mul
 The aim of this section is to describe two methods used for detecting \glspl{SSVEP} in an \gls{EEG} recording. These methods are called \gls{feature extraction} methods. This section describes the \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. These are the methods used in chapter~\ref{sec:SSVEP_BCI} to design an application for controlling a robot. % frequency-domain method and time-domain method
 
 \subsection{Power spectral density analysis method}
+\label{sec:PSDA}
 
 This section describes \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} method called \gls{PSDA}. \Gls{PSDA} is widely used in \gls{SSVEP}-based \glspl{BCI}~\cite{bin2009cca}. This method is based on a \gls{power spectral density} estimation; one of the estimation methods called \gls{periodogram} was discussed in section~\ref{sec:fourier}.
 
@@ -271,6 +276,7 @@ where $h$ is the number of integer multiples used. Often three integer multiples
 To design a \gls{SSVEP}-based \gls{BCI} that uses \gls{PSDA} \gls{feature extraction} method it is enough to use one of the methods described in this section. Often \glspl{SNR} or just the powers of different \glspl{target} are compared to determine the user's choice.
 
 \subsection{Canonical correlation analysis method}
+\label{sec:CCA}
 
 \Gls{CCA} was first introduced by Harold Hotelling in 1936~\cite{cca_hotelling}. In 2001, \gls{CCA} was used to introduce a novel method for detecting neural activity in \gls{fMRI} data~\cite{cca_fmri}. Likewise, \gls{CCA} was introduced to \gls{EEG} recording analysis for the first time in 2007 by Lin~\textit{et al.}~\cite{cca_lin}. This section gives necessary background information and describes the method proposed by Lin~\textit{et al.}
 
