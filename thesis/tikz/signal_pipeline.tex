@@ -1,0 +1,34 @@
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+    text width=4.5em, text badly centered, node distance=2.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, very thick, color=black!50, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+
+\begin{tikzpicture}[scale=2, node distance = 4cm, auto]
+	% Nodes
+	\node [cloud] (start) {start};
+	\node [decision, below of=start] (wait) {wait for step packets};
+	\node [block, right of=wait] (filter) {filter new signal segment};
+	\node [cloud, right of=start] (stop) {stop};
+	\node [block, right of=filter] (add) {add segment to signal};
+	\node [decision, right of=add, node distance=4 cm] (length) {len(signal) \textgreater window length?};
+	\node [block, below of=length] (delete) {delete first step packets};
+	\node [block, left of=delete] (detrend) {make copy of signal and detrend it};
+	\node [block, left of=detrend] (window) {window signal};
+	\node [block, left of=window] (detect) {send signal to feature extraction};
+	
+	% Arrows
+	\path [line] (start) -- (wait);
+	\path [line] (wait) -- node [align=center, color=black, sloped, pos=1] {received\\"Stop"} (stop);
+	\path [line] (wait) -- node [align=center, color=black, sloped] {received\\data} (filter);
+	\path [line] (filter) -- (add);
+	\path [line] (add) -- (length);
+	\path [line] (length) -- node [near start, color=black] {yes} (delete);
+	\path [line] (length) -- node [near start, color=black] {no} (detrend);
+	\path [line] (detrend) -- (window);
+	\path [line] (delete) -- (detrend);
+	\path [line] (window) -- (detect);
+	\path [line] (detect) -- (wait);
+\end{tikzpicture}

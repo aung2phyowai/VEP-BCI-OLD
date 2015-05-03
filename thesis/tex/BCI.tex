@@ -25,27 +25,7 @@ In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---disp
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{\textwidth}
-		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
-			\SI{10}{Hz} & [C] 10{3H 3L}\\
-			\SI{11}{Hz} & [C] 11{2.73H 2.73L}\\
-			\SI{12}{Hz} & [C] 12{2.5H 2.5L}\\
-			\extracode
-			\tablegrid[black!25,step=1]
-		\end{tikztimingtable}
-		\caption{Ideal target flickering that might not correspond to frame changes.}
-	\end{subfigure}
-	\begin{subfigure}{\textwidth}
-		\vspace{10pt}
-		\begin{tikztimingtable}[xscale=0.75, yscale=1.5, thick]
-			\SI{10}{Hz} & [C] 10{3H 3L}\\
-			\SI{11}{Hz} & [C] 3H 3L 3H 2L 3H 3L 3H 2L 3H 3L 2H 3L 3H 3L 2H 3L 3H 3L 2H 3L 3H 2L\\
-			\SI{12}{Hz} & [C] 12{3H 2L}\\
-			\extracode
-			\tablegrid[black!25,step=1]
-		\end{tikztimingtable}
-		\caption{Target flickering adjusted to refresh rate.}
-	\end{subfigure}
+	\input{./tikz/flickering}
 	\caption{Adjusting target flickering to \SI{60}{Hz} refresh rate. The black line represents the flickering as state versus time. The states are displayed and not displayed. Vertical grid lines represent frame changes. There are 60 vertical grid lines and thus this figure shows the state changes of targets with different frequencies in one second.}
 	\label{fig:flickering}
 \end{figure}
