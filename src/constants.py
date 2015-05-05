@@ -19,6 +19,9 @@ TARGETS_TAB_TAB = "TargetsTab"
 PLOT_TAB_TAB = "PlotTab"
 EXTRACTION_TAB_TAB = "ExtractionTab"
 
+PSDA_METHOD_TAB = "PSDA"
+CCA_METHOD_TAB = "CCA"
+
 # Test tab buttons
 TEST_TIME = "Time"
 TEST_MIN = "Min"
@@ -28,6 +31,7 @@ TEST_TARGET = "Test target"
 TEST_UNLIMITED = "Unlimited"
 TEST_NONE = "None"
 TEST_RANDOM = "Random"
+TEST_COLOR = "Color"
 
 # Window tab buttons
 WINDOW_WIDTH = "Width"
@@ -55,6 +59,8 @@ WINDOW_BLACKMAN = "Blackman"
 WINDOW_KAISER = "Kaiser"
 WINDOW_BARTLETT = "Bartlett"
 
+WINDOW_FUNCTION_NAMES = (WINDOW_NONE, WINDOW_HANNING, WINDOW_HAMMING, WINDOW_BLACKMAN, WINDOW_KAISER, WINDOW_BARTLETT)
+
 # Arguments for sgipy.signal.get_window()
 # boxcar, triang, blackman, hamming, hann, bartlett, flattop, parzen,
 # bohman, blackmanharris, nuttall, barthann, kaiser (needs beta), gaussian (needs std),
@@ -65,6 +71,27 @@ SCIPY_WINDOW_HAMMING = "hamming"
 SCIPY_WINDOW_BLACKMAN = "blackmanharris"
 SCIPY_WINDOW_KAISER = "kaiser"
 SCIPY_WINDOW_BARTLETT = "bartlett"
+
+# Interpolation function names
+INTERPOLATE_LINEAR = "Linear"
+INTERPOLATE_NEAREST = "Nearest"
+INTERPOLATE_ZERO = "Zero"
+INTERPOLATE_SLINEAR = "Slinear"
+INTERPOLATE_QUADRATIC = "Quadratic"
+INTERPOLATE_CUBIC = "Cubic"
+INTERPOLATE_BARYCENTRIC = "Barycentric"
+
+INTERPOLATE_NAMES = (INTERPOLATE_LINEAR, INTERPOLATE_NEAREST, INTERPOLATE_ZERO, INTERPOLATE_SLINEAR, INTERPOLATE_QUADRATIC, INTERPOLATE_CUBIC, INTERPOLATE_BARYCENTRIC)
+
+# Arguments for scipy.interpolate.interp1d
+# linear, nearest, zero, slinear, quadratic, cubic
+
+SCIPY_INTERPOLATE_LINEAR = "linear"
+SCIPY_INTERPOLATE_NEAREST = "nearest"
+SCIPY_INTERPOLATE_ZERO = "zero"
+SCIPY_INTERPOLATE_SLINEAR = "slinear"
+SCIPY_INTERPOLATE_QUADRATIC = "quadratic"
+SCIPY_INTERPOLATE_CUBIC = "cubic"
 
 # Plot and Extraction tab options frame buttons
 OPTIONS_NORMALISE = "Normalise"
@@ -78,6 +105,8 @@ OPTIONS_TAPS = "Taps"
 OPTIONS_ARG = "Arg"
 OPTIONS_WINDOW = "Window"
 OPTIONS_BREAK = "Break"
+OPTIONS_INTERPOLATE = "Interp"
+OPTIONS_HARMONICS = "Harmonics"
 
 EXTRACTION_TAB_BUTTON_FRAME = "ExtractionTabButtonFrame"
 PLOT_TAB_BUTTON_FRAME = "PlotTabButtonFrame"
@@ -87,11 +116,13 @@ BOTTOM_FRAME = "BottomFrame"
 
 PLUS_MINUS_FRAME = "PlusMinusFrame"
 PLUS_MINUS_TEXTOX_FRAME = "PlusMinusTextboxFrame"
+RADIOBUTTON_FRAME = "RadiobuttonFrame"
 DISABLE_DELETE_FRAME = "DisableDeleteFrame"
 
 TARGET_COLOR1_FRAME = "Color1TextboxFrame"
 TARGET_COLOR2_FRAME = "Color2TextboxFrame"
 WINDOW_COLOR_FRAME = "ColorTextboxFrame"
+TEST_COLOR_FRAME = "TestColorTextboxFrame"
 
 TARGET_FRAME = "TargetFrame"
 
@@ -106,7 +137,23 @@ TARGET_HEIGHT = "Height"
 TARGET_COLOR1 = "Color1"
 TARGET_X = "x"
 TARGET_Y = "y"
-TARGET_COLOR2 = "Color2"
+TARGET_COLOR0 = "Color0"
+TARGET_SEQUENCE = "Sequence"
+
+# Detrend optionmenu
+CONSTANT_DETREND = "Constant"
+LINEAR_DETREND = "Linear"
+NONE_DETREND = "None"
+
+DETREND_NAMES = (LINEAR_DETREND, CONSTANT_DETREND, NONE_DETREND)
+
+# Filter optionmenu
+NONE_FILTER = "None"
+LOWPASS_FILTER = "Low-pass"
+HIGHPASS_FILTER = "High-pass"
+BANDPASS_FILTER = "Band-pass"
+
+FILTER_NAMES = (NONE_FILTER, LOWPASS_FILTER, HIGHPASS_FILTER, BANDPASS_FILTER)
 
 # Plus minus frame buttons
 PLUS = "+"
@@ -115,6 +162,7 @@ MINUS = " -"
 # Disable and Delete frame buttons
 DISABLE = "Disable"
 DELETE = "Delete"
+DISABLE_METHOD = "Disable method"
 
 # Bottom frame buttons
 START_BUTTON = "Start"
@@ -185,7 +233,6 @@ DATA_OPTIONS = "Options"
 DATA_METHODS = "Methods"
 
 DATA_METHOD = "Method"
-DATA_SENSOR = "Sensor"
 
 DATA_FREQ = "Freq"
 

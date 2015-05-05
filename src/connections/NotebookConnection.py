@@ -2,18 +2,20 @@ __author__ = 'Anti'
 
 import Connections
 import constants as c
+import copy
 
 
 class SensorConnection(Connections.MultipleConnections):
     def __init__(self):
         Connections.MultipleConnections.__init__(self)
 
-    def setup(self, sensors, options, target_freqs):
+    def setup(self, options):
         self.close()
-        for sensor in sensors:
+        for sensor in options[c.DATA_SENSORS]:
             new_connection = self.getConnection(options[c.DATA_METHOD])
-            options[c.DATA_SENSOR] = sensor
-            new_connection.setup([sensor], options, target_freqs)
+            dict_copy = copy.deepcopy(options)
+            dict_copy[c.DATA_SENSORS] = [sensor]
+            new_connection.setup(dict_copy)
             self.connections.append(new_connection)
 
     def getConnection(self, method):
@@ -27,12 +29,13 @@ class MethodConnection(Connections.MultipleConnections):
     def getConnection(self, method):
         raise NotImplementedError("getConnection not implemented!")
 
-    def setup(self, sensors, options, target_freqs):
+    def setup(self, options):
         self.close()
         for method in options[c.DATA_METHODS]:
             new_connection = self.getConnection(method)
-            options[c.DATA_METHOD] = method
-            new_connection.setup(sensors, options, target_freqs)
+            dict_copy = copy.deepcopy(options)
+            dict_copy[c.DATA_METHOD] = method
+            new_connection.setup(dict_copy)
             self.connections.append(new_connection)
 
 
@@ -45,7 +48,9 @@ class TabConnection(Connections.MultipleConnections):
         self.close()
         for option in options[self.options_key]:
             new_connection = self.getConnection()
-            new_connection.setup(option[c.DATA_SENSORS], option, options[c.DATA_FREQS])
+            dict_copy = copy.deepcopy(option)
+            dict_copy[c.DATA_FREQS] = options[c.DATA_FREQS]
+            new_connection.setup(dict_copy)
             self.connections.append(new_connection)
 
     def getConnection(self):

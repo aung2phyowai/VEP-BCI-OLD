@@ -11,7 +11,9 @@
 \pgfplotsset{compat = 1.3}
 \usepgfplotslibrary{groupplots}
 \usepackage{tikz-timing}
+\usetikzlibrary{shapes,arrows}
 %\usetikztiminglibrary{nicetabs} 
+\usepackage[estonian, english]{babel}
 
 \usepackage{alphalph} 			% subfigure letters to plots
 \makeatletter
@@ -59,8 +61,8 @@
 % Changing some title names
 % more http://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
 
-\renewcommand{\bibname}{References}
-\renewcommand{\contentsname}{Table of contents}
+\addto{\captionsenglish}{\renewcommand{\bibname}{References}}
+\addto{\captionsenglish}{\renewcommand{\contentsname}{Table of contents}}
 
 % Exact page size from template
 

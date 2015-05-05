@@ -7,16 +7,19 @@ import constants as c
 
 
 class Target(object):
-    def __init__(self, target, window, monitor_frequency):
+    def __init__(self, target, test_color, window):
         self.standby_target = False
-        self.color = target[c.TARGET_COLOR1]
+        self.color1 = target[c.TARGET_COLOR1]
+        self.color0 = target[c.TARGET_COLOR0]
+        self.test_color = test_color
+        self.current_target = False
         self.rect = visual.Rect(
             window,
             width=target[c.TARGET_WIDTH],
             height=target[c.TARGET_HEIGHT],
             pos=(target[c.TARGET_X], target[c.TARGET_Y]),
             autoLog=False,
-            fillColor=self.color
+            fillColor=self.color1
         )
         # self.fixation = visual.GratingStim(window, size=1, pos=[int(target["x"]), int(target["y"])], sf=0, rgb=1)
         # self.fixation.setAutoDraw(True)
@@ -35,24 +38,29 @@ class Target(object):
             pos=(target["x"], target["y"]-target["Height"]+20)
         )
         self.freq = float(target[c.DATA_FREQ])
-        self.sequence = "01"
-        monitor_frequency = int(monitor_frequency)
-        self.freq_on = int(monitor_frequency/self.freq//2)
-        self.freq_off = int(monitor_frequency/self.freq/2.0+0.5)
-        print("Frequency: " + str(float(monitor_frequency)/(self.freq_off+self.freq_on)), str(self.freq_on), self.freq_off)
+        self.sequence = str(target[c.TARGET_SEQUENCE])
+
+    def setCurrent(self, value):
+        self.current_target = value
+
+    def setStandbyTarget(self, value):
+        self.standby_target = value
+
+    def drawRect(self, color, standby):
+        self.rect.setFillColor(color, colorSpace="rgb")
+        self.rect.setLineColor(color, colorSpace="rgb")
+        if not standby or self.standby_target:
+            self.rect.draw()
 
     def generator(self):
         while True:
-            for c in self.sequence:
-                if c == "1":
-                    for _ in range(self.freq_on):
-                        standby = yield
-                        if not standby or self.standby_target:
-                            self.rect.draw()
-                        # self.fixation.draw()
-                if c == "0":
-                    for _ in range(self.freq_off):
-                        yield
+            for state in self.sequence:
+                standby = yield
+                if state == "1":
+                    self.drawRect(self.test_color if self.current_target else self.color1, standby)
+                    # self.fixation.draw()
+                if state == "0":
+                    self.drawRect(self.color0, standby)
 
 
 class TargetsWindow(object):
@@ -62,18 +70,21 @@ class TargetsWindow(object):
         """ @type : ConnectionProcessEnd.PsychopyConnection """
         self.targets = None
         self.generators = None
-        # self.lock = args[1]
         self.window = None
         self.monitor_frequency = None
+        self.prev_current = None
         # clock = core.Clock()
         #self.window._refreshThreshold = 1/60
         #self.window.setRecordFrameIntervals(True)
         self.connection.waitMessages(self.start, self.exit, self.updateWindow, self.setup)
 
     def setup(self):
-        background_data, targets_data, standby = self.connection.receiveOptions()
-        self.setBackground(background_data)
-        self.setTargets(targets_data)
+        options = self.connection.receiveOptions()
+        self.window = self.getWindow(options[c.DATA_BACKGROUND])
+        self.monitor_frequency = self.getMonitorFreq(options[c.DATA_BACKGROUND])
+        self.targets = self.getTargets(options[c.DATA_TARGETS], options[c.DATA_TEST][c.TEST_COLOR], self.window)
+        self.generators = self.getGenerators(self.targets)
+        self.setStandbyTarget(options[c.DATA_TEST][c.TEST_STANDBY])
         return c.SUCCESS_MESSAGE
 
     def exit(self):
@@ -89,47 +100,54 @@ class TargetsWindow(object):
         if self.window is not None:
             self.window.flip()
 
-    def setBackground(self, background_data):
+    def getMonitorFreq(self, background_data):
+        return background_data[c.WINDOW_FREQ]
+
+    def getWindow(self, background_data):
         self.closeWindow()
-        self.window = visual.Window(
-            [
-                background_data[c.WINDOW_WIDTH],
-                background_data[c.WINDOW_HEIGHT]
-            ],
+        return visual.Window(
+            [background_data[c.WINDOW_WIDTH], background_data[c.WINDOW_HEIGHT]],
             units="pix",
             color=background_data[c.WINDOW_COLOR]
         )
-        self.monitor_frequency = background_data[c.WINDOW_FREQ]
 
-    def setTargets(self, targets):
-        self.targets = []
-        self.generators = []
-        for target in targets:
-            self.targets.append(Target(target, self.window, self.monitor_frequency))
-            self.generators.append(self.targets[-1].generator())
-            self.generators[-1].send(None)
-        self.targets[-1].standby_target = True
+    def getTargets(self, targets_data, test_color, window):
+        return [Target(data, test_color, window) for data in targets_data]
+
+    def setupGenerator(self, generator):
+        generator.send(None)
+        return generator
+
+    def getGenerators(self, targets):
+        return [self.setupGenerator(target.generator()) for target in targets]
+
+    def setStandbyTarget(self, standby):
+        if standby != c.TEST_NONE:
+            self.targets[standby-1].setStandbyTarget(True)
+
+    def setCurrentTarget(self, target):
+        if self.prev_current is not None:
+            self.prev_current.setCurrent(False)
+        target.setCurrent(True)
+        self.prev_current = target
 
     def start(self, standby=False):
-        prev_rect = self.targets[0].current_rect
         while True:
             self.updateWindow()
             message = self.connection.receiveMessageInstant()
-            if message is not None and message != "None":
+            if message is not None:
                 if isinstance(message, bool):
                     standby = message
                     continue
                 elif isinstance(message, basestring):
-                    prev_rect.setAutoDraw(False)
+                    # prev_rect.setAutoDraw(False)
                     return message
                 for i in range(len(self.targets)):
                     if message == self.targets[i].freq and isinstance(message, float):
                         self.targets[i].detected_rect.draw()
                         break
                     elif message == i+1 and isinstance(message, int):
-                        prev_rect.setAutoDraw(False)
-                        self.targets[i].current_rect.setAutoDraw(True)
-                        prev_rect = self.targets[i].current_rect
+                        self.setCurrentTarget(self.targets[i])
                         break
             for i in range(len(self.targets)):
                 self.generators[i].send(standby)

@@ -56,9 +56,8 @@ class MainWindow(MyWindows.TkWindow):
     def removeDisabledData(self, data, filter_function, frame_key):
         result = []
         for key in range(len(data)):
-            if key != 0:
-                if not self.disabled(data[key]):
-                    result.append(filter_function(data[key], frame_key))
+            if not self.disabled(data[key]):
+                result.append(filter_function(data[key], frame_key))
         return result
 
     def getFrequencies(self, enabled_targets):
@@ -98,12 +97,14 @@ class MainWindow(MyWindows.TkWindow):
             (
                 c.TARGET_COLOR1_FRAME,
                 c.TARGET_COLOR2_FRAME,
-                c.PLUS_MINUS_TEXTOX_FRAME
+                c.PLUS_MINUS_TEXTOX_FRAME,
+                c.TARGET_SEQUENCE
             )
         )
         result[c.TARGET_COLOR1] = target_data[key][c.TARGET_COLOR1_FRAME][c.TEXTBOX]
-        result[c.TARGET_COLOR2] = target_data[key][c.TARGET_COLOR2_FRAME][c.TEXTBOX]
+        result[c.TARGET_COLOR0] = target_data[key][c.TARGET_COLOR2_FRAME][c.TEXTBOX]
         result[c.DATA_FREQ] = self.getPlusMinusValue(target_data[key])
+        result[c.TARGET_SEQUENCE] = target_data[key][c.TARGET_SEQUENCE]
         return result
 
     def getTargetData(self, data):
@@ -149,7 +150,12 @@ class MainWindow(MyWindows.TkWindow):
         }
 
     def getTestData(self, data):
-        return self.filterData(data)
+        result = self.filterData(
+            data,
+            (c.TEST_COLOR_FRAME,)
+        )
+        result[c.TEST_COLOR] = data[c.TEST_COLOR_FRAME][c.TEXTBOX]
+        return result
 
     def exit(self):
         print("Exiting main window")

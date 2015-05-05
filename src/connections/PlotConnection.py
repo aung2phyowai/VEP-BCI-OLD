@@ -1,8 +1,9 @@
+from generators import Plot
+
 __author__ = 'Anti'
 
 from connections import NotebookConnection, ConnectionPostOfficeEnd
 import constants as c
-import Plot
 
 
 class PlotTabConnection(NotebookConnection.TabConnection):
@@ -28,6 +29,8 @@ class PlotMethodConnection(NotebookConnection.MethodConnection):
             return ConnectionPostOfficeEnd.PlotConnection(Plot.SumAvgPower)
         elif method in [c.SIGNAL, c.POWER, c.AVG_SIGNAL, c.AVG_POWER]:
             return PlotSensorConnection()
+        else:
+            raise ValueError("Illegal argument in getConnection: " + str(method))
 
 
 class PlotSensorConnection(NotebookConnection.SensorConnection):
@@ -43,3 +46,5 @@ class PlotSensorConnection(NotebookConnection.SensorConnection):
             return ConnectionPostOfficeEnd.PlotConnection(Plot.NotSumAvgSignal)
         elif method == c.AVG_POWER:
             return ConnectionPostOfficeEnd.PlotConnection(Plot.NotSumAvgPower)
+        else:
+            raise ValueError("Illegal argument in getConnection: " + str(method))
