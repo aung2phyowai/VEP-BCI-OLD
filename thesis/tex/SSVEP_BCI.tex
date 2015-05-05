@@ -2,7 +2,7 @@
 \chapter{Application for controlling a robot via SSVEP}
 \label{sec:SSVEP_BCI}
 
-The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository\footnote{github.com/kahvel/VEP-BCI}. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
+The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository\footnote{https://github.com/kahvel/VEP-BCI}. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
 
 \section{Related work}
 
@@ -27,7 +27,6 @@ In this thesis, Emotiv EPOC is used to record brain activity. Table~\ref{tab:emo
 \newcommand{\liu}{Liu \textit{et al.}~\cite{emotiv_11hz}}
 \newcommand{\lin}{Lin \textit{et al.}~\cite{emotiv_walking}}
 \newcommand{\choi}{Choi and Jo~\cite{emotiv_hybrid}}
-%\newcommand{\zier}{Zier~\cite{emotiv_psda}}
 \newcommand{\hvar}{Hvaring and}
 \newcommand{\moe}{Ulltveit-Moe~\cite{emotiv_comparison}}
 \newcommand{\duvi}{Duvinage \textit{et al.}~\cite{emotiv_p300_comp}}
@@ -73,7 +72,7 @@ The application runs on multiple subprocesses and therefore is able to use multi
 	\label{fig:class_diagram}
 \end{figure}
 
-The communication between different components is implemented using multiprocessing connections. Each edge in figure~\ref{fig:class_diagram} represents one connection. It can be seen that all the connections go to the PostOffice class. This class is used to receive and send messages between different components of the application.
+The communication between different components is implemented using multiprocessing connections. Each line in figure~\ref{fig:class_diagram} represents one connection. It can be seen that all the connections go to the PostOffice class. This class is used to receive and send messages between different components of the application.
 
 \section{Using the application with other EEG devices}
 \label{sec:different_devices}
@@ -99,7 +98,7 @@ The application does not have one specific signal pipeline, but the components o
 	\label{fig:signal_pipeline}
 \end{figure}
 
-As seen in figure~\ref{fig:signal_pipeline}, all the signal processing techniques discussed in section~\ref{sec:signal_processing} can be used as components of the signal pipeline and in addition to these techniques, filtering can also be used. See figure~\ref{fig:options_frame} for illustration of the application's user interface for choosing signal pipeline components and options.
+As seen in figure~\ref{fig:signal_pipeline}, all the signal processing techniques discussed in section~\ref{sec:signal_processing} can be used as components of the signal pipeline and in addition to these techniques, filtering can also be used. One thing to keep in mind is that the \gls{window} length shows how long signal is held in memory and after every step, the whole signal goes through the signal pipeline, not only the segment obtained during the last step. See figure~\ref{fig:options_frame} for illustration of the application's user interface for choosing signal pipeline components and options.
 
 \begin{figure}[h]
 	\centering
@@ -124,14 +123,12 @@ The explanation of the signal pipeline options is the following:
 	\item Taps shows the number of taps or the length of the filter. See SciPy documentation\addtocounter{footnote}{-2}\footnotemark\addtocounter{footnote}{1} for details.
 \end{enumerate}
 
-One thing to keep in mind is that the window length shows how many unprocessed packets are held in the memory. This means that after every step, the whole signal goes through the signal pipeline, not only the segment obtained during the last step.
-
-The application has graphical user interface and the code is written so that it is relatively easy to add new or change the existing functionality, as briefly discussed in section~\ref{sec:different_devices}. Thus this application can be used to compare how different signal pipelines affect the detection of \glspl{SSVEP}.
+The application has graphical user interface and the code is written so that it is relatively easy to add new or change the existing functionality, as briefly discussed in section~\ref{sec:different_devices}. This application can be used to compare how different signal pipelines affect the detection of \glspl{SSVEP}.
 
 \section{Target identification method}
 \label{sec:identification}
 
-This section describes the user's choice identification method used in this application. As is the case with the signal pipeline, this application actually does not have one specific \gls{feature extraction} method, but the \gls{feature extraction} method can be changed and a combinations of different \gls{feature extraction} methods can be used. To the best of the author's knowledge, combining different \gls{feature extraction} methods while using only one \gls{SSVEP} neuromechanism has not been used before.
+This section describes the user's choice identification method used in this application. As is the case with the signal pipeline, this application actually does not have one specific \gls{feature extraction} method, but the \gls{feature extraction} method can be changed and a combinations of different \gls{feature extraction} methods can be used. To the best of the author's knowledge, combining different \gls{feature extraction} methods while using only \gls{SSVEP} neuromechanism has not been used before.
 
 Currently the application has three different \gls{feature extraction} methods that can be combined: widely known \gls{PSDA} and \gls{CCA} method and a method that is similar to the \gls{PSDA} method but the estimated \gls{power spectral density} is calculated not for each signal obtained from different channels but for the sum of all the signals from different channels. If only one channel is used, then this method works exactly the same as standard \gls{PSDA} method. In the graphical user interface, this method is called sum \gls{PSDA} method. Using this method makes sense, because \gls{FFT} is linear, meaning that the result will be the same if first the signals are summed up and then the \gls{power spectral density} is estimated and if first the \gls{power spectral density} is estimated separately for each channel and then the \gls{power spectral density} estimates for each channel are summed up.
 
@@ -165,10 +162,10 @@ The robot\footnote{https://github.com/kuz/Garage48-PiTank} used for testing the 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{robot.png}
-	\caption{The robot used for testing the application.}
+	\caption{The robot used for testing the application\protect\footnotemark.}
 	\label{fig:robot}
 \end{figure}
-
+\footnotetext{https://github.com/kuz/Garage48-PiTank/blob/master/Docs/images/pitank.png}
 The robot has a camera on it and thus it is possible to see the camera's videos stream on the computer screen when controlling the robot with the application. The empty space in the middle of the screen as shown in figure~\ref{fig:arrow_stimuli} is intended---it is possible to show the video stream there.
 
 The communication between the robot and the application is implemented similarly to the communication between other parts of the application, but instead of multiprocessing connections, sockets were used to exchange information.
