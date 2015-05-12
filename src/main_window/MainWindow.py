@@ -9,11 +9,11 @@ import constants as c
 class MainWindow(MyWindows.TkWindow):
     def __init__(self, connection):
         MyWindows.TkWindow.__init__(self, "VEP-BCI", 310, 500)
-        self.start_button = None
-
+        self.exitFlag = False
         self.main_frame = MainFrame.MainFrame(self,
             (
                 self.start,
+                self.stop,
                 self.setup,
                 self.askSaveFile,
                 self.askLoadFile,
@@ -26,14 +26,26 @@ class MainWindow(MyWindows.TkWindow):
             )
         )
         self.loadValues(c.DEFAULT_FILE)
-
+        self.disableButton(c.START_BUTTON)
+        self.disableButton(c.STOP_BUTTON)
         # self.neutral_signal = None
         # self.target_signal = [None for _ in range(self.tabs["Targets"].tab_count)]
-
+        self.setup_options = None
         self.connection = connection
-        """ @type : ConnectionProcessEnd.MainConnection """
+        """ @type : connections.ConnectionProcessEnd.MainConnection """
         self.protocol("WM_DELETE_WINDOW", self.exit)
         self.mainloop()
+
+    def mainloop(self, n=0):
+        while True:
+            message = self.connection.receiveMessagePoll(0.1)
+            if message is c.STOP_MESSAGE:
+                self.stop()
+            if not self.exitFlag:
+                self.update()
+            else:
+                self.connection.close()
+                return
 
     def loadValues(self, default_file_name):
         try:
@@ -42,17 +54,17 @@ class MainWindow(MyWindows.TkWindow):
             self.main_frame.loadDefaultValue()
 
     def resetResults(self):
-        self.connection.send(c.RESET_RESULTS_MESSAGE)
+        self.connection.sendMessage(c.RESET_RESULTS_MESSAGE)
 
     def showResults(self):
-        self.connection.send(c.SHOW_RESULTS_MESSAGE)
+        self.connection.sendMessage(c.SHOW_RESULTS_MESSAGE)
 
     def saveResults(self):
-        self.connection.send(c.SAVE_RESULTS_MESSAGE)
+        self.connection.sendMessage(c.SAVE_RESULTS_MESSAGE)
 
     def calculateThreshold(self):
-        self.connection.send("Threshold")
-        self.connection.send(self.getChosenFreq())
+        self.connection.sendMessage("Threshold")
+        self.connection.sendMessage(self.getChosenFreq())
 
     def removeDisabledData(self, data, filter_function, frame_key):
         result = []
@@ -159,24 +171,39 @@ class MainWindow(MyWindows.TkWindow):
         return result
 
     def exit(self):
+        self.exitFlag = True
         print("Exiting main window")
         self.connection.sendExitMessage()
         self.destroy()
 
     def setup(self):
         not_validated = self.main_frame.getNotValidated()
+        self.setup_options = self.getData(self.main_frame.getValue()[c.MAIN_NOTEBOOK])
         if len(not_validated) != 0:
             print(not_validated)
         else:
             self.connection.sendSetupMessage()
-            self.connection.sendMessage(self.getData(self.main_frame.getValue()[c.MAIN_NOTEBOOK]))
+            self.connection.sendMessage(self.setup_options)
+            self.enableButton(c.START_BUTTON)
+
+    def disableButton(self, button_name):
+        self.main_frame.widgets_dict[c.BOTTOM_FRAME].disableButton(button_name)
+
+    def enableButton(self, button_name):
+        self.main_frame.widgets_dict[c.BOTTOM_FRAME].enableButton(button_name)
 
     def start(self):
-        self.main_frame.widgets_dict[c.BOTTOM_FRAME].widgets_dict[c.START_BUTTON].widget.configure(text=c.STOP_BUTTON, command=self.stop)
+        if self.setup_options != self.getData(self.main_frame.getValue()[c.MAIN_NOTEBOOK]):
+            print("Warning: options were changed, but setup was not clicked")
+        self.disableButton(c.SETUP_BUTTON)
+        self.disableButton(c.START_BUTTON)
+        self.enableButton(c.STOP_BUTTON)
         self.connection.sendStartMessage()
 
     def stop(self):
-        self.main_frame.widgets_dict[c.BOTTOM_FRAME].widgets_dict[c.START_BUTTON].widget.configure(text=c.START_BUTTON, command=self.start)
+        self.enableButton(c.SETUP_BUTTON)
+        self.enableButton(c.START_BUTTON)
+        self.disableButton(c.STOP_BUTTON)
         self.connection.sendStopMessage()
 
     # Save and Load
@@ -204,14 +231,14 @@ class MainWindow(MyWindows.TkWindow):
         if self.current_radio_button.get() == 0:
             print("Choose target")
         else:
-            self.connection.send("Record target")
-            # self.connection.send(self.removeDisabledData())
-            self.connection.send(self.getBackgroundData())
-            self.connection.send([self.targets[self.current_radio_button.get()]])
-            self.connection.send(length)
-            self.connection.send(self.current_radio_button.get())
+            self.connection.sendMessage("Record target")
+            # self.connection.sendMessage(self.removeDisabledData())
+            self.connection.sendMessage(self.getBackgroundData())
+            self.connection.sendMessage([self.targets[self.current_radio_button.get()]])
+            self.connection.sendMessage(length)
+            self.connection.sendMessage(self.current_radio_button.get())
 
     def recordNeutral(self):
-        self.connection.send("Record neutral")
-        self.connection.send(int(self.textboxes["Record"]["Length"].get()))
-        self.connection.send(self.current_radio_button.get())
+        self.connection.sendMessage("Record neutral")
+        self.connection.sendMessage(int(self.textboxes["Record"]["Length"].get()))
+        self.connection.sendMessage(self.current_radio_button.get())
