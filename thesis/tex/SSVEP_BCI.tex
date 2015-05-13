@@ -4,93 +4,51 @@
 
 The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository\footnote{https://github.com/kahvel/VEP-BCI}. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
 
-\section{Related work}
-
-There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a detailed overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses at least two different neuromechanisms in a \gls{BCI} and therefore at least two different methods are required to analyse the \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}.
-
-\gls{SSVEP}-based \glspl{BCI} can be divided in categories according to the method used to detect \glspl{SSVEP} in \gls{EEG} recording. Current \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} methods include:
-\begin{itemize}
-	\item \Gls{PSDA} method introduced by Cheng \textit{et al.}~\cite{psda}.
-	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
-	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
-	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
-	\item \Gls{MEC} method introduced by Friman \textit{et al.}~\cite{mec}. This method has shown better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
-	\item \Gls{CCA} method introduced by Lin \textit{et al.}~\cite{cca_lin}. This method has shown better performance than \gls{PSDA} method~\cite{cca_psda, bin2009cca, cca_lin}.
-	\item Multiway \gls{CCA} method introduced by Zhang \textit{et al.}~\cite{mcca}. This method has shown better performance than standard \gls{CCA}~\cite{mcca}.
-	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
-	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
-\end{itemize}
-For more comprehensive review of the \gls{feature extraction} methods see article by Liu \textit{et al.}~\cite{feature_extraction}.
-
-In this thesis, Emotiv EPOC is used to record brain activity. Table~\ref{tab:emotiv_BCIs} gives overview of the existing \glspl{BCI} that also use Emotiv EPOC for recording brain activity. It can be seen that existing applications have \gls{target} detection time above or exactly three seconds which is not fast enough to control a robot in real time. However, as Zier mentioned in his paper~\cite{emotiv_psda} and as also noticed in the process of developing this application, if the \gls{window} length is long enough for the \gls{feature extraction} method to accurately detect correct \gls{target}, the \gls{target} detection time is about half the \gls{window} length. That is so, because after half the \gls{window} length, half of the previous data is replaced with new data and if there is more new data than previous, then the \gls{BCI} recognises the new user's choice.
-
-\newcommand{\liu}{Liu \textit{et al.}~\cite{emotiv_11hz}}
-\newcommand{\lin}{Lin \textit{et al.}~\cite{emotiv_walking}}
-\newcommand{\choi}{Choi and Jo~\cite{emotiv_hybrid}}
-\newcommand{\hvar}{Hvaring and}
-\newcommand{\moe}{Ulltveit-Moe~\cite{emotiv_comparison}}
-\newcommand{\duvi}{Duvinage \textit{et al.}~\cite{emotiv_p300_comp}}
-
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}\hline
-		& Method& Accuracy (\%)		& Target detection 	& ITR (bits/min)	\\
-		&		&					& time (sec)		&					\\\hline
-\liu	& CCA	& $95.83\pm 3.59$	& $5.25\pm 2.14$	& $20.97\pm 0.37$	\\\hline
-\lin	& CCA	& $76.60\pm 21.74$	& $4.34\pm 0.08$	& $14.38\pm 9.04$	\\\hline
-		& CCA	& $84.4\pm 5.0$		& N/A				& $11.6\pm 3.9$		\\\cline{2-5}
-\choi	& ERD	& $84.6\pm 5.3$		& N/A				& $11.8\pm 3.7$		\\\cline{2-5}
-		& P300	& $89.5$			& $5.35$			& $18.1\pm 2.1$		\\\hline
-\hvar	& CCA	& $85.12\pm 4.58$	& $3.00$			& $32.92\pm 4.72$	\\\cline{2-5}
-\moe	& PSDA	& $89.29\pm 6.41$	& $5.14\pm 0.98$	& $23.78\pm 7.15$	\\\hline
-	\end{tabular}
-	\caption{Comparison of the existing BCIs that use Emotiv EPOC.}
-	\label{tab:emotiv_BCIs}
-\end{table}
-
-This thesis aims at developing \gls{BCI} with faster \gls{target} detection time than the previous applications to provide suitable speed for controlling a robot.
-%This thesis focuses on two of these methods: \gls{PSDA} and \gls{CCA} methods.
-
 \section{Overview of the application}
 \label{sec:application}
 
-As already mentioned, the application is written in Python 2.7. In addition to the Python 2.7 standard library, the following libraries were used:
+As already mentioned, the application implements a communication channel between the brain and a robot, thus making it possible to send control commands to the robot. Brain activity is recorded using Emotiv EPOC and the recording is analysed with \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. The application is open-source, written in Python 2.7 and requires Windows operating system.
+
+The application is divided into the following components:
+\begin{itemize}
+	\item\texttt{MainWindow} is the window through which a user can easily change the parameters of the signal pipeline, \gls{feature extraction} methods and \glspl{target} and control the flow of the application through \gls{GUI};
+	\item\texttt{TargetsWindow} is the window on which the \glspl{target} are displayed;
+	\item\texttt{Emotiv} is the class which receives the raw data from the Emotiv EPOC headset, decrypts the data and sends it to other components of the application;
+	\item\texttt{Robot} is the code that sends commands to the robot after the signal has been analysed and result has been obtained;
+	\item\texttt{Plot} is the code that can be used to plot the \gls{EEG} signal in real-time;
+	\item\texttt{Extraction} is the code that analyses the signal using \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods.
+	\item\texttt{PostOffice} is the class that handles the communication between the components of the application.
+\end{itemize}
+There is one of each component except the \texttt{Plot} and the \texttt{Extraction}. The number of \texttt{Plots} and \texttt{Extractions} depends on how many plots the user wants to see or how many \gls{feature extraction} methods to use. Each plot and \gls{feature extraction} method can have different parameters. Having different parameters on different plots allows the user to compare how different signal processing affects the signal. Having different parameters on \gls{feature extraction} methods allows the user to compare how the parameters affect the performance of the \gls{BCI}. Furthermore, \gls{feature extraction} methods with different parameters can be used together to complement each other and work as a single \gls{feature extraction} method. Combining different \gls{feature extraction} methods to a single method is further discussed in section~\ref{sec:identification}. For graphical illustration of the components of the application see figure~\ref{fig:class_diagram}.
+
+\begin{figure}[h!]
+	\centering
+	\input{./tikz/class_diagram}
+	\caption{Components of the application. Lines between the components represent connections through which the components communicate. The numbers show how many instances of the same component there can be.}
+	\label{fig:class_diagram}
+\end{figure}
+
+The \texttt{PostOffice} class is important because each component is running on separate subprocess, meaning that each component has its own memory space. Thus it is not possible for the components of the application to communicate by for example writing to and reading from the same variable---their memory is separated---and therefore more complex type of communication has to be used. Alternative to using multiple processes or multiprocessing is using multiple threads or multithreading. Unlike processes, threads run in the same memory space but due to the limitations of the standard implementation of Python, threads cannot use multiple \glspl{CPU} or multiple \gls{CPU} cores at the same time while processes can.
+
+Making use of multiple \gls{CPU} cores is important because calculating the \gls{power spectral density} and analysing the recorded signal using \gls{CCA} is computationally expensive and thus it might be necessary to divide the calculations between different \gls{CPU} cores to achieve optimal performance and use the \gls{BCI} in real-time. The Emotiv EPOC headset is constantly sending new data to the application and the application has to be able to finish analysing current data before receiving enough data for the next \gls{feature extraction}.
+
+For the ease of use, the application has \gls{GUI}. See figure~\ref{fig:options_frame} for an example of the application's user interface. Multiprocessing is also important to avoid freezing of the whole application while one window of the \gls{GUI} is moved or resized. In case of moving a window, the window manager of Windows operating system freezes the subprocess which is updating the window. If the application is divided into subprocesses then only the subprocess which updates the window freezes, the rest of the application continues working.
+
+The usage of multiple subprocesses is achieved by using multiprocessing module from Python 2.7 standard library. This module also provides connections that can be used for communication between the components of the application. In addition to the Python 2.7 standard library, the following libraries were used:
 \begin{itemize}
 	\item Emokit\footnote{https://github.com/openyou/emokit/tree/master/python/emokit} to access raw data from Emotiv EPOC headset;
 	\item PsychoPy~\cite{psychopy} for designing visual stimuli and precise timing of the stimuli presentations;
 	\item scikit-learn~\cite{scikit-learn} for calculating \gls{CCA} algorithm;
 	\item SciPy and NumPy~\cite{scipy} for calculating other advanced mathematical algorithms, for example \gls{FFT};
 	\item PyQtGraph\footnote{http://www.pyqtgraph.org} for real-time plotting of the data.
-\end{itemize} For the ease of use, the application has graphical user interface. See figure~\ref{fig:options_frame} for an example the application's user interface.
-
-The application runs on multiple subprocesses and therefore is able to use multiple \glspl{CPU} or multiple \gls{CPU} cores at the same time. This is achieved by using Python multiprocessing module. Multiprocessing is also important to avoid freezing of the whole application while one window is moved or resized, since this is the default behaviour of the window manager of Windows operating system. The components of the application that run on different processes can be seen in figure~\ref{fig:class_diagram}.
-
-\begin{figure}[h!]
-	\centering
-	\input{./tikz/class_diagram}
-	\caption{Components of the application.}
-	\label{fig:class_diagram}
-\end{figure}
-
-The communication between different components is implemented using multiprocessing connections. Each line in figure~\ref{fig:class_diagram} represents one connection. It can be seen that all the connections go to the PostOffice class. This class is used to receive and send messages between different components of the application.
-
-\section{Using the application with other EEG devices}
-\label{sec:different_devices}
-
-Although the application was written for Emotiv EPOC, it can be used with other \gls{EEG} devices too if it is possible to access the data of these devices with Python script. As discussed in section~\ref{sec:application}, the communication between the data accessing code and the rest of the application is realised using Python multiprocessing module. The data accessing code runs on separate process and communicates with the rest of the application by sending messages through multiprocessing connection. It sends raw data through the connection and receives messages like "Setup", "Start", "Stop" and "Exit". Each of the received messages should lead to calling a specific function. If the received message is
-\begin{itemize}
-	\item "Setup", then the object should get internally ready to start sending data;
-	\item "Start", then the object should start sending the data;
-	\item "Stop", then the object should stop sending the data;
-	\item "Exit", then all the needed clean up procedures should be executed, because the application is closing.
 \end{itemize}
 
-The easiest way to start using different headset with the application is changing the code in MyEmotiv.py. The constructor of MyEmotiv class has to take one argument. This argument is the object that handles the communication between different processes. The last line in the constructor of MyEmotiv should call the argument's waitMessages method, which waits until it receives one of the previously discussed messages. The waitMessages method takes arguments which are the functions that are called when corresponding message is received. By replacing these methods in MyEmotiv object, it is possible to use the application with other \gls{EEG} devices too. Since the application can be relatively easily modified to use other \gls{EEG} devices too, it could be a good tool to test how suitable are different devices for a \gls{SSVEP}-based \gls{BCI}.
+The most important part of the implementation of this application is that multiple \gls{feature extraction} methods complement each other when analysing \gls{EEG} recording.
 
 \section{Signal pipeline of the application}
 \label{sec:signal_pipeline}
 
-The application does not have one specific signal pipeline, but the components of the pipeline can be changed using the graphical user interface. This allows different configurations to be easily tested to find the best settings for controlling a robot and the best settings for different users. See figure~\ref{fig:signal_pipeline} for the flowchart of the application's signal pipeline.
+As already discussed in the previous section, the application does not have one specific signal pipeline, but the parameters of the signal pipeline can be changed from the \gls{GUI}. This allows different configurations to be easily tested to find the best settings for controlling a robot and the best settings for different users. See figure~\ref{fig:signal_pipeline} for the flowchart of the application's signal pipeline.
 
 \begin{figure}[h!]
 	\input{./tikz/signal_pipeline}
@@ -98,7 +56,11 @@ The application does not have one specific signal pipeline, but the components o
 	\label{fig:signal_pipeline}
 \end{figure}
 
-As seen in figure~\ref{fig:signal_pipeline}, all the signal processing techniques discussed in section~\ref{sec:signal_processing} can be used as components of the signal pipeline and in addition to these techniques, filtering can also be used. One thing to keep in mind is that the \gls{window} length shows how long signal is held in memory and after every step, the whole signal goes through the signal pipeline, not only the segment obtained during the last step. See figure~\ref{fig:options_frame} for illustration of the application's user interface for choosing signal pipeline components and options.
+As seen in figure~\ref{fig:signal_pipeline}, \texttt{length} is the \gls{window} length and it shows how long filtered signal is held in memory. \texttt{Step} on the other hand shows how many packets have to be received before trying to identify user's choice. If \texttt{step} is smaller than \texttt{length} then the \gls{window} is overlapping which means that some of the data that was used in previous \gls{feature extraction} will also be used in the next \gls{feature extraction}. If \texttt{step} is equal to \texttt{length}, then every consecutive \gls{feature extraction} uses only new data that has not been analysed by previous \glspl{feature extraction}. It would not make sense to use larger \texttt{step} than \texttt{length}, because then some of the data will not be analysed and in this case the \gls{target} detection would be slower.
+
+After receiving \texttt{step} packets, the whole filtered signal will be first \glsdisp{detrend}{detrended} and then \glsdisp{window}{windowed}. \glsdisp{detrend}{Detrending} and \glsdisp{window}{windowing} were thoroughly discussed in sections~\ref{sec:detrend} and \ref{sec:window} respectively. Since some data is deleted and new data is added to the signal after every step, the \glsdisp{window}{windowing} cannot be performed only on the previously received signal segment, but has to be performed on the whole signal every time. \glsdisp{detrend}{Detrending} could be performed only on the previously received signal segment, but using it on the whole signal gives more possibilities since the same result as using it only on the signal segment can be achieved by dividing the \glsdisp{detrend}{detrending} of the whole signal into segments with suitable length. In the application this division can be achieved by giving the \texttt{break} parameter which shows how many breakpoints to use that divide the signal into equal length segments.
+
+There are more signal pipeline settings that can be changed through the \gls{GUI} of the application and now a brief overview of these settings will be given. See figure~\ref{fig:options_frame} for illustration of the application's \gls{GUI} for choosing signal pipeline components and parameters.
 
 \begin{figure}[h]
 	\centering
@@ -107,38 +69,37 @@ As seen in figure~\ref{fig:signal_pipeline}, all the signal processing technique
 	\label{fig:options_frame}
 \end{figure}
 
-The explanation of the signal pipeline options is the following:
+The explanation of the signal pipeline settings is the following:
 \begin{enumerate}
-	\item \Gls{detrend} is either linear, constant or none. None means that \glsdisp{detrend}{detrending} is not used. Linear means that linear trend is removed from the raw signal; constant means that constant trend is removed from the raw signal. \glsdisp{detrend}{Detrending} was more thoroughly discussed in section~\ref{sec:detrend}.
-	\item \Gls{window} is either hann, hamming, blackman, keiser, bartlett or none. None means that \gls{window} function is not used. Other options are standard signal processing \gls{window} functions. \glsdisp{window}{Windowing} was more thoroughly discussed in section~\ref{sec:window}.
-	\item \glsdisp{interpolation}{Interp} is either linear, nearest, zero, slinear, quadratic or cubic. See SciPy documentation\footnote{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html} for more information. \Gls{interpolation} was more thoroughly discussed in section~\ref{sec:interpolate}.
-	\item Filter is either high-pass, low-pass, band-pass or none. None means that filtering is not used. High-pass filter means that frequencies lower than the given value are removed from the signal. Similarly, low-pass filter removes frequencies higher than the given value. Band-pass filter takes two values and removes frequencies that are not in the given range. See SciPy documentation\footnote{http://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.firwin.html} for more information. 
-	\item Step shows how many packets have to be received before trying to identify user's choice. For example, if \gls{sampling rate} is \SI{128}{Hz} and step is 64 then the \gls{feature extraction} algorithms are executed after every $\frac{64}{\SI{128}{Hz}}=0.5$ seconds.
-	\item Length is the length of the window. Length shows the number of packets on which the \gls{feature extraction} algorithms are executed. For example, if \gls{sampling rate} is \SI{128}{Hz} and length is 512 then the \gls{feature extraction} algorithms are performed on the last $\frac{512}{\SI{128}{Hz}}=4$ seconds of data.
-	\item Break is the number of breakpoints used when \glsdisp{detrend}{detrending} the signal. The breakpoints will be equally spaced. If the number of breakpoints is 1, then the breakpoint will be in the middle of the signal and the trend will be removed separately from the first half of the signal and the second half of the signal.
-	\item Arg is the beta argument for kaiser window. See NumPy documentation for details\footnote{http://docs.scipy.org/doc/numpy/reference/generated/numpy.kaiser.html}.
-	\item Harmonics is the number of integer multiples used in \gls{feature extraction} methods. How integer multiples of the \gls{target} frequency can be used in \gls{PSDA} and \gls{CCA} methods was discussed in sections~\ref{sec:PSDA} and \ref{sec:CCA} respectively. The motivation for using integer multiples was discussed in section~\ref{sec:decomposition}.
-	\item Normalise shows whether to normalise the estimated \gls{power spectral density} as in equation~\ref{eq:norm_SNR} or not.
-	\item From and to are the frequencies used to specify which frequencies are removed and which not. From shows the lowest frequency that is passed, lower frequencies than the value will be removed; to shows the highest frequency that is passed, higher frequencies than the value will be removed.
-	\item Taps shows the number of taps or the length of the filter. See SciPy documentation\addtocounter{footnote}{-2}\footnotemark\addtocounter{footnote}{1} for details.
+	\item \texttt{\Gls{detrend}} is either linear, constant or none. None means that \glsdisp{detrend}{detrending} is not used. Linear means that linear trend is removed from the raw signal; constant means that constant trend is removed from the raw signal. \glsdisp{detrend}{Detrending} was more thoroughly discussed in section~\ref{sec:detrend}.
+	\item \texttt{\Gls{window}} is either hann, hamming, blackman, keiser, bartlett or none. None means that \gls{window} function is not used. Other options are standard signal processing \gls{window} functions. \glsdisp{window}{Windowing} was more thoroughly discussed in section~\ref{sec:window}.
+	\item \texttt{\glsdisp{interpolation}{Interp}} is either linear, nearest, zero, slinear, quadratic or cubic. See SciPy documentation\footnote{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interp1d.html} for more information. \Gls{interpolation} was more thoroughly discussed in section~\ref{sec:interpolate}.
+	\item \texttt{Filter} is either high-pass, low-pass, band-pass or none. None means that filtering is not used. High-pass filter means that frequencies lower than the given value are removed from the signal. Similarly, low-pass filter removes frequencies higher than the given value. Band-pass filter takes two values and removes frequencies that are not in the given range. See SciPy documentation\footnote{http://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.firwin.html} for more information. 
+	\item \texttt{Step} shows how many packets have to be received before trying to identify user's choice. For example, if \gls{sampling rate} is \SI{128}{Hz} and step is 64 then the \gls{feature extraction} algorithms are executed after every $\frac{64}{\SI{128}{Hz}}=0.5$ seconds.
+	\item \texttt{Length} is the length of the window. Length shows the number of packets on which the \gls{feature extraction} algorithms are executed. For example, if \gls{sampling rate} is \SI{128}{Hz} and length is 512 then the \gls{feature extraction} algorithms are performed on the last $\frac{512}{\SI{128}{Hz}}=4$ seconds of data.
+	\item \texttt{Break} is the number of breakpoints used when \glsdisp{detrend}{detrending} the signal. The breakpoints will be equally spaced. If the number of breakpoints is 1, then the breakpoint will be in the middle of the signal and the trend will be removed separately from the first half of the signal and the second half of the signal.
+	\item \texttt{Arg} is the beta argument for kaiser window. See NumPy documentation for details\footnote{http://docs.scipy.org/doc/numpy/reference/generated/numpy.kaiser.html}.
+	\item \texttt{Normalise} shows whether to normalise the estimated \gls{power spectral density} as in equation~\ref{eq:norm_SNR} or not.
+	\item \texttt{From} and \texttt{to} are the frequencies used to specify which frequencies are removed and which not. From shows the lowest frequency that is passed, lower frequencies than the value will be removed; to shows the highest frequency that is passed, higher frequencies than the value will be removed.
+	\item \texttt{Taps} shows the number of taps or the length of the filter. See SciPy documentation\addtocounter{footnote}{-2}\footnotemark\addtocounter{footnote}{1} for details.
 \end{enumerate}
 
-The application has graphical user interface and the code is written so that it is relatively easy to add new or change the existing functionality, as briefly discussed in section~\ref{sec:different_devices}. This application can be used to compare how different signal pipelines affect the detection of \glspl{SSVEP}.
+Since the application has \gls{GUI} and many parameters that can be easily tested, this application can be a good tool to compare how different signal pipelines affect the detection of \glspl{SSVEP}.
 
 \section{Target identification method}
 \label{sec:identification}
 
 This section describes the user's choice identification method used in this application. As is the case with the signal pipeline, this application actually does not have one specific \gls{feature extraction} method, but the \gls{feature extraction} method can be changed and a combinations of different \gls{feature extraction} methods can be used. To the best of the author's knowledge, combining different \gls{feature extraction} methods while using only \gls{SSVEP} neuromechanism has not been used before.
 
-Currently the application has three different \gls{feature extraction} methods that can be combined: widely known \gls{PSDA} and \gls{CCA} method and a method that is similar to the \gls{PSDA} method but the estimated \gls{power spectral density} is calculated not for each signal obtained from different channels but for the sum of all the signals from different channels. If only one channel is used, then this method works exactly the same as standard \gls{PSDA} method. In the graphical user interface, this method is called sum \gls{PSDA} method. Using this method makes sense, because \gls{FFT} is linear, meaning that the result will be the same if first the signals are summed up and then the \gls{power spectral density} is estimated and if first the \gls{power spectral density} is estimated separately for each channel and then the \gls{power spectral density} estimates for each channel are summed up.
+Currently the application has three different \gls{feature extraction} methods that can be combined: widely known \gls{PSDA} and \gls{CCA} method and a method that is similar to the \gls{PSDA} method but the estimated \gls{power spectral density} is calculated not for each signal obtained from different channels but for the sum of all the signals from different channels. If only one channel is used, then this method works exactly the same as standard \gls{PSDA} method. In the \gls{GUI}, this method is called \texttt{sum \gls{PSDA}} method. Using this method makes sense, because \gls{FFT} is linear, meaning that the result will be the same if first the signals are summed up and then the \gls{power spectral density} is estimated and if first the \gls{power spectral density} is estimated separately for each channel and then the \gls{power spectral density} estimates for each channel are summed up.
 
-Unlike the sum \gls{PSDA} method, the standard \gls{PSDA} method calculates separate results for each channel. One way to identify user's choice with standard \gls{PSDA} method is to choose a command only if all the \gls{PSDA} methods give the same result. If all the methods do not give the same result, it is assumed that the signal was too noisy and the decision could not be made. In this case the application waits for new data.
+Unlike the sum \gls{PSDA} method, the standard \gls{PSDA} method calculates separate results for each channel. One way to identify user's choice with standard \gls{PSDA} method is to choose a command only if for all the different channels are the same. If all the methods do not give the same result, it is assumed that the signal was too noisy and the decision could not be made. In this case the application waits for new data.
 
 All \gls{feature extraction} methods used in the application can be combined. In case of combining methods, the \gls{target} choosing algorithm is similar to the standard \gls{PSDA} method---all the methods have to give the same result. Currently the \gls{target} choosing method cannot be changed from the user interface. If different \gls{target} choosing method is needed, then the code has to be changed.
 
 It is easy to modify this functionality by changing the code in handleFreqMessage method in PostOffice.py. This method receives the results of the \gls{feature extraction} methods through a connection similarly to the data accessing code discussed in section~\ref{sec:different_devices}. The results have already been organised into different data structures. There are results per each method, results per each signal pipeline, all the results counted and other data structures to make it easier to further develop the application.
 
-It is also worth mentioning that different \gls{feature extraction} methods can have different signal pipelines. For example it would not make sense to \gls{window} a signal that is later analysed using \gls{CCA}, but \glsdisp{window}{windowing} could be beneficial if the estimated \gls{power spectral density} of the signal is later analysed using \gls{PSDA} method. Thus the application has the functionality to use multiple signal pipelines with different options, which gives even more flexibility.
+It is also worth mentioning that different \gls{feature extraction} methods can have different signal pipelines. For example it would not make sense to \gls{window} a signal that is later analysed using \gls{CCA}, but \glsdisp{window}{windowing} could be beneficial if the \gls{power spectral density} of the signal is later estimated analysed using \gls{PSDA} method. Thus the application has the functionality to use multiple signal pipelines with different options, which gives even more flexibility.
 
 Using \gls{PSDA} and \gls{CCA} method together makes the \gls{target} identification more accurate, because finally the \gls{target} is chosen only if different methods give the same result. If one of the methods makes a mistake and gives a wrong result, then the other method might still give the correct result. It is less probable for two methods to make the same mistake at the same time than for one method to make a mistake. Using these two methods together makes sense, because these methods analyse the \gls{EEG} signal from two different aspects---one uses time-domain representation, the other uses frequency-domain representation.
 
@@ -148,7 +109,7 @@ To further improve this method, the phase information from the \gls{frequency sp
 
 As discussed in section~\ref{sec:identification}, the application does not have one specific \gls{feature extraction} method but it combines different \gls{feature extraction} methods with different signal pipelines if necessary. Thus the way how the signal is processed and how the user's choice is identified is modifiable. This section describes how the \gls{BCI} can be used to control a robot.
 
-Each \gls{target} in the \gls{BCI} can be used as one command for the robot. The robot can be controlled by looking at different \glspl{target} on the computer screen in certain sequence, depending on which command should be given to the robot. Then the \gls{BCI} tries to identify which \gls{target} is being looked at and translates the results into commands for the robot, for example forward, left, forward. The \glspl{target} could be designed for example as shown in figure~\ref{fig:arrow_stimuli}.
+Each \gls{target} in the \gls{BCI} can be used as one command for the robot. The robot can be controlled by looking at different \glspl{target} on the computer screen in certain sequence, depending on which command should be given to the robot. Then the \gls{BCI} tries to identify which \gls{target} is being looked at and translates the results into commands for the robot. The \glspl{target} could be designed for example as shown in figure~\ref{fig:arrow_stimuli}.
 
 \begin{figure}[h]
 	\centering
@@ -157,7 +118,7 @@ Each \gls{target} in the \gls{BCI} can be used as one command for the robot. The
 	\label{fig:arrow_stimuli}
 \end{figure}
 
-The robot\footnote{https://github.com/kuz/Garage48-PiTank} used for testing the application has five possible commands move forward, move backward, turn left, turn right and stop. The robot can execute one command at a time, meaning that it is not possible to move forward and turn left or right at the same time. If the robot is moving forward and receives different command, the moving forward will stop. See figure~\ref{fig:robot} for a picture of the robot used for testing the application.
+The robot\footnote{https://github.com/kuz/Garage48-PiTank} used for testing the application has five possible commands: move forward, move backward, turn left, turn right and stop. The robot can execute one command at a time, meaning that it is not possible to move forward and turn left or right at the same time. If the robot is moving forward and receives a command to turn left, the moving forward will stop and the robot starts to turn left. See figure~\ref{fig:robot} for a picture of the robot used for testing the application.
 
 \begin{figure}[h]
 	\centering
@@ -166,10 +127,21 @@ The robot\footnote{https://github.com/kuz/Garage48-PiTank} used for testing the 
 	\label{fig:robot}
 \end{figure}
 \footnotetext{https://github.com/kuz/Garage48-PiTank/blob/master/Docs/images/pitank.png}
-The robot has a camera on it and thus it is possible to see the camera's videos stream on the computer screen when controlling the robot with the application. The empty space in the middle of the screen as shown in figure~\ref{fig:arrow_stimuli} is intended---it is possible to show the video stream there.
+The robot has a camera on it and thus it is possible to see the camera's videos stream on the computer screen when controlling the robot with the application. The picture in the middle of the screen as shown in figure~\ref{fig:arrow_stimuli} represents the video stream.
 
 The communication between the robot and the application is implemented similarly to the communication between other parts of the application, but instead of multiprocessing connections, sockets were used to exchange information.
 
-[TODO: Add other details of the implementation if needed (not done yet, Ilya is searching for a camera for the robot)].
+The robot used in testing the application has very common commands---forward, back, left, right and stop. Therefore, if the \gls{BCI} proves to have sufficiently high \gls{target} detection speed and accuracy, then it could be adapted to other devices that can be controlled with similar commands.
 
-[TODO: Add the ITR/accuracy/speed and compare to existing BCIs]
+\section{Using the application with other EEG devices}
+\label{sec:different_devices}
+
+Although the application was written for Emotiv EPOC, it can be used with other \gls{EEG} devices too if it is possible to access the data of these devices with Python script. As discussed in section~\ref{sec:application}, the communication between the data accessing code and the rest of the application is implemented using Python multiprocessing module. The data accessing code runs on separate process and communicates with the rest of the application by sending messages through multiprocessing connection. It sends raw data through the connection and receives messages like "Setup", "Start", "Stop" and "Exit". Each of the received messages should lead to calling a specific function. If the received message is
+\begin{itemize}
+	\item "Setup", then the object should get internally ready to start sending data;
+	\item "Start", then the object should start sending the data;
+	\item "Stop", then the object should stop sending the data;
+	\item "Exit", then all the needed clean up procedures should be executed, because the application is closing.
+\end{itemize}
+
+The easiest way to start using different headset with the application is changing the code in \texttt{MyEmotiv.py}. The constructor of \texttt{MyEmotiv} class has to take one argument. This argument is the object that handles the communication between different processes. The last line in the constructor of \texttt{MyEmotiv} should call the argument's \texttt{waitMessages} method, which waits until it receives one of the previously discussed messages. The \texttt{waitMessages} method takes arguments which are the functions that are called when corresponding message is received. By replacing these methods in \texttt{MyEmotiv} class, it is possible to use the application with other \gls{EEG} devices too. Since the application can be relatively easily modified to use other \gls{EEG} devices, it could be a good tool to test how suitable are different devices for a \gls{SSVEP}-based \gls{BCI}.

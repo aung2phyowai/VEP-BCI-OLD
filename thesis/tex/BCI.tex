@@ -359,3 +359,49 @@ The \gls{canonical correlation} between the \gls{EEG} recording and every set of
 \end{figure}
 
 These two \gls{feature extraction} methods described in this chapter can be used as separate \gls{feature extraction} methods, but in the application described in chapter~\ref{sec:SSVEP_BCI}, these two methods collaborate with each other and therefore work as a single \gls{feature extraction} method.
+
+\section{Related work}
+
+There are many types of \glspl{BCI} available. A review by Bashashati \textit{et al.}~\cite{bci_comparison} contains a detailed overview of \gls{EEG}-based \glspl{BCI}. Their paper includes overview of the following neuromechanisms used in \gls{EEG}-based \glspl{BCI}: \gls{VEP} and \gls{SSVEP}, P300, slow cortical potential, response to mental task, sensorimotor activity, and multiple neuromechanisms or hybrid \gls{BCI}. Hybrid \gls{BCI} uses at least two different neuromechanisms in a \gls{BCI} and therefore at least two different methods are required to analyse the \gls{EEG} recording~\cite{hybrid_bci, hybrid_bci2}.
+
+\gls{SSVEP}-based \glspl{BCI} can be divided in categories according to the method used to detect \glspl{SSVEP} in \gls{EEG} recording. Current \gls{SSVEP}-based \gls{BCI} \gls{feature extraction} methods include:
+\begin{itemize}
+	\item \Gls{PSDA} method introduced by Cheng \textit{et al.}~\cite{psda}.
+	\item \Gls{SC} method introduced by Wu and Yao~\cite{sc}.
+	\item Dual-frequency \gls{SSVEP} methods~\cite{dual1, dual2}.
+	\item \Gls{MPCC} method introduced by Tong \textit{et al.}~\cite{MPCC}.
+	\item \Gls{MEC} method introduced by Friman \textit{et al.}~\cite{mec}. This method has shown better performance than \gls{SC} and \gls{PSDA} method~\cite{mec_comparison}.
+	\item \Gls{CCA} method introduced by Lin \textit{et al.}~\cite{cca_lin}. This method has shown better performance than \gls{PSDA} method~\cite{cca_psda, bin2009cca, cca_lin}.
+	\item Multiway \gls{CCA} method introduced by Zhang \textit{et al.}~\cite{mcca}. This method has shown better performance than standard \gls{CCA}~\cite{mcca}.
+	\item \Gls{LASSO} method introduced by Zhang \textit{et al.}~\cite{LASSO}. This method has shown better performance than \gls{CCA} method~\cite{LASSO}.
+	\item \Gls{LRT} method introduced by Zhang \textit{et al.}~\cite{LRT}. This method has shown better performance than \gls{CCA} method and similar performance to \gls{LASSO} method~\cite{LRT}.
+\end{itemize}
+For more comprehensive review of the \gls{feature extraction} methods see article by Liu \textit{et al.}~\cite{feature_extraction}.
+
+In this thesis Emotiv EPOC is used to record brain activity and the recording is analysed using \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. Table~\ref{tab:emotiv_BCIs} gives overview of the existing \glspl{BCI} that also use Emotiv EPOC for recording brain activity. It can be seen that existing applications have \gls{target} detection time above or exactly three seconds which is not fast enough to control a robot in real time. However, as Zier mentioned in his paper~\cite{emotiv_psda} and as also noticed in the process of developing this application, if the \gls{window} length is long enough for the \gls{feature extraction} method to accurately detect correct \gls{target}, the \gls{target} detection time is about half the \gls{window} length. That is so, because after half the \gls{window} length, half of the previous data is replaced with new data and if there is more new data than previous, then the \gls{BCI} recognises the new user's choice.
+
+\newcommand{\liu}{Liu \textit{et al.}~\cite{emotiv_11hz}}
+\newcommand{\lin}{Lin \textit{et al.}~\cite{emotiv_walking}}
+\newcommand{\choi}{Choi and Jo~\cite{emotiv_hybrid}}
+\newcommand{\hvar}{Hvaring and}
+\newcommand{\moe}{Ulltveit-Moe~\cite{emotiv_comparison}}
+\newcommand{\duvi}{Duvinage \textit{et al.}~\cite{emotiv_p300_comp}}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}\hline
+		& Method& Accuracy (\%)		& Target detection 	& ITR (bits/min)	\\
+		&		&					& time (sec)		&					\\\hline
+\liu	& CCA	& $95.83\pm 3.59$	& $5.25\pm 2.14$	& $20.97\pm 0.37$	\\\hline
+\lin	& CCA	& $76.60\pm 21.74$	& $4.34\pm 0.08$	& $14.38\pm 9.04$	\\\hline
+		& CCA	& $84.4\pm 5.0$		& N/A				& $11.6\pm 3.9$		\\\cline{2-5}
+\choi	& ERD	& $84.6\pm 5.3$		& N/A				& $11.8\pm 3.7$		\\\cline{2-5}
+		& P300	& $89.5$			& $5.35$			& $18.1\pm 2.1$		\\\hline
+\hvar	& CCA	& $85.12\pm 4.58$	& $3.00$			& $32.92\pm 4.72$	\\\cline{2-5}
+\moe	& PSDA	& $89.29\pm 6.41$	& $5.14\pm 0.98$	& $23.78\pm 7.15$	\\\hline
+	\end{tabular}
+	\caption{Comparison of the existing BCIs that use Emotiv EPOC.}
+	\label{tab:emotiv_BCIs}
+\end{table}
+
+This thesis aims at developing \gls{BCI} with faster \gls{target} detection time than the previous applications to provide suitable speed for controlling a robot.
