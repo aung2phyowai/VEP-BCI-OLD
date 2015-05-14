@@ -8,7 +8,7 @@
 %\usepackage{layout}
 %\printinunitsof{pt}
 
-\includeonly{./tex/glossary, ./tex/abstract, ./tex/title_page, ./tex/appendices, ./tex/introduction, ./tex/EEG, ./tex/BCI, ./tex/conclusion, ./tex/SSVEP_BCI, ./tex/results}
+\includeonly{./tex/glossary, ./tex/abstract, ./tex/title_page, ./tex/appendices, ./tex/introduction, ./tex/EEG, ./tex/BCI, ./tex/conclusion, ./tex/SSVEP_BCI, ./tex/results, ./tex/licence}
 \begin{document}
 
 %\layout
@@ -24,7 +24,7 @@
 \include{./tex/EEG}
 \include{./tex/BCI}
 \include{./tex/SSVEP_BCI}
-%\include{./tex/results}
+\include{./tex/results}
 \addcontentsline{toc}{chapter}{Conclusion}
 \include{./tex/conclusion}
 
@@ -35,8 +35,10 @@
 \bibliographystyle{abbrv}
 \addcontentsline{toc}{chapter}{References}
 \bibliography{thesis}
-Internet URLs were valid on ...
+Internet URLs were valid on 14.05.2015
 
 \include{./tex/appendices}
+\addcontentsline{toc}{chapter}{Licence}
+\include{./tex/licence}
 
 \end{document}

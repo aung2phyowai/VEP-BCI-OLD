@@ -1,34 +1,36 @@
 \tikzstyle{decision} = [diamond, draw, fill=blue!20,
-    text width=4.5em, text badly centered, node distance=2.5cm, inner sep=0pt]
+    text width=4.5em, text badly centered, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20,
     text width=5em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, very thick, color=black!50, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, 
     minimum height=2em]
 
 \begin{tikzpicture}[scale=2, node distance = 4cm, auto]
 	% Nodes
 	\node [cloud] (start) {start};
-	\node [decision, below of=start] (wait) {wait for step packets};
-	\node [block, right of=wait] (filter) {filter new signal segment};
-	\node [cloud, right of=start] (stop) {stop};
-	\node [block, right of=filter] (add) {add segment to signal};
-	\node [decision, right of=add, node distance=4 cm] (length) {len(signal) \textgreater window length?};
-	\node [block, below of=length] (delete) {delete first step packets};
-	\node [block, left of=delete] (detrend) {make copy of signal and detrend it};
-	\node [block, left of=detrend] (window) {window signal};
-	\node [block, left of=window] (detect) {send signal to feature extraction};
+	\node [block, right of=start] (length) {wait for \texttt{length} packets};
+	\node [decision, below of=length, node distance=2.7cm] (received) {received "Stop"?};
+	\node [block, left of=received] (step) {wait for \texttt{step} packets};
+	\node [block, right of=received] (filter) {filter new signal segment};
+	\node [block, right of=filter] (add) {add the segment to signal};
+	\node [cloud, above of=filter, node distance=2.7cm] (stop) {stop};
+	\node [block, below of=add, node distance=2.7cm] (delete) {delete first \texttt{step} packets};
+	\node [block, left of=delete] (detrend) {make copy of signal};
+	\node [block, left of=detrend] (window) {detrend~and window the signal};
+	\node [block, left of=window] (detect) {send signal to feature extraction or to plot};
 	
 	% Arrows
-	\path [line] (start) -- (wait);
-	\path [line] (wait) -- node [align=center, color=black, sloped, pos=1] {received\\"Stop"} (stop);
-	\path [line] (wait) -- node [align=center, color=black, sloped] {received\\data} (filter);
+	\path [line] (start) -- (length);
+	\path [line] (length) -- (received);
+	\path [line] (step) -- (received);
+	\path [line] (received) -- node [near start, color=black] {yes} (stop);
+	\path [line] (received) -- node [near start, color=black] {no} (filter);
 	\path [line] (filter) -- (add);
-	\path [line] (add) -- (length);
-	\path [line] (length) -- node [near start, color=black] {yes} (delete);
-	\path [line] (length) -- node [near start, color=black] {no} (detrend);
+	\path [line] (add) -- (delete);
 	\path [line] (detrend) -- (window);
 	\path [line] (delete) -- (detrend);
 	\path [line] (window) -- (detect);
-	\path [line] (detect) -- (wait);
+	\path [line] (detect) -- (step);
+	
 \end{tikzpicture}

@@ -13,7 +13,8 @@
 \usepackage{tikz-timing}
 \usetikzlibrary{shapes,arrows}
 %\usetikztiminglibrary{nicetabs} 
-\usepackage[estonian, english]{babel}
+\usepackage[estonian, english]{babel} % for lühikokkuvõte language has to be changed to estonian
+\usepackage{lscape} % for vertical table
 
 \usepackage{alphalph} 			% subfigure letters to plots
 \makeatletter
@@ -24,7 +25,7 @@
 }
 \makeatother
 
-\usepackage[nogroupskip, acronym]{glossaries}	% for acronyms
+\usepackage[nogroupskip,acronym,nopostdot]{glossaries}	% for acronyms
 \renewcommand{\glossarysection}[2][]{}			% no title for glossary
 \newcommand*{\glossfirstformat}[1]{\textit{#1}}	% use italics for first occurence
 \renewcommand{\glsdisplayfirst}[4]{\glossfirstformat{#1#4}}

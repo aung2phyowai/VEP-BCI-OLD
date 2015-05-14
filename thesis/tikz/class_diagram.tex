@@ -3,7 +3,7 @@
 \tikzstyle{block} = [rectangle, draw, fill=blue!20,
     text width=5em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, very thick, color=black!50]
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20,
     minimum height=2em]
 
 \newcommand*{\ArrowLength}{2.0em}
@@ -12,22 +12,22 @@
         \draw [-stealth, #1] (0,0) -- (\ArrowLength,0) ;
 }
 
-\begin{tikzpicture}[scale=2, node distance = 5cm, auto]
+\begin{tikzpicture}[scale=2, node distance = 4cm, auto]
 	% Nodes
-	\node [block] (PostOffice) {PostOffice};
-	\node [block, above of=PostOffice, node distance=3cm] (MainWindow) {Main Window};
-	\node [block, left of=MainWindow] (TargetsWindow) {Targets Window};
-	\node [block, below of=PostOffice,  node distance=3cm] (Robot) {Robot};
-	\node [block, left of=Robot] (MyEmotiv) {Emotiv};
-	\node [block, right of=MainWindow] (Plot) {Plot};
-	\node [block, right of=Robot] (Extraction) {Extraction};
+	\node [block] (PostOffice) {\texttt{PostOffice}};
+	\node [block, left of=PostOffice] (MainWindow) {\texttt{Main Window}};
+	\node [block, right of=PostOffice] (TargetsWindow) {\texttt{Targets Window}};
+	\node [block, below of=TargetsWindow, node distance=2cm] (Robot) {\texttt{Robot}};
+	\node [block, below of=MainWindow, node distance=2cm] (MyEmotiv) {\texttt{Emotiv}};
+	\node [block, above of=TargetsWindow, node distance=2cm] (Plot) {\texttt{Plot}};
+	\node [block, above of=MainWindow, node distance=2cm] (Extraction) {\texttt{Extraction}};
 	
 	% Arrows
 	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.9, above, color=black] {1} (MyEmotiv);
 	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.9, above, color=black] {1} (TargetsWindow);
-	\path [line] (PostOffice) -- node [pos=0.15, color=black] {1} node[pos=0.85, color=black] {1} (MainWindow);
-	\path [line] (PostOffice) -- node [pos=0.15, color=black] {1} node[pos=0.85, color=black] {1} (Robot);
+	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.9, above, color=black] {1} (MainWindow);
+	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.9, above, color=black] {1} (Robot);
 	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.9, above, color=black] {n} (Plot);
-	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.9, above, color=black] {n} (Extraction);
+	\path [line] (PostOffice) -- node [pos=0.1, above, color=black] {1} node[pos=0.85, above, color=black] {m} (Extraction);
 
 \end{tikzpicture}

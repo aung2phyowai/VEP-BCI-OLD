@@ -2,6 +2,10 @@
 % Can be replaced by \appendix
 
 \begin{appendices}
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+%\titleformat{\chapter}{\large\bfseries}{\appendixname~\thesection .}{0.5em}{}
+%\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\appendixname~\thechapter}{20pt}{}{}
 \renewcommand{\thesection}{\Roman{section}}
 \section{Glossary}
 \printglossary
@@ -9,31 +13,41 @@
 \section{Acronyms}
 \printglossary[type=\acronymtype]
 \newpage
+\begin{landscape}
+\section{Fixed parameters for testing}
+\label{sec:parameters}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}\hline
+Method& Extraction& Length& Step	& Sensors		& Detrend	& Detrend	 & Window& Kaiser& Interpolation& Filter\\
+ID	& method	& (sec)	& (sec)	& 				& 			& breakpoints& 		 & beta	 & 				&  \\\hline
+1	& Sum PSDA	& 2		& 0.125	& O1, O2		& Linear	& 5			 & Kaiser& 14	 & Quadratic	&- \\\hline
+2	& CCA		& 2		& 0.125	& O1, O2, P7, P8& Linear	& 5			 & -	 & -	 & -			&- \\\hline
+3	& PSDA		& 1		& 0.125	& O1, O2		& Linear	& 3			 & Kaiser& 14	 & Quadratic	&- \\\hline
+4	& CCA		& 1		& 0.125	& O1, O2, P7, P8& Linear	& 3			 & -	 & -	 & -			&- \\\hline
+		\end{tabular}
+		\caption{Settings of the feature extraction method's signal pipelines.}
+		\label{tab:pipelines}
+	\end{table}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}\hline
+Target	& Frequency & Harmonics		& Position x& Position y& Color	& Type			& Shape	 & Width 	& Height\\
+ID		& (Hz)		& in extraction	& (pixel)	& (pixel)	& 		& 		 		& 		 & (pixel)	&(pixel)\\\hline
+1		& 5.45		& 1, 2, 3		& 0		 	& -200		& White	& Single graphic& Square & 150	 	& 150\\\hline
+2		& 6.0		& 1, 2, 3		& -300	 	& 0			& White	& Single graphic& Square & 150	 	& 150\\\hline
+3		& 6.67		& 1, 2, 3		& 0		 	& 200		& White	& Single graphic& Square & 150	 	& 150\\\hline
+4		& 7.5		& 1, 2, 3		& 300	 	& 0			& White	& Single graphic& Square & 150	 	& 150\\\hline
+		\end{tabular}
+		\caption{Settings of the targets.}
+		\label{tab:targets}
+	\end{table}
+\end{landscape}
 %\section{List of figures}
 %\makeatletter
 %\@starttoc{lof}% Print List of Figures
 %\makeatother
 %\newpage
 %\listoftables
-\section{Licence}
-\textbf{Non-exclusive licence to reproduce thesis and make thesis public}\\[1cm]
-
-\noindent I, \textbf{Anti Ingel} (dd.mm.yyyy)
-
-\begin{enumerate}
-	\item herewith grant the University of Tartu a free permit (non-exclusive licence) to:
-	\begin{enumerate}
-		\item[1.1] reproduce, for the purpose of preservation and making available to the public, including for addition to the DSpace digital archives until expiry of the term of validity of the copyright, and
-		\item[1.2] make available to the public via the web environment of the University of Tartu, including via the DSpace digital archives until expiry of the term of validity of the copyright,
-	\end{enumerate}
-	of my thesis\\
-	\textbf{Control a Robot via VEP Using Emotiv EPOC}\\
-	supervised by Ilya Kuzovkin
-	\item I am aware of the fact that the author retains these rights.
-	\item I certify that granting the non-exclusive licence does not infringe the intellectual property rights or rights arising from the Personal Data Protection Act.
-\end{enumerate}
-\vspace{1cm}
-Tartu dd.mm.yyyy
-
 
 \end{appendices}
