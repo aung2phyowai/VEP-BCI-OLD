@@ -4,6 +4,39 @@
 
 The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository\footnote{https://github.com/kahvel/VEP-BCI}. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
 
+\section{Controlling a robot with the application}
+
+This section describes how the \gls{BCI} can be used to control a robot. Each \gls{target} in the \gls{BCI} can be used as one command for the robot. The robot can be controlled by looking at different \glspl{target} on the computer screen in certain sequence, depending on which command should be given to the robot. Then the \gls{BCI} tries to identify which \gls{target} is being looked at and translates the results into commands for the robot. The \glspl{target} could be designed for example as shown in figure~\ref{fig:arrow_stimuli}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{arrows_stream.png}
+	\caption{Stimuli locations on the screen for controlling a robot. The picture in the middle represents camera's video stream.}
+	\label{fig:arrow_stimuli}
+\end{figure}
+
+The robot\footnote{https://github.com/kuz/Garage48-PiTank} used for testing the application has five possible commands: move forward, move backward, turn left, turn right and stop. The robot can execute one command at a time, meaning that it is not possible to move forward and turn left or right at the same time. If the robot is moving forward and receives a command to turn left, the moving forward will stop and the robot starts to turn left. See figure~\ref{fig:robot} for a picture of the robot used for testing the application.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{robot.jpg}
+	\caption{The robot used for testing the application.}
+	\label{fig:robot}
+\end{figure}
+
+The robot has a camera on it and thus it is possible to see the camera's videos stream on the computer screen when controlling the robot with the application. The picture in the middle of the screen as shown in figure~\ref{fig:arrow_stimuli} represents the video stream.
+
+The flowchart of the \gls{BCI} can be seen in figure~\ref{fig:whole_bci}. The brain and the Emotiv EPOC headset were discussed in the first chapter. The \glspl{target} and \gls{feature extraction} methods of the \gls{BCI} along with the signal processing techniques were discussed in the second chapter. The details of the actual implementation of the signal pipeline and the novel target identification method will be discussed in sections~\ref{sec:signal_pipeline} and \ref{sec:identification} respectively.
+
+\begin{figure}[h!]
+	\centering
+	\input{./tikz/whole_bci}
+	\caption{Flowchart of the BCI.}
+	\label{fig:whole_bci}
+\end{figure}
+
+The robot used in testing the application has very common commands---forward, back, left, right and stop. Therefore, if the \gls{BCI} proves to have sufficiently high \gls{target} detection speed and accuracy, then it could be adapted to other devices that can be controlled with similar commands.
+
 \section{Overview of the application}
 \label{sec:application}
 
@@ -51,6 +84,7 @@ The most important part of the implementation of this application is that multip
 As already discussed in the previous section, the application does not have one specific signal pipeline, but the parameters of the signal pipeline can be changed from the \gls{GUI}. This allows different configurations to be easily tested to find the best settings for controlling a robot and the best settings for different users. See figure~\ref{fig:signal_pipeline} for the flowchart of the application's signal pipeline.
 
 \begin{figure}[h!]
+	\centering
 	\input{./tikz/signal_pipeline}
 	\caption{Flowchart of the application's signal pipeline.}
 	\label{fig:signal_pipeline}
@@ -99,7 +133,14 @@ Since multiple \gls{feature extraction} methods can be used together and some \g
 
 To further improve the performance of the \gls{BCI}, not only the weights of the last results, but the weights of multiple previous results are used to make the decision. Thus the condition would not be that if the sum of the weights of the last results is at least 3, but for example the sum of the weights of the three previous results is at least 9. If there are multiple \glspl{target} that satisfy the condition, then the \gls{target} with higher sum of the weights of the previous results is chosen. This case is not possible in the previously given example, since all the results always correspond to one \gls{target}. In the previous example the maximum sum of weights for one set of results is 4, therefore the sum of weights for the last three sets of results is $4\cdot 3=12$. If the condition is that this sum has to be higher than 9, then the maximum sum of weights for another \gls{target} is $12-9=3$.
 
-Finally, the \gls{target} is chosen if $n$ out of $m$ previous results that were obtained by comparing the sum the weights of $k$ previous results are the same. See figure that is right now missing for a graphical illustration of the \gls{target} identification method.
+Finally, the \gls{target} is chosen if $n$ out of $m$ previous results that were obtained by comparing the sum the weights of $k$ previous results are the same. See figure~\ref{fig:target_identification} for graphical illustration of the \gls{target} identification method.
+
+\begin{figure}[h!]
+	\centering
+	\input{./tikz/target_identification}
+	\caption{Flowchart of the application's target identification.}
+	\label{fig:target_identification}
+\end{figure}
 
 %One way to identify user's choice with standard \gls{PSDA} method is to choose a command only if results of all the different channels are the same. If all the methods do not give the same result, it is assumed that the signal was too noisy and the decision could not be made. In this case the application waits for new data.
 
@@ -112,34 +153,6 @@ It is also worth mentioning that different \gls{feature extraction} methods can 
 Using \gls{PSDA} and \gls{CCA} method together makes the \gls{target} identification more accurate, because finally the \gls{target} is chosen only if different methods give the same result. If one of the methods makes a mistake and gives a wrong result, then the other method might still give the correct result. It is less probable for two methods to make the same mistake at the same time than for one method to make a mistake. Using these two methods together makes sense, because these methods analyse the \gls{EEG} signal from two different aspects---one uses time-domain representation, the other uses frequency-domain representation.
 
 To further improve this method, the phase information from the \gls{frequency spectrum} that is currently being discarded could also be used. One possible usage would be to design \gls{CCA} method \glspl{reference signal} with correct phase. Currently both sine and cosine waves are used to achieve optimal minimum correlation as discussed in section~\ref{sec:CCA}. But even without this improvement, combining these methods already improves the performance of the \gls{BCI}.
-
-\section{Controlling a robot with the application}
-
-As discussed in section~\ref{sec:identification}, the application does not have one specific \gls{feature extraction} method but it combines different \gls{feature extraction} methods with different signal pipelines if necessary. Thus the way how the signal is processed and how the user's choice is identified is modifiable. This section describes how the \gls{BCI} can be used to control a robot.
-
-Each \gls{target} in the \gls{BCI} can be used as one command for the robot. The robot can be controlled by looking at different \glspl{target} on the computer screen in certain sequence, depending on which command should be given to the robot. Then the \gls{BCI} tries to identify which \gls{target} is being looked at and translates the results into commands for the robot. The \glspl{target} could be designed for example as shown in figure~\ref{fig:arrow_stimuli}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.4\textwidth]{arrows.png}
-	\caption{Stimuli locations on the screen for controlling a robot.}
-	\label{fig:arrow_stimuli}
-\end{figure}
-
-The robot\footnote{https://github.com/kuz/Garage48-PiTank} used for testing the application has five possible commands: move forward, move backward, turn left, turn right and stop. The robot can execute one command at a time, meaning that it is not possible to move forward and turn left or right at the same time. If the robot is moving forward and receives a command to turn left, the moving forward will stop and the robot starts to turn left. See figure~\ref{fig:robot} for a picture of the robot used for testing the application.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.6\textwidth]{robot.png}
-	\caption{The robot used for testing the application\protect\footnotemark.}
-	\label{fig:robot}
-\end{figure}
-\footnotetext{https://github.com/kuz/Garage48-PiTank/blob/master/Docs/images/pitank.png}
-The robot has a camera on it and thus it is possible to see the camera's videos stream on the computer screen when controlling the robot with the application. The picture in the middle of the screen as shown in figure~\ref{fig:arrow_stimuli} represents the video stream.
-
-The communication between the robot and the application is implemented similarly to the communication between other parts of the application, but instead of multiprocessing connections, sockets were used to exchange information.
-
-The robot used in testing the application has very common commands---forward, back, left, right and stop. Therefore, if the \gls{BCI} proves to have sufficiently high \gls{target} detection speed and accuracy, then it could be adapted to other devices that can be controlled with similar commands.
 
 \section{Using the application with other EEG devices}
 \label{sec:different_devices}
