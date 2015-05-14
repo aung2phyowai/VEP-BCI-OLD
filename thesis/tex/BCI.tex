@@ -8,15 +8,15 @@ The previous chapter discussed the biology of the brain and described the brain 
 
 As discussed in section~\ref{sec:VEP}, it is possible to present multiple visual stimuli to a subject and detect, which stimulus is the subject looking at. It was also mentioned that computer monitor can be used to present visual stimuli. This section will discuss how stimuli with certain blinking frequency can be displayed by a computer monitor.
 
-Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another article, however, concludes that \glspl{BCI} that use \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be displayed by a computer monitor are discussed in this thesis.
+Research has shown that LCD screens produce more reliable \gls{SSVEP} response than \gls{LED}~\cite{lcd_lcd_led}. Another study, however, concludes that \glspl{BCI} that use \glspl{LED} as visual stimuli have achieved better performance~\cite{ssvep_stim}. But since using \glspl{LED} requires dedicated hardware, only the stimuli that can be displayed by a computer monitor are discussed in this thesis.
 
-A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli. Monitor \gls{refresh rate}, on the other hand, limits the presentation rate or blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore, monitor \gls{refresh rate} is used for timing and synchronisation also in this thesis.
+A computer monitor has certain size, resolution and \gls{refresh rate}. Monitor resolution and size limit the size of the visual stimuli that can be used and the distance between the stimuli on the screen. Monitor \gls{refresh rate}, on the other hand, limits the presentation rate or blinking frequency of the stimulus that can be used. Research has shown that LCD screens produce more reliable \gls{SSVEP} response when using monitor \gls{refresh rate} for measuring the time between stimuli presentations rather than a timer~\cite{lcd_lcd_led}. Therefore in this thesis monitor \gls{refresh rate} is used for timing and synchronisation.
 
 Monitor \gls{refresh rate} is the number of consecutive images or \glspl{frame} shown on the screen in a second, assuming that the \glspl{frame} are produces at least as fast as they can be displayed. A \gls{frame} is one of the images that compose the changing picture on the screen. Monitor with a \gls{refresh rate} of \SI{60}{Hz} can display 60 \glspl{frame} per second. 
 
 Often blinking one-coloured squares on one-coloured background are used as visual stimuli in \gls{SSVEP}-based \glspl{BCI}~\cite{ssvep_stim}. The squares may have symbols on them, for example letters or numbers. The stimuli of \gls{VEP}-based \gls{BCI} are also called \glspl{target} and the blinking of a \gls{target} is called \gls{flickering}.
 
-In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the \gls{target} frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is \SI{60}{Hz}, then
+In every \gls{frame} each \gls{target} can be in one of two \glspl{state}---displayed or not displayed. The \gls{state} of a \gls{target} can be switched only when the current \gls{frame} is replaced with the next \gls{frame}. The \gls{state} switches should be distributed as evenly as possible for the \gls{target} frequency to be constant. Distributing the \gls{state} switches is easier with some frequencies than others. For example, if \gls{refresh rate} is \SI{60}{Hz}, then the state switches for \SI{10}{Hz}, \SI{11}{Hz} and \SI{12}{Hz} \gls{target} should be distributed as follows:
 \begin{itemize}
 	\item \SI{10}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{10}=6$ times slower than the \gls{refresh rate}. This means, that the \gls{target} has to be presented once in every 6 \glspl{frame}. Since 6 is an even number, \SI{10}{Hz} \gls{flickering} can be achieved by changing the \gls{state} of the \gls{target} after every $\frac{6}{2} = 3$ \glspl{frame}. If this \gls{flickering} is plotted as a function of \gls{state} versus time as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{square wave}. In this thesis, the waveform produced by plotting the \gls{flickering} is called \gls{flickering waveform}.
 	\item \SI{12}{Hz} \gls{flickering} can be achieved by presenting the \gls{target} $\frac{60}{12}=5$ times slower than the \gls{refresh rate}. The \gls{target} has to be presented once in every 5 \glspl{frame}. Since 5 is an odd number, the amount of time the \gls{target} is in displayed \gls{state} and in not displayed \gls{state} cannot be equal. Therefore, the \gls{target} should be 3 \glspl{frame} in displayed \gls{state} and 2 \glspl{frame} in not displayed \gls{state} or the other way round. If representing this \gls{flickering} as a \gls{flickering waveform} as in figure~\ref{fig:flickering}, it can be seen that it produces a \gls{rectangular wave}.
@@ -52,7 +52,7 @@ The previous discussion was about blinking shapes or \gls{single graphic} stimul
 	\label{fig:stimuli}
 \end{figure}
 
-The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}. The fastest possible target frequency can be achieved by changing between the \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. Perhaps it is most reasonable to calculate the \gls{target} frequency with:
+The main difference between \gls{single graphic} stimuli and \gls{pattern reversal} stimuli is that \gls{single graphic} stimuli elicits \gls{SSVEP} response after every two alterations, while \gls{pattern reversal} stimuli elicits \gls{SSVEP} response after every alteration~\cite{ssvep_stim}. The fastest possible target frequency can be achieved by changing between the \glspl{state} of a target every time a new \gls{frame} is displayed. If the \gls{state} is changed at lower rate, the \gls{target} frequency will also be lower. \Gls{target} frequency can be calculated as follows:
 \begin{equation}
 	f_{single\mbox{ }graphic} = \frac{n}{2T} \qquad f_{pattern\mbox{ }reversal} = \frac{n}{T}
 \end{equation}
@@ -75,7 +75,7 @@ The \glspl{pure tone} are used to represent all possible frequencies that a sign
 	\label{fig:pure_tone}
 \end{figure}
 
-To represent both amplitude and phase, complex numbers are used. Complex numbers can be represented as a pair of real numbers and therefore complex numbers can be used to represent two values. The amplitude and phase do not correspond to the real and imaginary part of the complex number but rather are related to the absolute value or the modulus and the phase of the complex number. In this thesis the phase information from the \gls{frequency spectrum} is not used. There are, however, \glspl{BCI} that also use the phase information~\cite{MPCC}. Since only the information about amplitude is required in this thesis, it is possible to convert the \gls{frequency spectrum} into \gls{power spectral density}, which can be represented as a function of amplitude squared or power versus frequency.
+To represent both amplitude and phase, complex numbers are used. The amplitude and phase do not correspond to the real and imaginary part of the complex number but rather are related to the absolute value or the modulus and the phase of the complex number. In this thesis the phase information from the \gls{frequency spectrum} is not used. There are, however, \glspl{BCI} that also use the phase information~\cite{MPCC}. Since only the information about amplitude is required in this thesis, it is possible to convert the \gls{frequency spectrum} into \gls{power spectral density}, which can be represented as a function of amplitude squared versus frequency.
 
 To conclude previous discussion, the amount of frequency $f$ present in a signal can be calculated by first calculating the \gls{frequency spectrum} with \gls{Fourier transform} and then taking modulus squared of the \gls{frequency spectrum}'s value at frequency $f$.
 
@@ -141,7 +141,7 @@ There are, however, preconditions that have to be fulfilled in order to calculat
 
 If these preconditions are met, the \gls{ITR} of a \gls{BCI} can be calculated using equation~\ref{eq:itr}. Using the same evaluation method allows the performance of different \glspl{BCI} to be easily compared.
 
-\section{Improving the accuracy of a spectrum with signal processing}
+\section[Improving the accuracy of a spectrum with signal processing]{Improving the accuracy of a spectrum with\break signal processing}
 \label{sec:signal_processing}
 
 The aim of this section is to describe some digital signal processing techniques that can improve the performance of a \gls{SSVEP}-based \gls{BCI} by improving the accuracy of an amplitude spectrum or \gls{power spectral density}.
@@ -192,7 +192,7 @@ It can be seen that if the \gls{trend} $t(x)$ is not constantly zero, then \glsd
 
 The longer the window, the more values will be acquired and the estimated \gls{power spectral density} will be closer to the actual \gls{power spectral density}~\cite{psd}. This was already briefly mentioned in section~\ref{sec:fourier}. However, to control a robot it is necessary for the \gls{BCI} to detect \glspl{SSVEP} as fast as possible and therefore the \gls{window} length should be as short as possible. Thus, choosing the right \gls{window} length is important in designing a fast and accurate \gls{BCI}.
 
-\subsection{Zero padding the signal and approximating unknown values}
+\subsection[Zero padding the signal and approximating unknown values]{Zero padding the signal and approximating unknown\break values}
 \label{sec:interpolate}
 
 Another problem that occurs when analysing \gls{power spectral density} is that the \gls{power spectral density} of a \gls{digital signal} is discrete and therefore it might not have \glspl{frequency bin} at the exact values of interest. For example, if designing a \gls{BCI}, the frequencies of interest are the \glspl{target} frequencies or integer multiples of the \glspl{target} frequencies, because these are the \glspl{frequency component} of \gls{SSVEP} as discussed in section~\ref{sec:decomposition}.
@@ -358,7 +358,7 @@ The \gls{canonical correlation} between the \gls{EEG} recording and every set of
 	\label{fig:cca}
 \end{figure}
 
-These two \gls{feature extraction} methods described in this chapter can be used as separate \gls{feature extraction} methods, but in the application described in chapter~\ref{sec:SSVEP_BCI}, these two methods collaborate with each other and therefore work as a single \gls{feature extraction} method.
+These two \gls{feature extraction} methods described in this chapter can be used as separate \gls{feature extraction} methods, but in the application described in chapter~\ref{sec:SSVEP_BCI}, these two methods complement each other and in a sense work as a single \gls{feature extraction} method.
 
 \section{Related work}
 
@@ -378,7 +378,7 @@ There are many types of \glspl{BCI} available. A review by Bashashati \textit{et
 \end{itemize}
 For more comprehensive review of the \gls{feature extraction} methods see article by Liu \textit{et al.}~\cite{feature_extraction}.
 
-In this thesis Emotiv EPOC is used to record brain activity and the recording is analysed using \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. Table~\ref{tab:emotiv_BCIs} gives overview of the existing \glspl{BCI} that also use Emotiv EPOC for recording brain activity. It can be seen that existing applications have \gls{target} detection time above or exactly three seconds which is not fast enough to control a robot in real time. However, as Zier mentioned in his paper~\cite{emotiv_psda} and as also noticed in the process of developing this application, if the \gls{window} length is long enough for the \gls{feature extraction} method to accurately detect correct \gls{target}, the \gls{target} detection time is about half the \gls{window} length. That is so, because after half the \gls{window} length, half of the previous data is replaced with new data and if there is more new data than previous, then the \gls{BCI} recognises the new user's choice.
+In this thesis Emotiv EPOC is used to record brain activity and the recording is analysed using \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods. Table~\ref{tab:emotiv_BCIs} gives overview of the existing \glspl{BCI} that also use Emotiv EPOC for recording brain activity.
 
 \newcommand{\liu}{Liu \textit{et al.}~\cite{emotiv_11hz}}
 \newcommand{\lin}{Lin \textit{et al.}~\cite{emotiv_walking}}
@@ -403,5 +403,7 @@ In this thesis Emotiv EPOC is used to record brain activity and the recording is
 	\caption{Comparison of the existing BCIs that use Emotiv EPOC.}
 	\label{tab:emotiv_BCIs}
 \end{table}
+
+It can be seen that existing applications have \gls{target} detection time above or exactly three seconds which is not fast enough to control a robot in real time. However, as Zier mentioned in his paper~\cite{emotiv_psda} and as also noticed in the process of developing this application, if the \gls{window} length is long enough for the \gls{feature extraction} method to accurately detect correct \gls{target}, the \gls{target} detection time is about half the \gls{window} length. That is so, because after half the \gls{window} length, half of the previous data is replaced with new data and if there is more new data than previous, then the \gls{BCI} recognises the new user's choice.
 
 This thesis aims at developing \gls{BCI} with faster \gls{target} detection time than the previous applications to provide suitable speed for controlling a robot.

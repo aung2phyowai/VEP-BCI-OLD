@@ -1,5 +1,5 @@
 
-\chapter{Application for controlling a robot via SSVEP}
+\chapter[Application for controlling a robot via SSVEP]{Application for controlling\\ a robot via SSVEP}
 \label{sec:SSVEP_BCI}
 
 The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository\footnote{https://github.com/kahvel/VEP-BCI}. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
@@ -10,7 +10,7 @@ This section describes how the \gls{BCI} can be used to control a robot. Each \g
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{arrows_stream.png}
+	\includegraphics[width=0.8\textwidth]{arrows_stream.png}
 	\caption{Stimuli locations on the screen for controlling a robot. The picture in the middle represents camera's video stream.}
 	\label{fig:arrow_stimuli}
 \end{figure}
@@ -52,7 +52,7 @@ The application is divided into the following components:
 	\item\texttt{Extraction} is the code that analyses the signal using \gls{PSDA} and \gls{CCA} \gls{feature extraction} methods.
 	\item\texttt{PostOffice} is the class that handles the communication between the components of the application.
 \end{itemize}
-There is one of each component except the \texttt{Plot} and the \texttt{Extraction}. The number of \texttt{Plots} and \texttt{Extractions} depends on how many plots the user wants to see or how many \gls{feature extraction} methods to use. Each plot and \gls{feature extraction} method can have different parameters. Having different parameters on different plots allows the user to compare how different signal processing affects the signal. Having different parameters on \gls{feature extraction} methods allows the user to compare how the parameters affect the performance of the \gls{BCI}. Furthermore, \gls{feature extraction} methods with different parameters can be used together to complement each other and work as a single \gls{feature extraction} method. Combining different \gls{feature extraction} methods to a single method is further discussed in section~\ref{sec:identification}. For graphical illustration of the components of the application see figure~\ref{fig:class_diagram}.
+There is instance one of each component except the \texttt{Plot} and the \texttt{Extraction}. The number of \texttt{Plots} and \texttt{Extractions} depends on how many plots the user wants to see or how many \gls{feature extraction} methods to use. Each plot and \gls{feature extraction} method can have different parameters. Having different parameters on different plots allows the user to compare how different signal processing affects the signal. Having different parameters on \gls{feature extraction} methods allows the user to compare how the parameters affect the performance of the \gls{BCI}. Furthermore, \gls{feature extraction} methods with different parameters can be used together to complement each other and work as a single \gls{feature extraction} method. Combining different \gls{feature extraction} methods to a single method is further discussed in section~\ref{sec:identification}. For graphical illustration of the components of the application see figure~\ref{fig:class_diagram}.
 
 \begin{figure}[h!]
 	\centering
@@ -123,7 +123,7 @@ Since the application has \gls{GUI} and many parameters that can be easily teste
 \section{Target identification method}
 \label{sec:identification}
 
-This section describes the user's choice identification method used in this application. As is the case with the signal pipeline, this application actually does not have one specific \gls{feature extraction} method, but the \gls{feature extraction} method can be changed and a combinations of different \gls{feature extraction} methods can be used. To the best of the author's knowledge, combining different \gls{feature extraction} methods while using only \gls{SSVEP} neuromechanism has not been used before.
+This section describes the \gls{target} identification method used in this application. As is the case with the signal pipeline, this application actually does not have one specific \gls{feature extraction} method, but the \gls{feature extraction} method can be changed and a combinations of different \gls{feature extraction} methods can be used. To the best of the author's knowledge, combining different \gls{feature extraction} methods while using only \gls{SSVEP} neuromechanism has not been used before.
 
 Currently the application has three different \gls{feature extraction} methods that can be combined: widely known \gls{PSDA} and \gls{CCA} method and a method that is similar to the \gls{PSDA} method but the estimated \gls{power spectral density} is calculated not for each signal obtained from different channels but for the sum of all the signals from different channels. If only one channel is used, then this method works exactly the same as standard \gls{PSDA} method. In the \gls{GUI}, this method is called \texttt{sum \gls{PSDA}} method. Using this method makes sense, because \gls{FFT} is linear, meaning that the result will be the same if first the signals are summed up and then the \gls{power spectral density} is estimated and if first the \gls{power spectral density} is estimated separately for each channel and then the \gls{power spectral density} estimates for each channel are summed up.
 

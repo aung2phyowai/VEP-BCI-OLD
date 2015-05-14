@@ -1,0 +1,62 @@
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+    text width=6em, text badly centered, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+    text width=6em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, very thick, color=black!50, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, 
+    minimum height=2em]
+\tikzstyle{noArrow} = [draw, very thick, color=black!50]
+
+\begin{tikzpicture}[scale=2, node distance = 4cm, auto]
+	% Nodes
+	\node [cloud] (start) {start};
+	
+	\coordinate [below of=start, node distance=5cm] (dummyStart);
+	\coordinate [left of=dummyStart, node distance=2cm] (dummyStartLeft);
+	
+	\node [block, left of=start] (wait) {wait for $k$ results};
+	\node [block, below of=wait, node distance=3cm] (calculate) {calculate the sum of the weights of $k$ last results};
+	\node [decision, right of=calculate] (threshold) {is sum \textgreater= threshold?};
+	\node [block, right of=threshold] (add) {add corresponding target to list};
+	\node [decision, below of=add] (del) {more than $n$ targets in the list?};
+	\node [block, left of=del] (remove) {delete the first target from the list};
+	
+	\coordinate [below of=remove, node distance=2cm] (dummyDel);
+	\coordinate [right of=dummyDel, node distance=2cm] (dummyDelRight);
+	\coordinate [left of=dummyDel, node distance=2cm] (dummyDelLeft);
+	
+	\node [decision, left of=remove] (final) {at least $m$ same targets in the list?};
+	\node [block, left of=final] (correct) {choose the target with the most occurrences};
+	\node [decision, above of=correct] (new) {wait for next results};
+	\node [cloud, above of=new, node distance=3cm] (stop) {stop};
+	
+	\coordinate [below of=stop, node distance=5cm] (dummyStop);
+	\coordinate [right of=dummyStop, node distance=2cm] (dummyStopRight);
+	
+	%\node [block, right of=start] (receive) {receive result(s) from feature extraction};
+	%\node [decision, below of=length, node distance=2.7cm] (received) {received "Stop"?};
+
+	
+	% Arrows
+	\path [noArrow] (threshold) -- node [near start, color=black] {no} (dummyStartLeft);
+	\path [noArrow] (dummyStartLeft) -- (dummyStopRight);
+	\path [line] (threshold) -- node [near start, color=black] {yes} (add);
+	\path [line] (dummyStopRight) -- (new);
+	\path [line] (start) -- (wait);
+	\path [line] (wait) -- (calculate);
+	\path [line] (calculate) -- (threshold);
+	\path [line] (add) -- (del);
+	\path [line] (del) -- node [near start, color=black, above] {yes} (remove);
+	\path [line] (remove) -- (final);
+	\path [line] (final) -- node [near start, color=black, above] {yes} (correct);
+	\path [line] (final) -- node [near start, color=black] {no} (new);
+	\path [line] (correct) -- (new);
+	\path [line] (new) -- node [near start, color=black, align=right] {received\\ results} (calculate);
+	\path [line] (new) -- node [near start, color=black, align=center] {received\\ "Stop"} (stop);
+	\path [noArrow] (del) -- node [near start, color=black] {no} (dummyDelRight);
+	\path [noArrow] (dummyDelRight) -- (dummyDelLeft);
+	\path [line] (dummyDelLeft) -- (final);
+	
+	%\path [line] (received) -- node [near start, color=black] {yes} (stop);
+	
+\end{tikzpicture}

@@ -10,13 +10,13 @@ As all living organisms are composed of cells, so are humans and the human brain
 
 \begin{figure}[b!]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{synapse_modified.jpg}
 		\caption{Neurons and a chemical synapse~\cite[p.~17]{neuronpic}.}
 		\label{fig:neuron_synapse}
 	\end{subfigure}
 	~
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{action_potential.png}
 		\caption{Action potential~\cite{action_potential_pic}.}
 		\label{fig:action_potential}
@@ -32,18 +32,19 @@ By having stable \gls{resting potential}, \glspl{neuron} are able to send signal
 
 An \gls{action potential} or signal sending is initiated when the \gls{membrane potential} of a \gls{neuron} exceeds certain threshold value called \gls{threshold potential}. The \gls{membrane potential} of a \gls{neuron} can increase when the \gls{neuron} receives signals from other \glspl{neuron}. The \gls{neuron} that receives a signal is called \gls{postsynaptic cell}. The received signal can cause the \gls{membrane potential} of the \gls{postsynaptic cell} to increase or decrease. This change in \gls{membrane potential} is called a \gls{postsynaptic potential}. If the \gls{postsynaptic potential} is large enough for the \gls{membrane potential} to exceed \gls{threshold potential}, an \gls{action potential} is initiated in the \gls{postsynaptic cell}.
 
-The following paragraph is mainly based on the article by Buzsaki \textit{et al.}~\cite{electric_field}. The \gls{postsynaptic potential} is caused by ions flowing into the cell. To achieve electroneutrality, a balancing flow of ions from the interior to the exterior of the cell is needed. The ions of the balancing flow have the same electric charge as the entering ions. If the ions flowing into the cell have
+The following paragraph is mainly based on the article by Buzsaki \textit{et al.}~\cite{electric_field}. The \gls{postsynaptic potential} is caused by ions flowing into the cell. To achieve electroneutrality, a balancing flow of ions from the interior to the exterior of the cell is needed. The ions of the balancing flow have the same electric charge as the entering ions. If the ions flowing into the cell have positive charge
 \begin{itemize}
-	\item positive charge, then 
-	\subitem the \gls{membrane potential} of the cell increases;
-	\subitem location where positive ions enter the cell is called \gls{sink};
-	\subitem location where positive ions exit the cell is called \gls{source}; and
-	\subitem as a result, there are less positive ions around \gls{sink} and more around \gls{source};
-	\item negative charge, then
-	\subitem the \gls{membrane potential} of the cell decreases;
-	\subitem location where negative ions enter the cell is called \gls{source};
-	\subitem location where negative ions exit the cell is called \gls{sink}; and
-	\subitem as a result, there are less negative ions around \gls{source} and more around \gls{sink}.
+	\item the \gls{membrane potential} of the cell increases;
+	\item location where positive ions enter the cell is called \gls{sink};
+	\item location where positive ions exit the cell is called \gls{source}; and
+	\item as a result, there are less positive ions around \gls{sink} and more around \gls{source};
+\end{itemize}
+If the ions flowing into the cell have negative charge
+\begin{itemize}
+	\item the \gls{membrane potential} of the cell decreases;
+	\item location where negative ions enter the cell is called \gls{source};
+	\item location where negative ions exit the cell is called \gls{sink}; and
+	\item as a result, there are less negative ions around \gls{source} and more around \gls{sink}.
 \end{itemize}
 
 In both cases, the \gls{source} is more positively charged than the \gls{sink}. Since the \gls{sink} and the \gls{source} have different electric potentials, they form a \gls{current dipole}. See figure~\ref{fig:dipole} for illustration.
@@ -77,7 +78,7 @@ As discussed in section~\ref{sec:neuron}, \glspl{neuron} in the brain are sendin
 
 \Gls{electromagnetic} techniques measure either electrical activity or magnetic fields produced by the electrical activity along the scalp. \Gls{electromagnetic} techniques include \gls{EEG} and \gls{MEG}. These methods have lower \gls{temporal resolution} than \gls{haemodynamic} methods, but measure only the activity in the outer layer of the brain. \Gls{temporal resolution} shows how short time period can be reliably separated out by a measuring technique or in other words, how accurately the brain activity can be measured with respect to time.
 
-To decide which method is best for controlling a robot, cost, portability and \gls{temporal resolution} of each method is compared in this thesis. See table~\ref{tab:neuroimaging} for details. For real-time robot controlling, lower \gls{temporal resolution} is better because it enables faster decision making.
+To decide which method is best for controlling a robot, cost, portability and \gls{temporal resolution} of each method is compared. See table~\ref{tab:neuroimaging} for details. For real-time robot controlling, lower \gls{temporal resolution} is better because it enables faster decision making.
 
 % Constants for table
 
@@ -111,7 +112,7 @@ In this thesis, techniques that are portable and available to the consumer are p
 
 As already mentioned in the previous section, \gls{EEG} measures the electrical activity along the scalp. This electrical activity originates mainly from the electric fields generated by \glspl{neuron} as discussed in section~\ref{sec:neuron}. The aim of this section is to describe the basics of \gls{EEG} and discuss how brain activity evoked by certain event can be measured using \gls{EEG}.
 
-The electric potential generated by one \gls{neuron} is far too low to be recognized. Therefore, approximately 108 \glspl{neuron} have to have synchronous electrical activity to create a measurable field~\cite{field_count}. Furthermore, these \glspl{neuron} have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. Namely, these neurons need to be perpendicular to the surface of the brain. See figure~\ref{fig:dipole_neuron} for example.
+The electric potential generated by one \gls{neuron} is far too low to be recognized. Therefore, approximately 108 \glspl{neuron} have to have synchronous electrical activity to create a measurable field~\cite{field_count}. Furthermore, these \glspl{neuron} have to have certain orientation for the electric fields to add up and reach the electrode on the scalp. Namely, these neurons need to be perpendicular to the surface of the brain as shown in figure~\ref{fig:dipole_neuron}.
 
 \gls{EEG} measures the potential fields as a function of voltage versus time using electrodes placed on scalp~\cite{field_count}. Since voltage is the electric potential difference between two points, one or more reference electrodes are commonly used. A voltmeter can be used to measure the difference in electric potential between two electrodes, one of which is the reference electrode. See figure~\ref{fig:voltmeter} for a simplified scheme.
 
@@ -122,7 +123,7 @@ The electric potential generated by one \gls{neuron} is far too low to be recogn
 	\label{fig:voltmeter}
 \end{figure}
 
-Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. See figure~\ref{fig:brain_lobes} for example. 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore the electrode measures the activity of this brain lobe. There are more complicated electrode-naming-systems that extend the 10-20 system. See figure~\ref{fig:electrode_locations} for example.
+Usually electrodes are placed on the scalp according to international 10-20 electrode location system. The outer layer of the brain can be classified into four lobes: temporal, occipital, parietal and frontal. See figure~\ref{fig:brain_lobes} for example. The mentioned 10-20 electrode location system uses a letter and a number to identify electrode location. The letter is the first letter of the brain lobe above which the electrode is located and therefore the electrode measures the activity of this brain lobe. There are more complicated electrode-naming-systems that extend the 10-20 system. See figure~\ref{fig:electrode_locations} for example.
 
 In a broad sense, \gls{EEG} recording is linked to the general state of the brain~\cite{VEP}. Due to the generality of the recording, potentials evoked by certain events cannot be seen in the recording because the evoked potentials are much smaller than the general fluctuations. A brain potential evoked by some event is called \gls{ERP}. 
 
@@ -137,13 +138,13 @@ When the visual stimulus is seen, the signal travels from the eyes to the \gls{v
 
 \begin{figure}[h!]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{brain_lobes.png}
 		\caption{Lobes of the brain~\cite{blausen}.}
 		\label{fig:brain_lobes}
 	\end{subfigure}
 	~
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{visual_pathway.png}
 		\caption{The primary visual pathway~\cite[p.~261]{neuroscience}.}
 		\label{fig:visual_pathway}
@@ -154,11 +155,7 @@ When the visual stimulus is seen, the signal travels from the eyes to the \gls{v
 
 Due to the posterior location of the occipital lobe, electrodes should be placed to the back of the head when recording \glspl{VEP} with \gls{EEG}. These electrode locations are identified with the letter O as discussed in section~\ref{sec:EEG}.
 
-When comparing the \glspl{VEP} elicited by
-\begin{enumerate*}[(1)]
-	\item the stimulation of the \gls{central visual field} and
-	\item the stimulation of the \gls{peripheral vision}
-\end{enumerate*} by the same stimuli, it can be seen that the stimulation of the \gls{central visual field} produces larger \glspl{VEP}~\cite{VEP_size}. In other words, the stimulus which a subject is looking at elicits larger \glspl{VEP} than those stimuli that are not in the very centre of the gaze. Therefore, it is possible to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
+When comparing the \glspl{VEP} elicited by the stimulation of the \gls{central visual field} and the stimulation of the \gls{peripheral vision} by the same stimuli, it can be seen that the stimulation of the \gls{central visual field} produces larger \glspl{VEP}~\cite{VEP_size}. In other words, the stimulus that a subject is looking at elicits larger \glspl{VEP} than those stimuli that are not in the very centre of the gaze. Therefore, it is possible to present multiple visual stimuli to a subject and detect which stimulus is the subject looking at. 
 
 To make the detection of \glspl{VEP} easier, \glspl{SSVEP} are used. If the visual stimulus is presented at a constant rate and the rate is so fast that the visual pathway does not have enough time to fully recover between stimulus presentations, then the elicited response becomes continuous and it is called \gls{SSVEP}~\cite{VEP}. See figure~\ref{fig:ssvep} for an example of \glspl{VEP} and \glspl{SSVEP}.
 
