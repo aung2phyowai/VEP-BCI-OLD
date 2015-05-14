@@ -48,7 +48,7 @@ class Generator(AbstractPythonGenerator):
                 y = yield
                 segment.append(y)
             signal.extend(segment)
-            yield self.processShortSignal(signal, i, self.signalPipeline)
+        yield self.processShortSignal(signal, i, self.signalPipeline)
         counter = 1
         while True:
             counter += 1
@@ -97,21 +97,11 @@ class AbstractExtracionGenerator(AbstractPythonGenerator):
 
     def setup(self, options):
         AbstractPythonGenerator.setup(self, options)
-        self.harmonics = self.getHarmonics(options[c.DATA_OPTIONS])
+        self.harmonics = self.getHarmonics(options)
         self.short_signal = True
 
     def getHarmonics(self, options):
-        return options[c.OPTIONS_HARMONICS]
-
-    def getMax(self, getValue, arg_list):
-        max_value = -float("inf")
-        max_index = None
-        for i in range(len(arg_list)):
-            value = getValue(arg_list[i])
-            if value > max_value:
-                max_value = value
-                max_index = i
-        return max_value, max_index
+        return options[c.DATA_HARMONICS]
 
     def checkLength(self, signal_length, options_length):
         if self.short_signal and signal_length == options_length:

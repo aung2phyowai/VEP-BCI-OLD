@@ -33,11 +33,8 @@ class PsdaExtraction(Generator.AbstractExtracionGenerator):
         else:
             raise ValueError("Illegal argument in getInterpolation: " + str(options[c.OPTIONS_INTERPOLATE]))
 
-    def getMagnitude(self, freq, harmonic_count, interpolation):
-        result = 0
-        for harmonic in range(harmonic_count):
-            result += interpolation(freq*(harmonic+1))
-        return result
+    def getMagnitude(self, freq, harmonic, interpolation):
+        return float(interpolation(freq*harmonic))
 
     # def getSNR(self, freq, harmonic_count, interpolation):
     #     result = 0
@@ -58,21 +55,18 @@ class PsdaExtraction(Generator.AbstractExtracionGenerator):
         else:
             return self.fft_bins
 
+    def getListOfMagnitudes(self, freq, harmonics, interpolation_func):
+        return {harmonic: self.getMagnitude(freq, harmonic, interpolation_func) for harmonic in harmonics}
+
+    def getResults(self, target_freqs, coordinates):
+        interpolation_func = self.interpolation(self.getFreqs(len(coordinates)), coordinates)
+        return {freq: self.getListOfMagnitudes(freq, harmonics, interpolation_func) for freq, harmonics in zip(target_freqs, self.harmonics)}
+
     def getGenerator(self, options):
-        length = options[c.DATA_OPTIONS][c.OPTIONS_LENGTH]
+        max_length = options[c.DATA_OPTIONS][c.OPTIONS_LENGTH]
         target_freqs = options[c.DATA_FREQS]
         while True:
             coordinates = yield
-            self.checkLength(len(coordinates), self.getFftLength(length))
-            max_value, max_index = self.getMax(
-                lambda target_freq: self.getMagnitude(
-                    target_freq,
-                    self.harmonics,
-                    self.interpolation(self.getFreqs(len(coordinates)), coordinates)
-                ),
-                target_freqs
-            )
-            # print max_value, sum(coordinates[channel])/len(coordinates[channel])*2+1
-            # if sum(coordinates[channel])/len(coordinates[channel])*2+1 < max_value:
-            #     max_freqs[max_index] += 1
-            yield target_freqs[max_index]
+            actual_length = len(coordinates)
+            self.checkLength(actual_length, self.getFftLength(max_length))
+            yield self.getResults(target_freqs, coordinates)

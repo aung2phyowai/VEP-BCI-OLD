@@ -34,7 +34,7 @@ class Extraction(Generator.AbstractMyGenerator):
                 if coordinates is not None:
                     self.coordinates_generator.next()
                     result = self.generator.send(coordinates)
-                    self.connection.sendMessage(((self.name, self.sensors), result))
+                    self.connection.sendMessage(result)
                     self.generator.next()
                 else:
                     self.connection.sendMessage(None)
@@ -100,14 +100,14 @@ class Cca(Extraction):
             if isinstance(message, basestring):
                 return message
             if message is not None:
-                freq = None
+                results = None
                 for sensor, generator in zip(self.sensors, self.coordinates_generators):
                     signal = generator.send(message.sensors[sensor]["value"])
                     if signal is not None:
                         generator.next()
-                        freq = self.generator.send(signal)
-                if freq is not None:
-                    self.connection.sendMessage(((self.name, self.sensors), freq))
+                        results = self.generator.send(signal)
+                if results is not None:
+                    self.connection.sendMessage(results)
                     self.generator.next()
                 else:
                     self.connection.sendMessage(None)

@@ -19,13 +19,12 @@ class CcaExtraction(Generator.AbstractExtracionGenerator):
 
     def getReferenceSignals(self, length, target_freqs):
         reference_signals = []
-        t = np.arange(0, length)  # TODO???
-        for freq in target_freqs:
+        t = np.arange(0, length, step=1.0)/c.HEADSET_FREQ
+        for freq, harmonics in zip(target_freqs, self.harmonics):
             reference_signals.append([])
-            for harmonic in range(1, self.harmonics+1):
-                reference_signals[-1].append(np.sin(np.pi*2*harmonic*freq/c.HEADSET_FREQ*t))
-                reference_signals[-1].append(np.cos(np.pi*2*harmonic*freq/c.HEADSET_FREQ*t))
-            # reference_signals[-1] = np.array(reference_signals[-1]).T
+            for harmonic in harmonics:
+                reference_signals[-1].append(np.sin(np.pi*2*harmonic*freq*t))
+                reference_signals[-1].append(np.cos(np.pi*2*harmonic*freq*t))
         return reference_signals
 
     def getCorr(self, signal, reference):
@@ -40,23 +39,18 @@ class CcaExtraction(Generator.AbstractExtracionGenerator):
         else:
             return np.array(target_reference)
 
+    def getResults(self, coordinates, length, target_freqs):
+        return {freq: self.getCorr(coordinates, self.getReferenceSignal(reference, length).T) for freq, reference in zip(target_freqs, self.reference_signals)}
+
     def getGenerator(self, options):
-        length = options[c.DATA_OPTIONS][c.OPTIONS_LENGTH]
-        target_freqs = options[c.DATA_FREQS]
+        max_length = options[c.DATA_OPTIONS][c.OPTIONS_LENGTH]
         generator_count = len(options[c.DATA_SENSORS])
-        coordinates = [None for _ in range(generator_count)]
+        target_freqs = options[c.DATA_FREQS]
+        coordinates = [[] for _ in range(generator_count)]
         while True:
             for i in range(generator_count):
                 coordinates[i] = yield
-            self.checkLength(len(coordinates[0]), length)
-            max_value, max_index = self.getMax(
-                lambda target_reference: self.getCorr(
-                    np.array(coordinates).T,
-                    self.getReferenceSignal(target_reference, len(coordinates[0])).T
-                ),
-                self.reference_signals
-            )
-            # print maximum, 0.2
-            # if maximum > 0.2:
-            #     yield target_freqs[max_index]
-            yield target_freqs[max_index]
+            actual_length = len(coordinates[0])
+            self.checkLength(actual_length, max_length)
+            transposed_coordinates = np.array(coordinates).T
+            yield self.getResults(transposed_coordinates, actual_length, target_freqs)
