@@ -2,7 +2,7 @@
 \chapter[Application for controlling a robot via SSVEP]{Application for controlling\\ a robot via SSVEP}
 \label{sec:SSVEP_BCI}
 
-The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository\footnote{https://github.com/kahvel/VEP-BCI}. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
+The aim of this chapter is to describe the \gls{SSVEP}-based \gls{BCI} designed as a practical part of this thesis. The \gls{BCI} is written in Python 2.7 and the code is accessible from Github repository, see appendix~\ref{sec:code} for details. The \gls{BCI} requires only Emotiv EPOC headset and a computer with Windows operating system, no specific hardware like digital signal processors or \glspl{LED} are used.
 
 \section{Controlling a robot with the application}
 
@@ -115,7 +115,7 @@ The explanation of the signal pipeline settings is the following:
 	\item \texttt{Arg} is the beta argument for kaiser window. See NumPy documentation for details\footnote{http://docs.scipy.org/doc/numpy/reference/generated/numpy.kaiser.html}.
 	\item \texttt{Normalise} shows whether to normalise the estimated \gls{power spectral density} as in equation~\ref{eq:norm_SNR} or not.
 	\item \texttt{From} and \texttt{to} are the frequencies used to specify which frequencies are removed and which not. From shows the lowest frequency that is passed, lower frequencies than the value will be removed; to shows the highest frequency that is passed, higher frequencies than the value will be removed.
-	\item \texttt{Taps} shows the number of taps or the length of the filter. See SciPy documentation\addtocounter{footnote}{-2}\footnotemark\addtocounter{footnote}{1} for details.
+	\item \texttt{Taps} shows the number of taps or the length of the filter. See SciPy documentation\begin{NoHyper}\addtocounter{footnote}{-2}\footnotemark\addtocounter{footnote}{1}\end{NoHyper} for details.
 \end{enumerate}
 
 Since the application has \gls{GUI} and many parameters that can be easily tested, this application can be a good tool to compare how different signal pipelines affect the detection of \glspl{SSVEP}.
@@ -146,7 +146,7 @@ Finally, the \gls{target} is chosen if $n$ out of $m$ previous results that were
 
 %All \gls{feature extraction} methods used in the application can be combined. In case of combining methods, the \gls{target} choosing algorithm is similar to the standard \gls{PSDA} method---all the methods have to give the same result. Currently the \gls{target} choosing method cannot be changed from the user interface. If different \gls{target} choosing method is needed, then the code has to be changed.
 
-It is easy to modify \gls{target} identification method by changing the code in \texttt{handleFreqMessage} method in \texttt{PostOffice.py}. This method receives the results of the \gls{feature extraction} methods through a connection similarly to the data accessing code discussed in section~\ref{sec:different_devices}. The results have already been organised into different data structures. %There are results per each method, results per each signal pipeline, all the results counted and other data structures to make it easier to further develop the application.
+It is easy to modify \gls{target} identification method by changing the code in \texttt{handleFreq-\break Message} method in \texttt{PostOffice.py}. This method receives the results of the \gls{feature extraction} methods through a connection similarly to the data accessing code discussed in section~\ref{sec:different_devices}. The results have already been organised into different data structures. %There are results per each method, results per each signal pipeline, all the results counted and other data structures to make it easier to further develop the application.
 
 It is also worth mentioning that different \gls{feature extraction} methods can have different signal pipelines. For example it would not make sense to \gls{window} a signal that is later analysed using \gls{CCA}, but \glsdisp{window}{windowing} could be beneficial if the \gls{power spectral density} of the signal is later estimated analysed using \gls{PSDA} method. Thus the application has the functionality to use multiple signal pipelines with different options, which gives even more flexibility.
 
